@@ -2,13 +2,18 @@ package com.booledata.llspringparent.model.springPoint;
 
 
 import com.booledata.llspringparent.utils.enums.PointType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data
@@ -29,6 +34,13 @@ public class SpringPointType implements Serializable {
     @NotNull(message = "温泉点类型不能为空")
     @Column(nullable = false,length=32)
     private String pointType;
+
+
+    @Column(columnDefinition = "datetime default now()")
+    @Generated(GenerationTime.INSERT)
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date createTime;
 
 //    //处理状态txt
 //    public String getPointTypeTxt(){

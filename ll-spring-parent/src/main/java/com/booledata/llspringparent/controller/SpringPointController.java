@@ -6,11 +6,9 @@ import com.booledata.llspringparent.model.springPoint.SpringPoint;
 import com.booledata.llspringparent.model.springPoint.SpringPointType;
 import com.booledata.llspringparent.model.springPoint.response.SpringPointResult;
 import com.booledata.llspringparent.service.SpringTypeService;
-import com.booledata.llspringparent.utils.EmptyUtil;
-import com.booledata.llspringparent.utils.HttpStatusContent;
-import com.booledata.llspringparent.utils.ValidatorUtil;
+import com.booledata.llspringparent.utils.*;
 import com.booledata.llspringparent.utils.enums.OutputState;
-import com.booledata.llspringparent.utils.ObjectCopyUtil;
+import com.booledata.llspringparent.utils.enums.PointCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -49,13 +47,12 @@ public class SpringPointController implements SpringPointControllerApi {
     @Override
     @GetMapping(produces = "application/json")
     public ResponseEntity<Page<SpringPoint>> findAll(SpringPoint entity, @PageableDefault(value = 10, sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable) {
-
+        //添加匹配规则  模糊查询 codeNumber address
         ExampleMatcher matcher = ExampleMatcher.matching()
-                //模糊方式查
-                .withMatcher("codeNumber", ExampleMatcher.GenericPropertyMatchers.contains())
+                .withMatcher("codeNumber", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
                 .withMatcher("address", ExampleMatcher.GenericPropertyMatchers.contains());
 
-        Example<SpringPoint> example = Example.of(entity, matcher);
+        Example<SpringPoint> example = Example.of(entity,matcher);
         Page<SpringPoint> springPoints = this.springPointRepository.findAll(example,pageable);
         return new ResponseEntity<Page<SpringPoint>>(springPoints, HttpStatus.OK);
     }
@@ -77,7 +74,7 @@ public class SpringPointController implements SpringPointControllerApi {
     @PostMapping("/addPoint")
     public ResponseEntity<?> addPoint(SpringPoint entity) {
         HttpStatusContent status = null;
-
+        PointCategoryUtil pointCategoryUtil =new PointCategoryUtil();
 
         //验证实体必填字段
         Map<String, StringBuffer> validate = ValidatorUtil.validate(entity);
@@ -85,12 +82,13 @@ public class SpringPointController implements SpringPointControllerApi {
             status = new HttpStatusContent(OutputState.FAIL, ValidatorUtil.getErrorMsg(validate));
             return new ResponseEntity<>(status, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        entity = springPointRepository.save(entity);
-        if (entity == null) {
+        SpringPoint springPoint = pointCategoryUtil.selectPointCategory(entity);
+        entity = springPointRepository.save(springPoint);
+        if (springPoint == null) {
             status = new HttpStatusContent(OutputState.FAIL, "添加失败，请稍后重试！");
             return new ResponseEntity<>(status, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        String success = springTypeService.saveType(entity);
+        String success = springTypeService.saveType(springPoint);
         status = new HttpStatusContent(OutputState.SUCCESS);
         return new ResponseEntity<>(status, HttpStatus.OK);
     }

@@ -2,12 +2,22 @@ package com.booledata.llspringparent.model.springPoint;
 
 import com.booledata.llspringparent.utils.enums.PicState;
 import com.booledata.llspringparent.utils.enums.PointType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
+/**
+* @author xlr
+* @description 温泉点照片
+* @date 2019/10/15
+**/
 @Entity
 @Data
 @Table(name = "spring_pointpic")
@@ -27,6 +37,13 @@ public class SpringPointPic implements Serializable {
 
     @Column(nullable = false, length = 20)
     private Integer picState;
+
+
+    @Column(columnDefinition = "datetime default now()")
+    @Generated(GenerationTime.INSERT)
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date createTime;
 
     //处理状态txt
     public String getPointTypeTxt(){

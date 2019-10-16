@@ -4,23 +4,22 @@ package com.booledata.llspringparent.utils.enums;
 import com.booledata.llspringparent.utils.EmptyUtil;
 
 /**
-* @author XLR
-* @date 2019/10/11
+* @author xlr
+* @description 温泉点种类
+* @date 2019/10/15
 **/
-public enum PicState {
-    //图片代码
-    WZT(10001, "位置图"),
-    DZT(10002, "地质图"),
-    ZZT(10003, "柱状图/剖面图"),
-    SZFX(10004,"水质分析"),
-    CYMS(10005,"成因模式"),
-    SCWJ(10006,"上传文件");
+public enum PointCategory {
+    //未处理  已处理  已完成  已取消
+    S(30001, "天然温泉"),
+    DR(30002, "地热井"),
 
+
+    CANCEL(-30000,"温泉点编号有误");
 
     private Integer value;
     private String txt;
 
-    PicState(Integer v, String txt) {
+    PointCategory(Integer v, String txt) {
         this.value = v;
         this.txt = txt;
     }
@@ -34,7 +33,7 @@ public enum PicState {
     }
 
     public static String getTxtByValue(Integer value) {
-        for (PicState state : values()) {
+        for (PointCategory state : values()) {
             if (state.getValue().equals(value)) {
                 return state.getTxt();
             }
@@ -52,7 +51,7 @@ public enum PicState {
         if (EmptyUtil.isEmpty(value)) {
             return false;
         }
-        for (PicState e : PicState.values()) {
+        for (PointCategory e : PointCategory.values()) {
             if (e.getValue().equals(value)) {
                 return true;
             }
