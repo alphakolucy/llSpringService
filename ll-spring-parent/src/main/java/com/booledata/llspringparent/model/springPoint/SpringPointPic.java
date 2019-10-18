@@ -1,5 +1,6 @@
 package com.booledata.llspringparent.model.springPoint;
 
+import com.booledata.llspringparent.model.Image;
 import com.booledata.llspringparent.utils.enums.PicState;
 import com.booledata.llspringparent.utils.enums.PointType;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,6 +24,10 @@ import java.util.Date;
 @Table(name = "spring_pointpic")
 public class SpringPointPic implements Serializable {
 
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "point_codenumber",referencedColumnName = "codeNumber", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    private SpringPoint springPoint;  //所属点
+
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -45,6 +50,8 @@ public class SpringPointPic implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createTime;
 
+
+
     //处理状态txt
     public String getPointTypeTxt(){
         if(this.getPicState()!=null){
@@ -54,9 +61,7 @@ public class SpringPointPic implements Serializable {
     }
 
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "point_Id",referencedColumnName = "id")
-    private SpringPoint springPoint;  //所属点
+
 
     public Integer getPicState() {
         return picState;

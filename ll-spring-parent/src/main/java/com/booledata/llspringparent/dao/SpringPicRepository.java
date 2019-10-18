@@ -12,4 +12,7 @@ import org.springframework.stereotype.Repository;
 **/
 @Repository
 public interface SpringPicRepository extends WiselyRepository<SpringPointPic,String> {
+
+
+
 }

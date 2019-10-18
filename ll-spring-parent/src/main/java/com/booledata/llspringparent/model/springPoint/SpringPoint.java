@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
 * @author xlr
@@ -31,7 +32,16 @@ import java.util.Date;
 public class SpringPoint implements Serializable {
 
 
-    private static final long serialVersionUID = -8958111163695414981L;
+
+
+    private static final long serialVersionUID = -8908592090826465419L;
+
+
+
+//    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "pic_url",referencedColumnName = "codeNumber", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+//    private SpringPointPic springPointPicList;  //url
+
     @Id
     @GeneratedValue(generator = "identifier", strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "identifier", strategy = "uuid")
@@ -47,16 +57,16 @@ public class SpringPoint implements Serializable {
 
     //编号
     @NotNull(message = "codeNumber不能为空")
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20,unique = true)
     private String codeNumber;
 
 
     //位置名称
-    @NotBlank(message = "address不能为空")
+//    @NotBlank(message = "address不能为空")
     @Column(nullable = false, length = 50)
     private String address;
     //x轴
-    @NotNull(message = "x不能为空")
+//    @NotNull(message = "x不能为空")
     @Column(nullable = false, length = 20)
     private double x;
     //y轴
@@ -118,7 +128,7 @@ public class SpringPoint implements Serializable {
     private String hydrochemicalType;
 
     //温泉点类型：理疗温泉  地热井
-    @Column(nullable = false, length = 10)
+    @Column( length = 10)
     private Integer pointCategory;
 
 

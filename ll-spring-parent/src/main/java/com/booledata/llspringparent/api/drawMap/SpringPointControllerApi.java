@@ -13,7 +13,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -26,8 +29,11 @@ public interface SpringPointControllerApi {
 
 
 
+    @ApiOperation(value = "获取温泉点列表(分页）") //Page<SpringPoint>
+    ResponseEntity<?> findAllPage(SpringPoint springPoint, @PageableDefault(value = 10, sort = {"createTime"}, direction = Sort.Direction.DESC)Pageable pageable);
+
     @ApiOperation(value = "获取温泉点列表")
-    ResponseEntity<Page<SpringPoint>> findAll(SpringPoint springPoint, @PageableDefault(value = 10, sort = {"createTime"}, direction = Sort.Direction.DESC)Pageable pageable);
+    ResponseEntity<?> findAll();
 
 
 
@@ -36,13 +42,13 @@ public interface SpringPointControllerApi {
 
 
     @ApiOperation(value = "添加温泉点")
-    ResponseEntity<?> addPoint( SpringPoint springPoint);
+    ResponseEntity<?> addPoint(SpringPoint entity);
 
     @ApiOperation(value = "修改温泉点")
-    ResponseEntity<?> updatePoint(SpringPoint entity);
+    ResponseEntity<?> updatePoint( String id,SpringPoint entity);
 
     @ApiOperation(value = "删除温泉点")
-    SpringPointResult deletePoint(Integer pointId);
+    ResponseEntity<?> deletePoint(String pointId);
 
 //    @ApiOperation(value = "更新温泉点")
 //    SpringPointResult updatePoint(SpringPoint springPoint);

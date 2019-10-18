@@ -1,4 +1,4 @@
-package com.booledata.llspringparent.utils;
+package com.booledata.llspringparent.utils.tools;
 
 import org.springframework.beans.BeanUtils;
 

@@ -16,6 +16,20 @@ public class SpringTypeService {
     private SpringTypeRepository springTypeRepository;
 
 
+
+
+    public String deleteType(String pointId){
+        Integer integer = springTypeRepository.deleteByPointId(pointId);
+
+        if (integer>0){
+            return "success";
+        }else {
+            return "error";
+        }
+
+    }
+
+
     public String saveType(SpringPoint springPoint) {
 
 

@@ -9,7 +9,7 @@ import com.booledata.llspringparent.utils.EmptyUtil;
 * @date 2019/10/15
 **/
 public enum PointCategory {
-    //未处理  已处理  已完成  已取消
+    //天然温泉，地热井
     S(30001, "天然温泉"),
     DR(30002, "地热井"),
 

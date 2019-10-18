@@ -17,5 +17,9 @@ import javax.transaction.Transactional;
 public interface SpringPointRepository extends WiselyRepository<SpringPoint,String> {
 
 
+
+
+    @Query(nativeQuery = true,value = "select * from spring_point where code_number = ?1")
+    SpringPoint getSpringPointByCodeNumber(String codeNumber);
 }
 
