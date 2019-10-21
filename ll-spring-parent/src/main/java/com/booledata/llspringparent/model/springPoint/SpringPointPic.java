@@ -30,7 +30,7 @@ public class SpringPointPic implements Serializable {
 //    private SpringPointInfo springPointInfo;  //所属点
 
 
-    @ManyToOne(cascade={CascadeType.MERGE})//可选属性optional=false,表示author不能为空。删除文章，不影响用户
+    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})//可选属性optional=false,表示author不能为空。删除文章，不影响用户
     @JoinColumn(name="point_id")//设置在article表中的关联字段(外键)
     private SpringPointInfo springPointInfo;//所属作者
 
