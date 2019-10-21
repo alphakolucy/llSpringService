@@ -1,5 +1,6 @@
 package com.booledata.llspringparent.service;
 
+import com.booledata.llspringparent.dao.SpringPointRepository;
 import com.booledata.llspringparent.dao.SpringTypeRepository;
 import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
 import com.booledata.llspringparent.model.springPoint.SpringPointType;
@@ -16,14 +17,15 @@ public class SpringTypeService {
     private SpringTypeRepository springTypeRepository;
 
 
+    @Autowired
+    private SpringPointRepository springPointRepository;
 
-
-    public String deleteType(String pointId){
+    public String deleteType(String pointId) {
         Integer integer = springTypeRepository.deleteByPointId(pointId);
 
-        if (integer>0){
+        if (integer > 0) {
             return "success";
-        }else {
+        } else {
             return "error";
         }
 
@@ -85,8 +87,9 @@ public class SpringTypeService {
         //传入id
 //        String id = springPointInfo.getId();
 //        springPointType.setId(id);
-        springTypeRepository.save(springPointType);
-
+//        springTypeRepository.save(springPointType);
+        springPointInfo.setSpringPointType(springPointType);
+        springPointRepository.save(springPointInfo);
 //        }
 
         return "success";

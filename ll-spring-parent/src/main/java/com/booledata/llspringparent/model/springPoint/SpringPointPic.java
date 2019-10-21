@@ -30,6 +30,10 @@ public class SpringPointPic implements Serializable {
 //    private SpringPointInfo springPointInfo;  //所属点
 
 
+    @ManyToOne(cascade={CascadeType.MERGE})//可选属性optional=false,表示author不能为空。删除文章，不影响用户
+    @JoinColumn(name="point_id")//设置在article表中的关联字段(外键)
+    private SpringPointInfo springPointInfo;//所属作者
+
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -37,7 +41,7 @@ public class SpringPointPic implements Serializable {
     private String pid;
 
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 255)
     private String url;
 
 
@@ -51,7 +55,7 @@ public class SpringPointPic implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createTime;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 255)
     private String filePath;
 
     //处理状态txt

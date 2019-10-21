@@ -33,8 +33,8 @@ public class SpringPointInfo implements Serializable {
 
 
     private static final long serialVersionUID = -3658413605250436226L;
-    @OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-    @JoinColumn(name = "pid",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    @OneToMany(mappedBy = "springPointInfo",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+//    @JoinColumn(name = "pid",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     private List<SpringPointPic> springPointPics;
 
 

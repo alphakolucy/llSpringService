@@ -23,10 +23,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 @Service
-public class SpringPicService  {
+public class SpringPicService {
 
     private static final String PATH = "E:\\dev\\project\\llSpringService\\ll-spring-parent\\src\\main\\resources\\static"; //上传路径
     @Autowired
@@ -39,16 +40,19 @@ public class SpringPicService  {
     @Autowired
     private SpringPointControllerApi springPointControllerApi;
 
-    public ResponseEntity<?> saveImg( MultipartFile file,  String type,
-                              HttpServletRequest request, Integer picState, String codeNumber,String pid){
+    public ResponseEntity<?> saveImg(MultipartFile file, String type,
+                                     HttpServletRequest request, Integer picState, String codeNumber, String pid) {
         HttpStatusContent status;
 
         SpringPointInfo entity = new SpringPointInfo();
 
         SpringPointPic springPointPic = new SpringPointPic();
-        SpringPointInfo springPointInfo = new SpringPointInfo();
 
-        entity.setCodeNumber(codeNumber);
+
+
+        SpringPointInfo springPointInfo = springPointRepository.getSpringPointByCodeNumber(codeNumber);
+        List<SpringPointPic> springPointPics = springPointInfo.getSpringPointPics();
+
         String contentType = file.getContentType();
         String prefix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
 
@@ -56,7 +60,6 @@ public class SpringPicService  {
         Image img = new Image();
         img.setImageName(fileName);
         img.setImageType(contentType);
-
 
 
         RespondSpringPic respondSpringPic = new RespondSpringPic();
@@ -82,29 +85,29 @@ public class SpringPicService  {
             }
 
             FileUtil.uploadFile(file.getBytes(), PATH + path, img.getImageName());
-            String ap = PATH+path+img.getImageName();
+            String ap = PATH + path + img.getImageName();
             status = new HttpStatusContent(OutputState.SUCCESS);
             img.setImageName(path + fileName);
             img.setImageUrl(ApplicationConfig.newInstance().getBaseUrl() + img.getImageName());
 
-            if (pid !=null){
+            if (pid != null) {
                 SpringPointPic one = springPicRepository.findOne(pid);
-                if (one != null){
+                if (one != null) {
                     springPointPic.setUrl(img.getImageUrl());
                     ObjectCopyUtil<SpringPointPic> uUtil = new ObjectCopyUtil<>();
                     //同一类实体之间的属性复制
-                    uUtil.copyProperties(springPointPic,one);
+                    uUtil.copyProperties(springPointPic, one);
+                    springPointPics.add(one);
+                    springPointInfo.setSpringPointPics(springPointPics);
 
-                    springPointPic = springPicRepository.save(one);
 
-
+                    //保存点信息
+                    springPointRepository.save(springPointInfo);
                     respondSpringPic.setImage(img);
                     respondSpringPic.setSpringPointPic(springPointPic);
                     return new ResponseEntity<RespondSpringPic>(respondSpringPic, HttpStatus.OK);
                 }
             }
-
-
 
 
             springPointInfo = this.springPointRepository.getSpringPointByCodeNumber(codeNumber);
@@ -122,39 +125,31 @@ public class SpringPicService  {
             }
 
 
-//            if (springPointInfo == null) {
-//                status = new HttpStatusContent(OutputState.FAIL, "数据不存在！");
-//                return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
-//            }
-            if (springPointInfo == null ){
+            if (springPointInfo == null) {
 
-                status = new HttpStatusContent(OutputState.FAIL, "没有编号为"+codeNumber+"的温泉点，请先添加温泉点！");
+                status = new HttpStatusContent(OutputState.FAIL, "没有编号为" + codeNumber + "的温泉点，请先添加温泉点！");
                 return new ResponseEntity<>(status, HttpStatus.INTERNAL_SERVER_ERROR);
-//                SpringPointInfo setpoint = new SpringPointInfo();
-//                setpoint.setCodeNumber(codeNumber);
-//                springPointControllerApi.addPoint(setpoint);
-//                springPointPic.setSpringPointInfo(setpoint);
-//                springPointPic.setPicState(picState);
-//                springPointPic.setUrl(img.getImageUrl());
-//                return new ResponseEntity<Image>(img, HttpStatus.OK);
 
-//
             }
-//            springPointPic.setSpringPointInfo(springPointInfo);
+
             springPointPic.setPicState(picState);
             springPointPic.setUrl(img.getImageUrl());
             springPointPic.setFilePath(ap);
 
+            springPointPics.add(springPointPic);
+//            springPointPic = springPicRepository.save(springPointPic);
 
 
+            springPointInfo.setSpringPointPics(springPointPics);
+            springPointRepository.save(springPointInfo);
 
-            springPointPic = springPicRepository.save(springPointPic);
+
 //
 
 
             respondSpringPic.setImage(img);
             respondSpringPic.setSpringPointPic(springPointPic);
-            return new ResponseEntity<RespondSpringPic>(respondSpringPic, HttpStatus.OK);
+            return new ResponseEntity<SpringPointInfo>(springPointInfo, HttpStatus.OK);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -163,13 +158,13 @@ public class SpringPicService  {
         }
     }
 
-    public ResponseEntity<?> saveFile(MultipartFile file, HttpServletRequest request, Integer picState, String codeNumber,String pid) {
+    public ResponseEntity<?> saveFile(MultipartFile file, HttpServletRequest request, Integer picState, String codeNumber, String pid) {
         HttpStatusContent status;
         SpringPointInfo entity = new SpringPointInfo();
         SpringPointPic springPointPic = new SpringPointPic();
-        SpringPointInfo springPointInfo = new SpringPointInfo();
+        SpringPointInfo springPointInfo = springPointRepository.getSpringPointByCodeNumber(codeNumber);
+        List<SpringPointPic> springPointPics = springPointInfo.getSpringPointPics();
 
-        entity.setCodeNumber(codeNumber);
 
         String contentType = file.getContentType();
         String prefix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
@@ -186,7 +181,7 @@ public class SpringPicService  {
             FileUtil.uploadFile(file.getBytes(), PATH + "/file/", img.getImageName());
             status = new HttpStatusContent(OutputState.SUCCESS);
             img.setImageName(ApplicationConfig.newInstance().getBaseUrl() + "/file/" + fileName);
-            String ap = PATH+"/file/"+img.getImageName();
+            String ap = PATH + "/file/" + fileName;
 
             UploadStatus uploadStatus = new UploadStatus();
             uploadStatus.setStatus("done");
@@ -196,22 +191,27 @@ public class SpringPicService  {
             uploadStatus.setFileURL(img.getImageName());
             uploadStatus.setImgURL(img.getImageName());
 
-            if (pid !=null){
+            if (pid != null) {
                 SpringPointPic one = springPicRepository.findOne(pid);
-                if (one != null){
+                if (one != null) {
                     springPointPic.setUrl(img.getImageName());
                     ObjectCopyUtil<SpringPointPic> uUtil = new ObjectCopyUtil<>();
                     //同一类实体之间的属性复制
-                    uUtil.copyProperties(springPointPic,one);
+                    uUtil.copyProperties(springPointPic, one);
                     springPointPic = springPicRepository.save(one);
+                    springPointPics.add(one);
+                    springPointInfo.setSpringPointPics(springPointPics);
 
+
+                    //保存点信息
+                    springPointRepository.save(springPointInfo);
 
                     respondSpringPic.setImage(img);
                     respondSpringPic.setSpringPointPic(springPointPic);
                     return new ResponseEntity<RespondSpringPic>(respondSpringPic, HttpStatus.OK);
                 }
             }
-            springPointInfo = this.springPointRepository.getSpringPointByCodeNumber(codeNumber);
+
 
             //同一类实体之间的属性复制
 //            ObjectCopyUtil<SpringPointInfo> uUtil = new ObjectCopyUtil<>();
@@ -229,9 +229,9 @@ public class SpringPicService  {
                 return new ResponseEntity<>(status, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-            if (springPointInfo == null ){
+            if (springPointInfo == null) {
 
-                status = new HttpStatusContent(OutputState.FAIL, "没有编号为"+codeNumber+"的温泉点，请先添加温泉点！");
+                status = new HttpStatusContent(OutputState.FAIL, "没有编号为" + codeNumber + "的温泉点，请先添加温泉点！");
                 return new ResponseEntity<>(status, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
@@ -240,8 +240,16 @@ public class SpringPicService  {
             springPointPic.setPicState(picState);
             springPointPic.setUrl(img.getImageName());
             springPointPic.setFilePath(ap);
+
             //存入url
-            springPointPic = springPicRepository.save(springPointPic);
+//            springPointPic = springPicRepository.save(springPointPic);
+
+            springPointPics.add(springPointPic);
+            springPointInfo.setSpringPointPics(springPointPics);
+
+
+            //保存点信息
+            springPointRepository.save(springPointInfo);
 
             respondSpringPic.setImage(img);
             respondSpringPic.setSpringPointPic(springPointPic);
@@ -256,9 +264,7 @@ public class SpringPicService  {
     }
 
 
-
-
-    public void sameCodeStart(MultipartFile file,String codeNumber){
+    public void sameCodeStart(MultipartFile file, String codeNumber) {
 
         HttpStatusContent status;
 

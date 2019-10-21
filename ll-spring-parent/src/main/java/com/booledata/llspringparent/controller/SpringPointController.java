@@ -1,6 +1,7 @@
 package com.booledata.llspringparent.controller;
 
 import com.booledata.llspringparent.api.drawMap.SpringPointControllerApi;
+import com.booledata.llspringparent.common.PageChange;
 import com.booledata.llspringparent.dao.SpringPointRepository;
 import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
 import com.booledata.llspringparent.model.springPoint.response.SpringPointResult;
@@ -59,8 +60,8 @@ public class SpringPointController implements SpringPointControllerApi {
     public SpringPointResult findAllPage(SpringPointInfo entity, @PageableDefault(sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable) {
         HttpStatusContent status = null;
 
-        int pageNumber = pageable.getPageNumber();
-        System.out.println("pageNumber:"+pageNumber);
+
+
 
 
         //添加匹配规则  模糊查询 codeNumber address+
