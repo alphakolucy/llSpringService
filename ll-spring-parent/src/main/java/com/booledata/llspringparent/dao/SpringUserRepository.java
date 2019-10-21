@@ -1,6 +1,5 @@
 package com.booledata.llspringparent.dao;
 
-import com.booledata.llspringparent.model.springPoint.SpringPointType;
 import com.booledata.llspringparent.model.ucenter.request.LoginRequest;
 import com.booledata.llspringparent.service.wisely.WiselyRepository;
 import org.springframework.data.jpa.repository.Query;

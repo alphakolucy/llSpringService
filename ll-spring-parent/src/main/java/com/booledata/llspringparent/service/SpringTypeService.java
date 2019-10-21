@@ -1,7 +1,7 @@
 package com.booledata.llspringparent.service;
 
 import com.booledata.llspringparent.dao.SpringTypeRepository;
-import com.booledata.llspringparent.model.springPoint.SpringPoint;
+import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
 import com.booledata.llspringparent.model.springPoint.SpringPointType;
 import com.booledata.llspringparent.utils.enums.PointType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class SpringTypeService {
     }
 
 
-    public String saveType(SpringPoint springPoint) {
+    public String saveType(SpringPointInfo springPointInfo) {
 
 
 //
@@ -39,51 +39,51 @@ public class SpringTypeService {
         double[] arr = {1000, 5, 500, 10, 2, 0.7, 50, 110, 35, 25};
         String type = "";
         SpringPointType springPointType = new SpringPointType();
-        if (springPoint.getDissolvedSolids() > arr[0]) {
+        if (springPointInfo.getDissolvedSolids() > arr[0]) {
             type += PointType.KQS.getTxt() + ",";
         }
-        if (springPoint.getI2() > arr[1]) {
+        if (springPointInfo.getI2() > arr[1]) {
 //            springPointType.setPointType(PointType.I.getTxt());
             type += PointType.I.getTxt() + ",";
 
         }
-        if (springPoint.getCo2() > arr[2]) {
+        if (springPointInfo.getCo2() > arr[2]) {
 //            springPointType.setPointType(PointType.CO2.getTxt());
             type += PointType.CO2.getTxt() + ",";
         }
-        if (springPoint.getFe() > arr[3]) {
+        if (springPointInfo.getFe() > arr[3]) {
 //            springPointType.setPointType(PointType.FE.getTxt());
             type += PointType.FE.getTxt() + ",";
         }
-        if (springPoint.getHydrothion() > arr[4]) {
+        if (springPointInfo.getHydrothion() > arr[4]) {
 //            springPointType.setPointType(PointType.H2S.getTxt());
             type += PointType.H2S.getTxt() + ",";
         }
-        if (springPoint.getAsa() > arr[5]) {
+        if (springPointInfo.getAsa() > arr[5]) {
 //            springPointType.setPointType(PointType.AS.getTxt());
             type += PointType.AS.getTxt() + ",";
         }
-        if (springPoint.getHsio() > arr[6]) {
+        if (springPointInfo.getHsio() > arr[6]) {
 //            springPointType.setPointType(PointType.H2SIO3.getTxt());
             type += PointType.H2SIO3.getTxt() + ",";
         }
-        if (springPoint.getRn() > arr[7]) {
+        if (springPointInfo.getRn() > arr[7]) {
 //            springPointType.setPointType(PointType.RN.getTxt());
             type += PointType.RN.getTxt() + ",";
         }
-        if (springPoint.getHbo2() > arr[8]) {
+        if (springPointInfo.getHbo2() > arr[8]) {
 //            springPointType.setPointType(PointType.HBO2.getTxt());
             type += PointType.HBO2.getTxt() + ",";
         }
-        if (springPoint.getBr2() > arr[9]) {
+        if (springPointInfo.getBr2() > arr[9]) {
 //            springPointType.setPointType(PointType.BR.getTxt());
             type += PointType.BR.getTxt() + ",";
         }
 
-        springPointType.setSpringPoint(springPoint);
+//        springPointType.setSpringPointInfo(springPointInfo);
         springPointType.setPointType(type);
         //传入id
-//        String id = springPoint.getId();
+//        String id = springPointInfo.getId();
 //        springPointType.setId(id);
         springTypeRepository.save(springPointType);
 

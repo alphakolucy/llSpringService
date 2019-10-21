@@ -1,5 +1,6 @@
-package com.booledata.llspringparent.model;
+package com.booledata.llspringparent.model.springPoint.response;
 
+import com.booledata.llspringparent.model.Image;
 import com.booledata.llspringparent.model.springPoint.SpringPointPic;
 import lombok.Data;
 /**
@@ -13,6 +14,8 @@ public class RespondSpringPic {
     private SpringPointPic springPointPic;
 
     private Image image;
+
+    private String code;
 
 
 }

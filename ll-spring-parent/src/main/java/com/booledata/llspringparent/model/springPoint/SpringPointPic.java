@@ -1,6 +1,5 @@
 package com.booledata.llspringparent.model.springPoint;
 
-import com.booledata.llspringparent.model.Image;
 import com.booledata.llspringparent.utils.enums.PicState;
 import com.booledata.llspringparent.utils.enums.PointType;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,10 +22,12 @@ import java.util.Date;
 @Data
 @Table(name = "spring_pointpic")
 public class SpringPointPic implements Serializable {
+    private static final long serialVersionUID = 3184772320378124845L;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "point_codenumber",referencedColumnName = "codeNumber", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
-    private SpringPoint springPoint;  //所属点
+
+//    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "point_codenumber",referencedColumnName = "codeNumber", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+//    private SpringPointInfo springPointInfo;  //所属点
 
 
     @Id
@@ -50,7 +51,8 @@ public class SpringPointPic implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createTime;
 
-
+    @Column(nullable = false, length = 100)
+    private String filePath;
 
     //处理状态txt
     public String getPointTypeTxt(){
@@ -95,11 +97,11 @@ public class SpringPointPic implements Serializable {
         this.url = url;
     }
 
-    public SpringPoint getSpringPoint() {
-        return springPoint;
-    }
-
-    public void setSpringPoint(SpringPoint springPoint) {
-        this.springPoint = springPoint;
-    }
+//    public SpringPointInfo getSpringPointInfo() {
+//        return springPointInfo;
+//    }
+//
+//    public void setSpringPointInfo(SpringPointInfo springPointInfo) {
+//        this.springPointInfo = springPointInfo;
+//    }
 }

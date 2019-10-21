@@ -1,13 +1,11 @@
 package com.booledata.llspringparent.model.springPoint;
 
 
-import com.booledata.llspringparent.utils.enums.PointType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -19,11 +17,12 @@ import java.util.Date;
 @Data
 @Table(name = "spring_pointtype")
 public class SpringPointType implements Serializable {
+    private static final long serialVersionUID = -6096969825298745411L;
 
     //所属温泉点
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "point_id")
-    private SpringPoint springPoint;
+//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "point_id")
+//    private SpringPointInfo springPointInfo;
 
     @Id
     @GeneratedValue(generator = "system-uuid")

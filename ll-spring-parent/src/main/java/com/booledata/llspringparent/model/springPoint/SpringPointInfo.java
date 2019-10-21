@@ -29,13 +29,18 @@ import java.util.List;
 @Entity
 @Table(name = "spring_point")
 @Data
-public class SpringPoint implements Serializable {
+public class SpringPointInfo implements Serializable {
 
 
+    private static final long serialVersionUID = -3658413605250436226L;
+    @OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name = "pid",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    private List<SpringPointPic> springPointPics;
 
 
-    private static final long serialVersionUID = -8908592090826465419L;
-
+    @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name = "typeId",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    private SpringPointType springPointType;
 
 
 //    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -68,16 +73,16 @@ public class SpringPoint implements Serializable {
     //x轴
 //    @NotNull(message = "x不能为空")
     @Column(nullable = false, length = 20)
-    private double x;
+    private Double x;
     //y轴
     @Column(nullable = false, length = 20)
-    private double y;
+    private Double y;
     //z轴
     @Column(nullable = false, length = 20)
-    private double z;
+    private Double z;
     //孔深
     @Column(nullable = false, length = 20)
-    private double holeDepth;
+    private Double holeDepth;
     //ph值
     @Column(nullable = false, length = 11)
     private String ph;
@@ -95,34 +100,34 @@ public class SpringPoint implements Serializable {
     private String waterOutlet;
     //溶解性总固体
     @Column(nullable = false, length = 20)
-    private double dissolvedSolids;
+    private Double dissolvedSolids;
     //二氧化碳
     @Column(nullable = false, length = 20)
-    private double co2;
+    private Double co2;
     //总硫化氢
     @Column(nullable = false, length = 20)
-    private double hydrothion;
+    private Double hydrothion;
     //偏硅酸
     @Column(nullable = false, length = 20)
-    private double hsio;
+    private Double hsio;
     //偏硼酸
     @Column(nullable = false, length = 20)
-    private double hbo2;
+    private Double hbo2;
     //溴
     @Column(nullable = false, length = 20)
-    private double br2;
+    private Double br2;
     //碘
     @Column(nullable = false, length = 20)
-    private double i2;
+    private Double i2;
     //总铁
     @Column(nullable = false, length = 20)
-    private double fe;
+    private Double fe;
     // 砷
     @Column(nullable = false, length = 20)
-    private double asa;
+    private Double asa;
     //氡
     @Column(nullable = false, length = 20)
-    private double rn;
+    private Double rn;
     //水化学类型
     @Column(nullable = false, length = 20)
     private String hydrochemicalType;

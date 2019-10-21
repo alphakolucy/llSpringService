@@ -1,7 +1,6 @@
 package com.booledata.llspringparent.dao;
 
 import com.booledata.llspringparent.model.springPoint.SpringPointPic;
-
 import com.booledata.llspringparent.service.wisely.WiselyRepository;
 import org.springframework.stereotype.Repository;
 

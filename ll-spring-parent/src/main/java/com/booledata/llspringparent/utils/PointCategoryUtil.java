@@ -1,25 +1,25 @@
 package com.booledata.llspringparent.utils;
 
-import com.booledata.llspringparent.model.springPoint.SpringPoint;
+import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
 import com.booledata.llspringparent.utils.enums.PointCategory;
 
 public class PointCategoryUtil {
 
 
-    public SpringPoint selectPointCategory(SpringPoint springPoint){
+    public SpringPointInfo selectPointCategory(SpringPointInfo springPointInfo){
 
-        String codeNumber = springPoint.getCodeNumber();
+        String codeNumber = springPointInfo.getCodeNumber();
 
         String substring = codeNumber.substring(0, 1);
         if ("S".equals(substring)|| "s".equals(substring)){
-            springPoint.setPointCategory(PointCategory.S.getValue());
-            return springPoint;
+            springPointInfo.setPointCategory(PointCategory.S.getValue());
+            return springPointInfo;
         }else if ("D".equals(substring)||"d".equals(substring)){
-            springPoint.setPointCategory(PointCategory.DR.getValue());
-            return springPoint;
+            springPointInfo.setPointCategory(PointCategory.DR.getValue());
+            return springPointInfo;
         }else {
-            springPoint.setPointCategory(PointCategory.CANCEL.getValue());
-            return springPoint;
+            springPointInfo.setPointCategory(PointCategory.CANCEL.getValue());
+            return springPointInfo;
         }
 
     }
