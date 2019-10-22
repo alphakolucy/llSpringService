@@ -3,6 +3,7 @@ package com.booledata.llspringparent.controller;
 
 import com.booledata.llspringparent.api.drawMap.UploadControllerApi;
 import com.booledata.llspringparent.dao.SpringPicRepository;
+import com.booledata.llspringparent.model.springPoint.SpringPointPic;
 import com.booledata.llspringparent.service.SpringPicService;
 import com.booledata.llspringparent.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,27 +34,37 @@ public class UploadController implements UploadControllerApi {
     @Override
     @RequestMapping(value = "/image", method = RequestMethod.POST)
     public ResponseEntity<?> uploadImgDif(@RequestParam("file") MultipartFile file, @RequestParam(value = "filetype", defaultValue = "") String type,
-                                          HttpServletRequest request,@RequestParam(value = "PicState", defaultValue = "") Integer picState,String codeNumber,String pid) {
+                                          HttpServletRequest request,@RequestParam(value = "PicState", defaultValue = "") Integer picState,String codeNumber,String id,String pointId) {
 
-        return springPicService.saveImg(file, type, request, picState, codeNumber,pid);
+        return springPicService.saveImg(file, type, request, picState, codeNumber,id,pointId);
     }
 
     @Override
     @RequestMapping(value = "/file", method = RequestMethod.POST)
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request,@RequestParam(value = "PicState", defaultValue = "")  Integer picState,String codeNumber,String pid) {
-        return springPicService.saveFile(file,request,picState,codeNumber,pid);
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request,@RequestParam(value = "PicState", defaultValue = "")  Integer picState,String codeNumber,String id,String poinId) {
+        return springPicService.saveFile(file,request,picState,codeNumber,id,poinId);
     }
 
     @Override
     @DeleteMapping
-    public String deledteFile(String ap) {
+    public String deledteFile(String id) {
 
-        if (FileUtil.delete(ap)){
-            FileUtil.delete(ap);
-            return "删除成功";
+        if(id.isEmpty()){
+            return "删除失败，id为空！";
         }else {
-            return "删除失败";
+            SpringPointPic one = springPicRepository.findOne(id);
+            if (one!=null){
+                String filePath = one.getFilePath();
+                FileUtil.delete(filePath);
+                springPicRepository.delete(id);
+                return "删除成功";
+            }else {
+                return "删除失败";
+            }
         }
+
+
+
 
 
     }

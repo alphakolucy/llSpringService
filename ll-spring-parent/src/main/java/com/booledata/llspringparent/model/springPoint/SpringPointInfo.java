@@ -30,12 +30,12 @@ import java.util.List;
 @Table(name = "spring_point")
 @Data
 public class SpringPointInfo implements Serializable {
+    private static final long serialVersionUID = 9102962457482172463L;
 
 
-    private static final long serialVersionUID = -3658413605250436226L;
-    @OneToMany(mappedBy = "springPointInfo",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-//    @JoinColumn(name = "pid",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
-    private List<SpringPointPic> springPointPics;
+//    @OneToMany(mappedBy = "springPointInfo",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+////    @JoinColumn(name = "pid",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+//    private List<SpringPointPic> springPointPics;
 
 
     @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)

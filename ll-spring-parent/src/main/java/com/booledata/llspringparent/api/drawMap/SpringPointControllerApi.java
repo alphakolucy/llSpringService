@@ -4,6 +4,7 @@ package com.booledata.llspringparent.api.drawMap;
 //import com.booledata.llspringparent.model.springPointInfo.SpringPointInfo;
 //import com.booledata.llspringparent.model.springPointInfo.response.SpringPointResult;
 import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
+import com.booledata.llspringparent.model.springPoint.SpringPointPic;
 import com.booledata.llspringparent.model.springPoint.response.SpringPointResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 /**
 * @author Administrator
@@ -42,8 +45,11 @@ public interface SpringPointControllerApi {
     @ApiOperation(value = "删除温泉点")
     ResponseEntity<?> deletePoint(String id);
 
-//    @ApiOperation(value = "更新温泉点")
-//    SpringPointResult updatePoint(SpringPointInfo springPointInfo);
+    @ApiOperation(value = "获取温泉点图文列表")
+    public List<SpringPointPic> findAllPic();
 
+
+    @ApiOperation(value = "获取温泉点图文信息")
+    public List<SpringPointPic> findPointPic(String id);
 
 }

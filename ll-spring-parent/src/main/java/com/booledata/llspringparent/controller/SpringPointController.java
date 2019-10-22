@@ -2,8 +2,10 @@ package com.booledata.llspringparent.controller;
 
 import com.booledata.llspringparent.api.drawMap.SpringPointControllerApi;
 import com.booledata.llspringparent.common.PageChange;
+import com.booledata.llspringparent.dao.SpringPicRepository;
 import com.booledata.llspringparent.dao.SpringPointRepository;
 import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
+import com.booledata.llspringparent.model.springPoint.SpringPointPic;
 import com.booledata.llspringparent.model.springPoint.response.SpringPointResult;
 import com.booledata.llspringparent.service.SpringPicService;
 import com.booledata.llspringparent.service.SpringTypeService;
@@ -45,6 +47,8 @@ public class SpringPointController implements SpringPointControllerApi {
     @Autowired
     private SpringTypeService springTypeService;
 
+    @Autowired
+    private SpringPicRepository springPicRepository;
 
     private static ArrayList<Integer> spState = new ArrayList<Integer>() {{
         add(10001);
@@ -61,9 +65,6 @@ public class SpringPointController implements SpringPointControllerApi {
         HttpStatusContent status = null;
 
 
-
-
-
         //添加匹配规则  模糊查询 codeNumber address+
         SpringPointResult springPointResult = new SpringPointResult();
 //        if (pageable.getPageSize()==0){
@@ -72,12 +73,12 @@ public class SpringPointController implements SpringPointControllerApi {
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withMatcher("codeNumber", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
                 .withMatcher("address", ExampleMatcher.GenericPropertyMatchers.contains())
-                .withMatcher("pointCategory",ExampleMatcher.GenericPropertyMatchers.contains());
+                .withMatcher("pointCategory", ExampleMatcher.GenericPropertyMatchers.contains());
 
         Example<SpringPointInfo> example = Example.of(entity, matcher);
 
         Page<SpringPointInfo> springPoints = this.springPointRepository.findAll(example, pageable);
-        return new SpringPointResult(springPoints,200);
+        return new SpringPointResult(springPoints, 200);
     }
 
     @Override
@@ -176,13 +177,26 @@ public class SpringPointController implements SpringPointControllerApi {
     public ResponseEntity<?> deletePoint(String id) {
         HttpStatusContent status = null;
         springPointRepository.delete(id);
+        springPicRepository.deleteByPointId(id);
         status = new HttpStatusContent(OutputState.SUCCESS);
         return new ResponseEntity<HttpStatusContent>(status, HttpStatus.OK);
     }
 
-//    @Override
-//    @PutMapping("updatePoint1")
-//    public SpringPointResult updatePoint(SpringPointInfo springPointInfo) {
-//        return null;
-//    }
+    @Override
+    @GetMapping("findAllPic")
+    public List<SpringPointPic> findAllPic() {
+        List<SpringPointPic> all = springPicRepository.findAll();
+        return all;
+    }
+
+
+    @Override
+    @GetMapping("findOnePic")
+    public List<SpringPointPic> findPointPic(String id) {
+
+        SpringPointInfo one = springPointRepository.findOne(id);
+        String pointId = one.getId();
+        return springPicRepository.findByPointId(pointId);
+
+    }
 }

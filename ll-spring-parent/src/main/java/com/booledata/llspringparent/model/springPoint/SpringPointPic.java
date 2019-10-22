@@ -22,7 +22,7 @@ import java.util.Date;
 @Data
 @Table(name = "spring_pointpic")
 public class SpringPointPic implements Serializable {
-    private static final long serialVersionUID = 3184772320378124845L;
+    private static final long serialVersionUID = -558096895794728691L;
 
 
 //    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -30,9 +30,9 @@ public class SpringPointPic implements Serializable {
 //    private SpringPointInfo springPointInfo;  //所属点
 
 
-    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})//可选属性optional=false,表示author不能为空。删除文章，不影响用户
-    @JoinColumn(name="point_id")//设置在article表中的关联字段(外键)
-    private SpringPointInfo springPointInfo;//所属作者
+//    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})//可选属性optional=false,表示author不能为空。删除文章，不影响用户
+//    @JoinColumn(name="point_id")//设置在article表中的关联字段(外键)
+//    private SpringPointInfo springPointInfo;//所属作者
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -57,6 +57,13 @@ public class SpringPointPic implements Serializable {
 
     @Column(nullable = false, length = 255)
     private String filePath;
+
+    @Column(nullable = false, length = 255)
+    private String pointId;
+
+
+    @Column(nullable = false, length = 100)
+    private String fileName;
 
     //处理状态txt
     public String getPointTypeTxt(){

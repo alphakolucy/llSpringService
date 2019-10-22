@@ -17,15 +17,14 @@ import java.util.Date;
 @Data
 @Table(name = "spring_pointtype")
 public class SpringPointType implements Serializable {
-    private static final long serialVersionUID = -6096969825298745411L;
 
+
+    private static final long serialVersionUID = 3669213560426432403L;
     //所属温泉点
 //    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinColumn(name = "point_id")
     @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)//People是关系的维护端
-//    @JoinTable(name = "type_info",
-//            joinColumns = @JoinColumn(name="type_id"),
-//            inverseJoinColumns = @JoinColumn(name = "point_id"))//通过关联表保存一对一的关系
+    @JoinColumn(name = "point_id")
     private SpringPointInfo springPointInfo;
 
     @Id

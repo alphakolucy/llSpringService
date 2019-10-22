@@ -15,15 +15,13 @@ public interface UploadControllerApi {
 
 
     @ApiOperation(value = "图片上传")
-    ResponseEntity<?> uploadImgDif(@RequestParam("file") MultipartFile file, @RequestParam(value = "filetype", defaultValue = "") String type, HttpServletRequest request, @RequestParam(value = "PicState", defaultValue = "") Integer picState, @RequestParam(value = "codeNumber", defaultValue = "") String codeNumber, String pid);
+    ResponseEntity<?> uploadImgDif(@RequestParam("file") MultipartFile file, @RequestParam(value = "filetype", defaultValue = "") String type, HttpServletRequest request, @RequestParam(value = "PicState", defaultValue = "") Integer picState, @RequestParam(value = "codeNumber", defaultValue = "") String codeNumber, String id,String poinId);
 
     @ApiOperation(value = "文件上传")
-    ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request, @RequestParam(value = "PicState", defaultValue = "") Integer picState, @RequestParam(value = "codeNumber", defaultValue = "") String codeNumber, String pid);
+    ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request, @RequestParam(value = "PicState", defaultValue = "") Integer picState, @RequestParam(value = "codeNumber", defaultValue = "") String codeNumber, String id,String poinId);
 
 
     @ApiOperation(value = "文件/文件夹删除")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ap", value = "文件绝对路径", required = true, paramType = "String")})
     String deledteFile(@RequestParam("ap") String ap);
 
 }
