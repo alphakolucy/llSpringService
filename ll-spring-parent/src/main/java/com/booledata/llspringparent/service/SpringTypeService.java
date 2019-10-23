@@ -32,9 +32,9 @@ public class SpringTypeService {
     }
 
 
-    public String saveType(SpringPointInfo springPointInfo) {
+    public Boolean saveType(SpringPointInfo springPointInfo) {
 
-
+        boolean bool = false;
 //
         ArrayList arrayList = new ArrayList();
         //温泉类型标准值（大于）
@@ -45,53 +45,47 @@ public class SpringTypeService {
             type += PointType.KQS.getTxt() + ",";
         }
         if (springPointInfo.getI2() > arr[1]) {
-//            springPointType.setPointType(PointType.I.getTxt());
             type += PointType.I.getTxt() + ",";
 
         }
         if (springPointInfo.getCo2() > arr[2]) {
-//            springPointType.setPointType(PointType.CO2.getTxt());
             type += PointType.CO2.getTxt() + ",";
         }
         if (springPointInfo.getFe() > arr[3]) {
-//            springPointType.setPointType(PointType.FE.getTxt());
             type += PointType.FE.getTxt() + ",";
         }
         if (springPointInfo.getHydrothion() > arr[4]) {
-//            springPointType.setPointType(PointType.H2S.getTxt());
             type += PointType.H2S.getTxt() + ",";
         }
         if (springPointInfo.getAsa() > arr[5]) {
-//            springPointType.setPointType(PointType.AS.getTxt());
             type += PointType.AS.getTxt() + ",";
         }
         if (springPointInfo.getHsio() > arr[6]) {
-//            springPointType.setPointType(PointType.H2SIO3.getTxt());
             type += PointType.H2SIO3.getTxt() + ",";
         }
         if (springPointInfo.getRn() > arr[7]) {
-//            springPointType.setPointType(PointType.RN.getTxt());
             type += PointType.RN.getTxt() + ",";
         }
         if (springPointInfo.getHbo2() > arr[8]) {
-//            springPointType.setPointType(PointType.HBO2.getTxt());
             type += PointType.HBO2.getTxt() + ",";
         }
         if (springPointInfo.getBr2() > arr[9]) {
-//            springPointType.setPointType(PointType.BR.getTxt());
             type += PointType.BR.getTxt() + ",";
         }
 
-//        springPointType.setSpringPointInfo(springPointInfo);
-        springPointType.setPointType(type);
-        //传入id
-//        String id = springPointInfo.getId();
-//        springPointType.setId(id);
-//        springTypeRepository.save(springPointType);
-        springPointInfo.setSpringPointType(springPointType);
-        springPointRepository.save(springPointInfo);
-//        }
+        if (type.length()>0){
+            springPointType.setPointType(type);
+            springPointInfo.setSpringPointType(springPointType);
+            springPointRepository.save(springPointInfo);
+            bool = true;
+            return bool;
+        }else {
+            springPointType.setPointType(type);
+            springPointInfo.setSpringPointType(springPointType);
+            springPointRepository.save(springPointInfo);
+            return bool;
+        }
 
-        return "success";
+
     }
 }

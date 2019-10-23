@@ -14,8 +14,9 @@ public enum PointCategory {
     DR(30002, "地热井"),
     SGZRKSZK(30003,"施工中热矿水钻孔"),
 
-    CANCEL(-30001,"不达标温泉"),
-    DRCANCEL(-30002,"不达标地热");
+    SCANCEL(-30001,"不达标温泉"),
+    DRCANCEL(-30002,"不达标地热"),
+    NCANCEL(-30003,"其他");
 
     private Integer value;
     private String txt;

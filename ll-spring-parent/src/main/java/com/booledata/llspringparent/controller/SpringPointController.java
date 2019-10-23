@@ -122,7 +122,10 @@ public class SpringPointController implements SpringPointControllerApi {
             status = new HttpStatusContent(OutputState.FAIL, ValidatorUtil.getErrorMsg(validate));
             return new ResponseEntity<>(status, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        SpringPointInfo springPointInfo = pointCategoryUtil.selectPointCategory(entity);
+        //判断温泉是否达标(
+        boolean b = springTypeService.saveType(entity);
+        SpringPointInfo springPointInfo = pointCategoryUtil.selectPointCategory(entity,b);
+
         entity = springPointRepository.save(springPointInfo);
         if (springPointInfo == null) {
             status = new HttpStatusContent(OutputState.FAIL, "添加失败，请稍后重试！");
@@ -137,7 +140,7 @@ public class SpringPointController implements SpringPointControllerApi {
 //                springPicService.saveImg(file, type, request, picState, entity);
 //            }
 //        }
-        String success = springTypeService.saveType(springPointInfo);
+
         status = new HttpStatusContent(OutputState.SUCCESS);
         return new ResponseEntity<>(springPointInfo, HttpStatus.OK);
     }
