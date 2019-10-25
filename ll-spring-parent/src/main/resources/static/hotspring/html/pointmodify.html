@@ -65,6 +65,17 @@
 					<!--基本信息-->
 					<form class="layui-form" action="" lay-filter="pointinfo">
 						<b>基本信息</b>
+						<div class="layui-row layui-hide">
+							<div class="layui-col-md6">
+								<div class="layui-form-item">
+									<label class="layui-form-label">id</label>
+									<div class="layui-input-block">
+										<input type="text" name="id" required lay-verify="required" placeholder="请输入" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="layui-row">
 							<div class="layui-col-md6">
 								<div class="layui-form-item">
@@ -584,6 +595,7 @@
 						url: apiUrl + '/upload/image',
 						data: senddata,
 						accept: 'images',
+						acceptMime: 'image/*',
 						size: 5120,
 						auto: false,
 						choose: function(obj) {

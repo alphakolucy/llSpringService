@@ -17,8 +17,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 @ComponentScan("com.booledata.llspringparent.config")
-@ComponentScan(basePackages = {"com.booledata.llspringparent.api"})
+@ComponentScan(basePackages = {"com.booledata.llspringparent.api","com.gitee.sunchenbin.mybatis.actable.manager.*"})
 @MapperScan("com.booledata.llspringparent.dao")
+@MapperScan({"com.booledata.mapper","com.gitee.sunchenbin.mybatis.actable.dao.*"})
 @EnableJpaRepositories(repositoryBaseClass = WiselyRepositoryImpl.class)
 public class LlSpringParentApplication {
     public static void main(String[] args) {

@@ -84,7 +84,7 @@ public class SpringPointPic implements Serializable {
         this.picState = picState;
     }
 
-    //申请类型状态txt
+    //类型状态txt
     public String getPicStateTxt(){
         if(this.getPicState() != null){
             return PicState.getTxtByValue(this.getPicState());

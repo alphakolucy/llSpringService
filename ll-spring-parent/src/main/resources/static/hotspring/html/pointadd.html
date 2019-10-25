@@ -70,7 +70,7 @@
 								<div class="layui-form-item">
 									<label class="layui-form-label">编号</label>
 									<div class="layui-input-block">
-										<input type="text" name="codeNumber" value="10001" required lay-verify="required" placeholder="请输入"
+										<input type="text" name="codeNumber" value="s1" required lay-verify="required" placeholder="请输入"
 										 autocomplete="off" class="layui-input">
 									</div>
 								</div>
@@ -94,7 +94,7 @@
 								<div class="layui-form-item">
 									<label class="layui-form-label">x</label>
 									<div class="layui-input-block">
-										<input type="text" name="x" required lay-verify="required" value="1182.4152024552552" placeholder="请输入"
+										<input type="text" name="x" required lay-verify="required" value="3060227.000" placeholder="请输入"
 										 autocomplete="off" class="layui-input">
 									</div>
 								</div>
@@ -104,7 +104,7 @@
 								<div class="layui-form-item">
 									<label class="layui-form-label">y</label>
 									<div class="layui-input-block">
-										<input type="text" name="y" required lay-verify="required" value="5560.519195287376" placeholder="请输入"
+										<input type="text" name="y" required lay-verify="required" value="19222257.000" placeholder="请输入"
 										 autocomplete="off" class="layui-input">
 									</div>
 								</div>
@@ -411,6 +411,7 @@
 				var $ = layui.jquery;
 				var pointid = 0;
 				var codeNumber = 0;
+				
 				//监听提交
 				form.on('submit(formDemo)', function(data) {
 					var fromdata = data.field;
@@ -428,7 +429,7 @@
 								}, function() {
 									pointid=data.id;
 									codeNumber = data.codeNumber;
-									window.parent.readdpoint([fromdata.x, fromdata.y], fromdata);
+									window.parent.readdpoint([fromdata.x/pointrotiox, fromdata.y/pointrotioy], fromdata);
 									// var index = parent.layer.getFrameIndex(window.name);
 									// parent.layer.close(index);
 								});
@@ -493,7 +494,8 @@
 							codeNumber: 0
 						},
 						auto: false,
-						accept: 'image',
+						accept: 'images',
+						acceptMime: 'image/*',
 						size: 5120,
 						choose: function(obj) {
 							if (pointid == 0) {

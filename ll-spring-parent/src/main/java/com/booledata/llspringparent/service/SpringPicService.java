@@ -3,9 +3,11 @@ package com.booledata.llspringparent.service;
 import com.alibaba.fastjson.JSONObject;
 import com.baidu.aip.ocr.AipOcr;
 import com.booledata.llspringparent.api.drawMap.SpringPointControllerApi;
+import com.booledata.llspringparent.dao.SpringPicFileRepository;
 import com.booledata.llspringparent.dao.SpringPicRepository;
 import com.booledata.llspringparent.dao.SpringPointRepository;
 import com.booledata.llspringparent.model.Image;
+import com.booledata.llspringparent.model.springPoint.SpringPicFile;
 import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
 import com.booledata.llspringparent.model.springPoint.SpringPointPic;
 import com.booledata.llspringparent.model.springPoint.response.RespondSpringPic;
@@ -35,26 +37,32 @@ public class SpringPicService {
 
 
     @Autowired
+    private SpringPicFileRepository springPicFileRepository;
+
+    @Autowired
     private SpringPointRepository springPointRepository;
 
     @Autowired
     private SpringPointControllerApi springPointControllerApi;
 
     public ResponseEntity<?> saveImg(MultipartFile file, String type,
-                                     HttpServletRequest request, Integer picState, String codeNumber, String id,String pointId) {
+                                     HttpServletRequest request, Integer picState, String codeNumber, String id, String pointId) {
         HttpStatusContent status;
+
+        SpringPicFile springPicFile = new SpringPicFile();
 
         SpringPointInfo entity = new SpringPointInfo();
 
         SpringPointPic springPointPic = new SpringPointPic();
 
 
-
         SpringPointInfo springPointInfo = springPointRepository.getSpringPointByCodeNumber(codeNumber);
 //        List<SpringPointPic> springPointPics = springPointInfo.getSpringPointPics();
 
         String contentType = file.getContentType();
-        String prefix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+        String originalFilename = file.getOriginalFilename();
+
+        String prefix = file.getOriginalFilename().substring(originalFilename.lastIndexOf(".") + 1);
 
         String fileName = UUID.randomUUID().toString() + '.' + prefix;
         Image img = new Image();
@@ -94,6 +102,22 @@ public class SpringPicService {
                 SpringPointPic one = springPicRepository.findOne(id);
 
                 if (one != null) {
+                    //保存历史图片
+
+
+                    springPicFile.setFileName(originalFilename);
+                    springPicFile.setUrl(one.getUrl());
+                    springPicFile.setPointId(one.getPointId());
+                    springPicFile.setPicState(one.getPicState());
+                    springPicFileRepository.save(springPicFile);
+                    //清除缓存图片
+//                    boolean delete = FileUtil.delete(one.getFilePath());
+//                    if (delete) {
+//                        System.out.println("删除覆盖图片成功");
+//                    }else {
+//                        System.out.println("删除覆盖图片失败");
+//                    }
+
                     springPointPic.setUrl(img.getImageUrl());
                     ObjectCopyUtil<SpringPointPic> uUtil = new ObjectCopyUtil<>();
                     //同一类实体之间的属性复制
@@ -137,15 +161,18 @@ public class SpringPicService {
             springPointPic.setUrl(img.getImageUrl());
             springPointPic.setFilePath(ap);
             springPointPic.setPointId(pointId);
-//            springPointPics.add(springPointPic);
+
             springPointPic = springPicRepository.save(springPointPic);
 
 
-
-
-
-//
-
+            if (springPointPic!=null){
+                //保存历史图片
+                springPicFile.setFileName(originalFilename);
+                springPicFile.setUrl(springPointPic.getUrl());
+                springPicFile.setPointId(springPointPic.getPointId());
+                springPicFile.setPicState(springPointPic.getPicState());
+                springPicFileRepository.save(springPicFile);
+            }
 
             respondSpringPic.setImage(img);
             respondSpringPic.setSpringPointPic(springPointPic);
@@ -158,7 +185,7 @@ public class SpringPicService {
         }
     }
 
-    public ResponseEntity<?> saveFile(MultipartFile file, HttpServletRequest request, Integer picState, String codeNumber, String id,String poinId) {
+    public ResponseEntity<?> saveFile(MultipartFile file, HttpServletRequest request, Integer picState, String codeNumber, String id, String poinId) {
         HttpStatusContent status;
         SpringPointInfo entity = new SpringPointInfo();
         SpringPointPic springPointPic = new SpringPointPic();
@@ -198,9 +225,9 @@ public class SpringPicService {
                     if (!ap.isEmpty()) {
                         springPointPic.setFilePath(ap);
                     }
-                   if (picState !=null){
-                       springPointPic.setPicState(picState);
-                   }
+                    if (picState != null) {
+                        springPointPic.setPicState(picState);
+                    }
 
 
                     ObjectCopyUtil<SpringPointPic> uUtil = new ObjectCopyUtil<>();

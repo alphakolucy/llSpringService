@@ -17,6 +17,10 @@
 				 placeholder="请输入地址关键字" />
 				<button class="layui-btn" style="width: 100px;" id="searchaddress">查询</button>
 			</div>
+			<div class="layui-inline">
+				<button class="layui-btn" style="width: 100px;" id="import" >导入</button>
+				<button class="layui-btn" style="width: 100px;" id="export">导出</button>
+			</div>
 		</div>
 		<div>
 			<table class="layui-hide" id="list" lay-data="{id: 'pointlist'}" lay-filter="demo"></table>
@@ -25,12 +29,15 @@
 		<script type="text/javascript" src="../layui/layui.js"></script>
 		<script type="text/javascript">
 			var curpointjson = {};
-			layui.use(['table', 'form', 'jquery', 'layer'], function() {
+
+			layui.use(['table', 'form', 'jquery', 'layer','upload'], function() {
 				var table = layui.table;
 				var form = layui.form;
 				var $ = layui.jquery;
 				var layer = layui.layer;
-				var searchfilter="codeNumber";
+				var upload = layui.upload;
+				var searchfilter = "codeNumber";
+				//查询
 				$("#searchaddress").on("click", function() {
 					var searchval = $("#searchvaladress").val();
 					table.reload('pointlist', {
@@ -42,9 +49,45 @@
 						}
 					});
 				});
+				//导出
+				$("#export").on("click", function() {
+					parent.exportdata();
+				});
+				//导入
+				var uploadfiles = upload.render({
+					elem: "#import",
+					url: apiUrl + '/springPoint/importToSave',
+					data: {},
+					accept: 'file',
+					// multiple: true,
+					auto: true,
+					size: 10240,
+					choose: function(obj) {},
+					before: function(res) {
+						layer.load();
+					},
+					done: function(res) {
+						layer.closeAll('loading');
+						layer.msg('数据导入成功', {
+							icon: 1,
+							time: 1000
+						}, function() {});
+						parent.getpointlist();
+					},
+					error: function() {
+						layer.msg('数据导入失败', {
+							icon: 5,
+							time: 1000
+						}, function() {
+
+						});
+						layer.closeAll('loading');
+					},
+				});
+				//选择查询字段
 				form.on('select(selectfilter)', function(data) {
 					// console.log(data.elem); //得到select原始DOM对象
-					searchfilter=data.value;
+					searchfilter = data.value;
 					// console.log(data.value); //得到被选中的值
 					// console.log(data.othis); //得到美化后的DOM对象
 				});
@@ -118,11 +161,11 @@
 										return "地热井";
 									} else if (d.pointCategory == 30003) {
 										return "施工中热矿水转孔";
-									}else if (d.pointCategory == -30001) {
+									} else if (d.pointCategory == -30001) {
 										return "不达标温泉";
-									}else if (d.pointCategory == -30002) {
+									} else if (d.pointCategory == -30002) {
 										return "不达标地热";
-									}else {
+									} else {
 										return "未分类";
 									}
 								}
@@ -153,7 +196,7 @@
 							layer.close(index);
 							$.ajax({
 								type: "DELETE",
-								url: apiUrl + "/springPoint/deletePoint?id="+ curpointjson.id,
+								url: apiUrl + "/springPoint/deletePoint?id=" + curpointjson.id,
 								// data: {
 								// 	id: curpointjson.id
 								// },

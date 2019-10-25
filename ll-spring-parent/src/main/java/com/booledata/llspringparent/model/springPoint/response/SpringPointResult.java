@@ -22,6 +22,9 @@ public class SpringPointResult extends ResponseResult {
     public SpringPointResult() {
     }
 
+    public SpringPointResult(int code) {
+        this.code = code;
+    }
 
     public SpringPointResult(Page<SpringPointInfo> springPoints, int code) {
         this.springPoints = springPoints;
