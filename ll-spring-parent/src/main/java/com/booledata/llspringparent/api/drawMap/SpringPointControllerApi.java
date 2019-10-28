@@ -5,6 +5,7 @@ package com.booledata.llspringparent.api.drawMap;
 //import com.booledata.llspringparent.model.springPointInfo.response.SpringPointResult;
 import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
 import com.booledata.llspringparent.model.springPoint.SpringPointPic;
+import com.booledata.llspringparent.model.springPoint.response.SpringPicFileResult;
 import com.booledata.llspringparent.model.springPoint.response.SpringPointResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,4 +53,7 @@ public interface SpringPointControllerApi {
     @ApiOperation(value = "获取温泉点图文信息")
     public List<SpringPointPic> findPointPic(String id);
 
+
+    @ApiOperation(value = "删除温泉图片")
+    public SpringPicFileResult deletePicFileHis(Integer id);
 }

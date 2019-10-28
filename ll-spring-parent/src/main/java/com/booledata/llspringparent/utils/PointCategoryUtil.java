@@ -14,11 +14,11 @@ public class PointCategoryUtil {
         String codeNumber = springPointInfo.getCodeNumber();
 
 
-        String substring = codeNumber.substring(0, 1);
+//        String substring = codeNumber.substring(0, 1);
 
 
 
-        if ("S".equals(substring) || "s".equals(substring)) {
+        if (codeNumber.contains("S") || codeNumber.contains("s")) {
             if (b) {
                 springPointInfo.setPointCategory(PointCategory.S.getValue());
                 return springPointInfo;
@@ -27,7 +27,7 @@ public class PointCategoryUtil {
                 return springPointInfo;
             }
 
-        } else if ("D".equals(substring) || "d".equals(substring)) {
+        } else if (codeNumber.contains("D") || codeNumber.contains("d")) {
 
             //判断是否是施工中地热井
             boolean reach = getReach(springPointInfo);

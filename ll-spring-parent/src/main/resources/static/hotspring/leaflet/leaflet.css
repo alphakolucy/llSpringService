@@ -250,7 +250,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* visual tweaks */
 
 .leaflet-container {
-	background: #d2d5da;
+	background: #ddd;
 	outline: 0;
 	}
 .leaflet-container a {
@@ -261,7 +261,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	}
 .leaflet-zoom-box {
 	border: 2px dotted #38f;
-	background: rgba(255,255,255,1.0);
+	background: rgba(255,255,255,0.5);
 	}
 
 

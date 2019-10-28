@@ -1,4 +1,73 @@
-var apiUrl="http://localhost:8080";
+var apiUrl = "http://localhost:8080";
+var pointrotiox=1800;//点坐标x缩放比例
+var pointrotioy=3100;//点坐标y缩放比例
+//水质标准
+var waterstanard = {
+	"dissolvedSolids": 1000,
+	"co2": 500,
+	"hydrothion": 2,
+	"hsio": 50,
+	"hbo2": 35,
+	"br2": 5,
+	"i2": 10,
+	"fe": 0.7,
+	"asa": 110,
+	"rn": 25,
+};
+//详情显示字段
+var showproperties = {
+	"codeNumber": "编号",
+	"address": "位置名称",
+	"x": "x",
+	"y": "y",
+	"z": "海拔",
+	"holeDepth": "孔深",
+	"ph": "PH",
+	"waterTemperature": "水温",
+	"waterInflow": "涌水量",
+	"trepanning": "开孔/出露层位",
+	"waterOutlet": "出水段",
+	"dissolvedSolids": "溶解性总固体",
+	"co2": "二氧化碳",
+	"hydrothion": "总硫化氢",
+	"hsio": "偏硅酸",
+	"hbo2": "偏硼酸",
+	"br2": "溴",
+	"i2": "碘",
+	"fe": "总铁",
+	"asa": "砷",
+	"rn": "氡",
+	"hydrochemicalType": "水化学类型"
+};
+//导出数据文件表头
+var pointtabletitles = {
+	"id": "ID",
+	"codeNumber": "编号",
+	"address": "位置名称",
+	"x": "x",
+	"y": "y",
+	"z": "海拔",
+	"holeDepth": "孔深",
+	"ph": "PH",
+	"waterTemperature": "水温",
+	"waterInflow": "涌水量",
+	"trepanning": "开孔/出露层位",
+	"waterOutlet": "出水段",
+	"dissolvedSolids": "溶解性总固体",
+	"co2": "二氧化碳",
+	"hydrothion": "总硫化氢",
+	"hsio": "偏硅酸",
+	"hbo2": "偏硼酸",
+	"br2": "溴",
+	"i2": "碘",
+	"fe": "总铁",
+	"asa": "砷",
+	"rn": "氡",
+	"hydrochemicalType": "水化学类型",
+	"pointCategory": "温泉类型",
+	"createTime": "创建时间"
+};
+//温泉点测试数据
 var visualpoint = [{
 		"latlng": [1558.156759601893, 6416.941167692173],
 		"properties": {

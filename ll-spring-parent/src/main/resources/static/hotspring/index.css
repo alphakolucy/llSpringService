@@ -40,7 +40,7 @@ body {
 	height: 30px;
 	cursor: pointer;
 }
-/*省界*/
+
 #legend {
 	position: absolute;
 	right: 10px;
@@ -130,7 +130,7 @@ body {
 }
 
 #menuitem li {
-	border: 2px solid #0b0b0b;
+	border: 2px solid #707070;
 	line-height: 40px;
 	height: 40px;
 	cursor: pointer;
@@ -144,13 +144,12 @@ body {
 	color: #00ff01;
 }
 
-/*图层筛选*/
 #screen {
 	position: absolute;
 	bottom: 10px;
 	left: 10px;
-	border: 1px solid #0b0b0b;
-	background-color: rgba(210, 213, 218, 0.1);
+	border: 1px solid #707070;
+	background-color: rgba(255, 255, 255, 0.1);
 	padding: 15px;
 	z-index: 9999;
 	margin-bottom: 0;
@@ -171,7 +170,7 @@ body {
 
 .my-div-icon-name {
 	font-size: 4px;
-	color: #96c7ee;
+	color: #0000FF;
 	opacity: 0.4;
 	width: 80px !important;
 	margin-left: -40px !important;
@@ -179,8 +178,9 @@ body {
 	text-align: center;
 }
 
-/*.my-div-icon-namepoint {*/
-/*	color: #FF0000;*/
-/*	font-size: 50px;*/
-/*	position: absolute;*/
-/*}*/
+.my-div-icon-namepoint {
+	color: #FF0000;
+	font-size: 50px;
+	position: absolute;
+	top: -25px;
+}

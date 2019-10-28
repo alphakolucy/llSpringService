@@ -4,6 +4,10 @@ proj4.defs("urn:ogc:def:crs:EPSG::2385",
 var mapcenter = [26.3715, 105.086682];
 var mapzoom = 16;
 
+var curpointjson = {};
+var allpointdata = {};
+var getpointlist;
+var showtype = 1; //1 直接点地图点上面显示 2 弹出详情框
 
 var structures = new L.layerGroup();
 var slips = new L.layerGroup();
@@ -25,22 +29,10 @@ structures.addTo(map);
 slips.addTo(map);
 residentials.addTo(map);
 hotsprings.addTo(map);
-// map.fitBounds(residentials.getBounds());
 
-var waterstanard = {
-	"dissolvedSolids": 0,
-	"co2": 0,
-	"hydrothion": 0,
-	"hsio": 0,
-	"hbo2": 0,
-	"br2": 0,
-	"i2": 0,
-	"fe": 0,
-	"asa": 0,
-	"rn": 0,
-};
 
 function readdpoint(latlng, properties) {
+	console.log(latlng);
 	var geojsonMarkerOptions = {
 		radius: 1,
 		fillColor: "#ff7800",
@@ -63,17 +55,17 @@ function readdpoint(latlng, properties) {
 		},
 		properties: properties
 	};
-	var pointiconUrl='img/default.png';
-	if(properties.pointCategory==30001){
-		pointiconUrl='img/hotspring.png';//天然温泉井
-	}else if(properties.pointCategory==30002){
-		pointiconUrl='img/lanhotwell.png';//地热井
-	}else if(properties.pointCategory==30003){
-		pointiconUrl='img/build-drill.png';//施工中热矿水转孔
-	}else if(properties.pointCategory==-30001){
-		pointiconUrl='img/hotspring-gray.png';//不达标温泉
-	}else if(properties.pointCategory==-30002){
-		pointiconUrl='img/default.png';//不达标地热
+	var pointiconUrl = 'img/default.png';
+	if (properties.pointCategory == 30001) {
+		pointiconUrl = 'img/hotspring.png'; //天然温泉井
+	} else if (properties.pointCategory == 30002) {
+		pointiconUrl = 'img/lanhotwell.png'; //地热井
+	} else if (properties.pointCategory == 30003) {
+		pointiconUrl = 'img/build-drill.png'; //施工中热矿水转孔
+	} else if (properties.pointCategory == -30001) {
+		pointiconUrl = 'img/hotspring-gray.png'; //不达标温泉
+	} else if (properties.pointCategory == -30002) {
+		pointiconUrl = 'img/default.png'; //不达标地热
 	}
 	var myIcon = L.icon({
 		iconUrl: pointiconUrl,
@@ -103,35 +95,44 @@ function readdpoint(latlng, properties) {
 				icon: myIcon,
 			});
 		},
+	}).on('click', function(e) {
+		var pointproperties = e.layer.feature.properties; //当前点击的物体的名称
+		if (showtype == 2) {
+			curpointjson = pointproperties;
+			layer.open({
+				type: 2,
+				title: "温泉点详情",
+				area: ['1000px', '800px'],
+				shadeClose: true, //点击遮罩关闭
+				content: 'html/pointdetail.html'
+			});
+		} else if (showtype == 1) {
+			var popuphtml = [];
+			Object.keys(pointproperties).forEach(function(key) {
+				if (showproperties.hasOwnProperty(key)) {
+					popuphtml.push(showproperties[key] + ":" + pointproperties[key]);
+				}
+			});
+			var popup = L.popup()
+				.setLatLng(e.latlng)
+				.setContent(popuphtml.join("</br>"))
+				.openOn(map);
+		}
 	}).addTo(hotsprings);
-	// on('click', function(e) {
-	// 	var pointproperties = e.layer.feature.properties; //当前点击的物体的名称
-	// 	if (pointproperties.hasOwnProperty("address")) {
-	// 		var popup = L.popup()
-	// 			.setLatLng(e.latlng)
-	// 			.setContent(pointproperties.address)
-	// 			.openOn(map);
-	// 	} else {
-	// 		var popup = L.popup()
-	// 			.setLatLng(e.latlng)
-	// 			.setContent("暂无位置")
-	// 			.openOn(map);
-	// 	}
-	// }).
 }
-// 底图颜色
+
 function provicestyle() {
 	var r = Math.floor(Math.random() * 256);
 	var g = Math.floor(Math.random() * 256);
 	var b = Math.floor(Math.random() * 256);
 	return {
-		"color": "#ffffff",
+		"color": "#000000", //边界颜色
+		"fillColor": "#FFFFFF", //县面颜色
 		"weight": 0.5,
 		"opacity": 0.6,
-		"dashArray": '',
+		"dashArray": '5',
 		"lineCap": 'butt',
 		"lineJoin": 'miter',
-        "fillcolor":"#ffffff",
 	}
 }
 
@@ -156,29 +157,159 @@ function func_map(type) {
 	}
 }
 
+function tableToExcel(tabletitles, jsonData) {
+	//列标题，逗号隔开，每一个逗号就是隔开一个单元格
+	let str = "<tr>";
+	for (let item in tabletitles) {
+		str += `<td>${ tabletitles[item] + '\t'}</td>`;
+	}
+	str += '</tr>';
+	// `姓名,电话,邮箱\n`;
+	//增加\t为了不让表格显示科学计数法或者其他格式
+	for (let i = 0; i < jsonData.length; i++) {
+		str += '<tr>';
+		for (let item in tabletitles) {
+			if (jsonData[i].hasOwnProperty(item)) {
+				if (item == "pointCategory") {
+					switch (jsonData[i][item]) {
+						case 30001:
+							str += "<td>天然温泉\t</td>";
+							break;
+						case 30002:
+							str += "<td>地热井\t</td>";
+							break;
+						case 30003:
+							str += "<td>施工中热矿水转孔\t</td>";
+							break;
+						case -30001:
+							str += "<td>不达标温泉\t</td>";
+							break;
+						case -30002:
+							str += "<td>不达标地热\t</td>";
+							break;
+						default:
+							str += "<td>未分类\t</td>";
+							break;
+					}
+				} else {
+					str += `<td>${jsonData[i][item] + '\t'}</td>`;
+				}
+			}
+		}
+		str += '</tr>';
+	}
+	//Worksheet名
+	let worksheet = '温泉点数据'
+	let uri = 'data:application/vnd.ms-excel;base64,';
+
+	//下载的表格模板数据
+	let template =
+		`<html xmlns:o="urn:schemas-microsoft-com:office:office" 
+	      xmlns:x="urn:schemas-microsoft-com:office:excel" 
+	      xmlns="http://www.w3.org/TR/REC-html40">
+	      <head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>
+	        <x:Name>${worksheet}</x:Name>
+	        <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>
+	        </x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+	        </head><body><table>${str}</table></body></html>`;
+	//下载模板
+	let link = document.createElement("a");
+	link.href = uri + base64(template);
+	//对下载的文件命名
+	link.download = "温泉点数据.xls";
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	
+}
+//输出base64编码
+function base64(s) {
+	return window.btoa(unescape(encodeURIComponent(s)))
+}
+
+function tableToExcelcsv(tabletitles, jsonData) {
+	//列标题，逗号隔开，每一个逗号就是隔开一个单元格
+	tabletitletext = [];
+	for (let item in tabletitles) {
+		tabletitletext.push(tabletitles[item])
+	}
+	let str = tabletitletext.join(',') + "\n";
+	// `姓名,电话,邮箱\n`;
+	//增加\t为了不让表格显示科学计数法或者其他格式
+	for (let i = 0; i < jsonData.length; i++) {
+		for (let item in tabletitles) {
+			if (jsonData[i].hasOwnProperty(item)) {
+				if (item == "pointCategory") {
+					switch (jsonData[i][item]) {
+						case 30001:
+							str += "天然温泉\t,";
+							break;
+						case 30002:
+							str += "地热井\t,";
+							break;
+						case 30003:
+							str += "施工中热矿水转孔\t,";
+							break;
+						case -30001:
+							str += "不达标温泉\t,";
+							break;
+						case -30002:
+							str += "不达标地热\t,";
+							break;
+						default:
+							str += "未分类\t,";
+							break;
+					}
+				} else {
+					str += `${jsonData[i][item] + '\t'},`;
+				}
+			}
+		}
+		str += '\n';
+	}
+	//encodeURIComponent解决中文乱码
+	let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+	//通过创建a标签实现
+	let link = document.createElement("a");
+	link.href = uri;
+	//对下载的文件命名
+	link.download = "温泉点数据.csv";
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+}
+var exportdata = function() {
+	tableToExcel(pointtabletitles, allpointdata);
+}
+
 layui.use(['layer', 'jquery', 'form'], function() {
 	var layer = layui.layer
 	var $ = layui.jquery;
 	var form = layui.form;
-	
-	//获取已存在的温泉点
-	$.ajax({
-		type: "GET",
-		url: apiUrl+"/springPoint",
-		dataType: "json",
-		success: function(data) {
-			// console.log(data);
-			$.each(data, function(i, item) {
-				readdpoint([item.x,item.y], item);
-			})
-		},errorfunction(data) {
-			console.log(data);
-		}
-	});
 
-	// $.each(visualpoint, function(i, item) {
-	// 	readdpoint(item["latlng"], item["properties"]);
-	// })
+	getpointlist = function() {
+		hotsprings.clearLayers();
+		//获取已存在的温泉点
+		$.ajax({
+			type: "GET",
+			url: apiUrl + "/springPoint",
+			dataType: "json",
+			success: function(data) {
+				allpointdata = data;
+				$.each(data, function(i, item) {
+					readdpoint([item.x / pointrotiox, item.y / pointrotioy], item);
+				})
+			},
+			errorfunction(data) {
+				console.log(data);
+			}
+		});
+	};
+
+	getpointlist();
+
+
+
 
 
 	//加载县市
@@ -212,7 +343,7 @@ layui.use(['layer', 'jquery', 'form'], function() {
 			};
 			var curprovice = L.Proj.geoJson(item, {
 				style: {
-					"color": "#0b0b0b",
+					"color": "#5F5F5F",
 					"weight": 1,
 					"opacity": 1,
 					"dashArray": '',
@@ -353,7 +484,10 @@ layui.use(['layer', 'jquery', 'form'], function() {
 				className: 'my-div-icon-name',
 				// iconSize: 30,
 			});
-			var myIcon = L.divIcon({className: 'my-div-icon-namepoint',html:'·'});
+			var myIcon = L.divIcon({
+				className: 'my-div-icon-namepoint',
+				html: '·'
+			});
 			L.Proj.geoJson(item, {
 				pointToLayer: function(feature, latlng) {
 					// return L.circleMarker(latlng, geojsonMarkerOptions);

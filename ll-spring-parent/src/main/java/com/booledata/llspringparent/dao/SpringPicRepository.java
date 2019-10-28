@@ -1,5 +1,6 @@
 package com.booledata.llspringparent.dao;
 
+import com.booledata.llspringparent.model.springPoint.SpringPicFile;
 import com.booledata.llspringparent.model.springPoint.SpringPointPic;
 import com.booledata.llspringparent.service.wisely.WiselyRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -33,4 +34,6 @@ public interface SpringPicRepository extends WiselyRepository<SpringPointPic,Str
     @Query(nativeQuery = true,value = "select * from spring_pointpic where point_id = ?1")
     List<SpringPointPic> findByPointId(String pointId);
 
+    @Query(nativeQuery = true,value = "select * from spring_pointpic where url = ?1")
+	SpringPointPic selectByPointIdAndPicState(String url);
 }
