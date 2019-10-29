@@ -2,6 +2,7 @@ package com.booledata.llspringparent.api.auth;
 
 
 import com.booledata.llspringparent.common.model.response.ResponseResult;
+import com.booledata.llspringparent.model.springPoint.response.RespondAuth;
 import com.booledata.llspringparent.model.ucenter.request.LoginRequest;
 import com.booledata.llspringparent.model.ucenter.response.JwtResult;
 import com.booledata.llspringparent.model.ucenter.response.LoginResult;
@@ -16,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 @Api(value = "用户认证", tags = {"用户认证接口"})
 public interface AuthControllerApi {
     @ApiOperation("登录")
-    public ResponseEntity<?> login(LoginRequest loginRequest);
+    public RespondAuth login(LoginRequest loginRequest);
 
     @ApiOperation("退出--暂未启用")
     public ResponseResult logout();

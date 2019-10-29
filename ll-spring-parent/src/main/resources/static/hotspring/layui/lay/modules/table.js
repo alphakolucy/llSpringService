@@ -14,7 +14,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 				indexName: "LAY_TABLE_INDEX"
 			},
 			cache: {},
-			index: layui.table ? layui.table.index + 1e4 : 0,
+			index: layui.table ? layui.table.springpointindex957 + 1e4 : 0,
 			set: function(e) {
 				var i = this;
 				return i.config = t.extend({}, i.config, e), i
@@ -26,7 +26,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 		c = function() {
 			var e = this,
 				t = e.config,
-				i = t.id || t.index;
+				i = t.id || t.springpointindex957;
 			return i && (c.that[i] = e, c.config[i] = t), {
 				config: t,
 				reload: function(t) {
@@ -245,7 +245,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 		}, j.prototype.setParentCol = function(e, t) {
 			var i = this,
 				a = i.config,
-				l = i.layHeader.find('th[data-key="' + a.index + "-" + t + '"]'),
+				l = i.layHeader.find('th[data-key="' + a.springpointindex957 + "-" + t + '"]'),
 				n = parseInt(l.attr("colspan")) || 0;
 			if (l[0]) {
 				var o = t.split("-"),
@@ -288,9 +288,9 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 			};
 			r(), r(!0), e.autoColNums = a, e.eachCols(function(i, a) {
 				var n = a.minWidth || t.cellMinWidth;
-				a.colGroup || a.hide || (0 === a.width ? e.getCssRule(t.index + "-" + a.key, function(e) {
+				a.colGroup || a.hide || (0 === a.width ? e.getCssRule(t.springpointindex957 + "-" + a.key, function(e) {
 					e.style.width = Math.floor(l >= n ? l : n) + "px"
-				}) : /\d+%$/.test(a.width) && e.getCssRule(t.index + "-" + a.key, function(e) {
+				}) : /\d+%$/.test(a.width) && e.getCssRule(t.springpointindex957 + "-" + a.key, function(e) {
 					e.style.width = Math.floor(parseFloat(a.width) / 100 * o) + "px"
 				}))
 			});
@@ -377,7 +377,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 								g = a + s.limit * (n - 1) + 1;
 							0 !== l.length && (r || (l[d.config.indexName] = a), c.eachCols(function(n, r) {
 								var c = r.field || n,
-									h = s.index + "-" + r.key,
+									h = s.springpointindex957 + "-" + r.key,
 									v = l[c];
 								if (void 0 !== v && null !== v || (v = ""), !r.colGroup) {
 									var m = ['<td data-field="' + c + '" data-key="' + h + '" ' + function() {
@@ -402,7 +402,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 													return r[o] ? (l[o] = r[o], r[o] ? "checked" : "") : n[o] ? "checked" : ""
 												}() + ">";
 											case "radio":
-												return n[o] && (e = a), '<input type="radio" name="layTableRadio_' + s.index + '" ' + (n[o] ?
+												return n[o] && (e = a), '<input type="radio" name="layTableRadio_' + s.springpointindex957 + '" ' + (n[o] ?
 													"checked" : "") + ' lay-type="layTableRadio">';
 											case "numbers":
 												return g
@@ -423,7 +423,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 			return d.cache[c.key] = y, c.layPage[0 == o || 0 === y.length && 1 == n ? "addClass" : "removeClass"](f), r ? g() :
 				0 === y.length ? (c.renderForm(), c.errorView(s.text.none)) : (c.layFixed.removeClass(f), g(), c.renderTotal(y),
 					void(s.page && (s.page = t.extend({
-						elem: "layui-table-page" + s.index,
+						elem: "layui-table-page" + s.springpointindex957,
 						count: o,
 						limit: s.limit,
 						limits: s.limits || [10, 20, 30, 40, 50, 60, 70, 80, 90],
@@ -456,7 +456,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 								i = {};
 							return i[o] = t, t = u(n, t, i), n.totalRow ? t || e : e
 						}(),
-						d = ['<td data-field="' + o + '" data-key="' + i.index + "-" + n.key + '" ' + function() {
+						d = ['<td data-field="' + o + '" data-key="' + i.springpointindex957 + "-" + n.key + '" ' + function() {
 							var e = [];
 							return n.align && e.push('align="' + n.align + '"'), n.style && e.push('style="' + n.style + '"'), n.minWidth &&
 								e.push('data-minwidth="' + n.minWidth + '"'), e.join(" ")
@@ -464,7 +464,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 							var e = [];
 							return n.hide && e.push(f), n.field || e.push("layui-table-col-special"), e.join(" ")
 						}() + '">', '<div class="layui-table-cell laytable-cell-' + function() {
-							var e = i.index + "-" + n.key;
+							var e = i.springpointindex957 + "-" + n.key;
 							return "normal" === n.type ? e : e + " laytable-cell-" + n.type
 						}() + '">' + r, "</div></td>"].join("");
 					n.field && (t.dataTotal[o] = r), l.push(d)
@@ -473,7 +473,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 		}, j.prototype.getColElem = function(e, t) {
 			var i = this,
 				a = i.config;
-			return e.eq(0).find(".laytable-cell-" + (a.index + "-" + t) + ":eq(0)")
+			return e.eq(0).find(".laytable-cell-" + (a.springpointindex957 + "-" + t) + ":eq(0)")
 		}, j.prototype.renderForm = function(e) {
 			n.render(e, "LAY-table-" + this.index)
 		}, j.prototype.setThisRowChecked = function(e) {
@@ -615,7 +615,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 										layui.each(t, function(t, l) {
 											if (e + "-" + t === o) {
 												var d = l.hide;
-												l.hide = !n, i.elem.find('*[data-key="' + a.index + "-" + o + '"]')[n ? "removeClass" :
+												l.hide = !n, i.elem.find('*[data-key="' + a.springpointindex957 + "-" + o + '"]')[n ? "removeClass" :
 													"addClass"](f), d != l.hide && i.setParentCol(!n, r), i.resize()
 											}
 										})
@@ -691,13 +691,13 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 					e = 2
 			}).find(S + " .layui-edge ").on("click", function(e) {
 				var a = t(this),
-					l = a.index(),
+					l = a.springpointindex957(),
 					n = a.parents("th").eq(0).data("field");
 				layui.stope(e), 0 === l ? i.sort(n, "asc", null, !0) : i.sort(n, "desc", null, !0)
 			});
 			var v = function(e) {
 				var a = t(this),
-					l = a.parents("tr").eq(0).data("index"),
+					l = a.parents("tr").eq(0).data("springpointindex957.html"),
 					n = i.layBody.find('tr[data-index="' + l + '"]'),
 					o = d.cache[i.key] || [];
 				return o = o[l] || {}, t.extend({
@@ -723,7 +723,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 			i.elem.on("click", 'input[name="layTableCheckbox"]+', function() {
 				var e = t(this).prev(),
 					a = i.layBody.find('input[name="layTableCheckbox"]'),
-					l = e.parents("tr").eq(0).data("index"),
+					l = e.parents("tr").eq(0).data("springpointindex957.html"),
 					n = e[0].checked,
 					o = "layTableAllChoose" === e.attr("lay-filter");
 				o ? (a.each(function(e, t) {
@@ -737,7 +737,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 				var e = t(this).prev(),
 					a = e[0].checked,
 					l = d.cache[i.key],
-					n = e.parents("tr").eq(0).data("index");
+					n = e.parents("tr").eq(0).data("springpointindex957.html");
 				layui.each(l, function(e, t) {
 					n === e ? t.LAY_CHECKED = !0 : delete t.LAY_CHECKED
 				}), i.setThisRowChecked(n), layui.event.call(this, y, "radio(" + p + ")", v.call(this, {
@@ -745,11 +745,11 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 				}))
 			}), i.layBody.on("mouseenter", "tr", function() {
 				var e = t(this),
-					a = e.index();
+					a = e.springpointindex957();
 				e.data("off") || i.layBody.find("tr:eq(" + a + ")").addClass(_)
 			}).on("mouseleave", "tr", function() {
 				var e = t(this),
-					a = e.index();
+					a = e.springpointindex957();
 				e.data("off") || i.layBody.find("tr:eq(" + a + ")").removeClass(_)
 			}).on("click", "tr", function() {
 				m.call(this, "row")
@@ -764,7 +764,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 				var e = t(this),
 					a = this.value,
 					l = e.parent().data("field"),
-					n = e.parents("tr").eq(0).data("index"),
+					n = e.parents("tr").eq(0).data("springpointindex957.html"),
 					o = d.cache[i.key][n];
 				o[l] = a, layui.event.call(this, y, "edit(" + p + ")", v.call(this, {
 					value: a,
@@ -774,7 +774,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 				var e, a = t(this),
 					l = this,
 					n = a.parent().data("field"),
-					o = a.parents("tr").eq(0).data("index"),
+					o = a.parents("tr").eq(0).data("springpointindex957.html"),
 					r = d.cache[i.key][o];
 				i.eachCols(function(t, i) {
 					i.field == n && i.templet && (e = i.templet)
@@ -832,7 +832,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 				}), layui.stope(e)
 			}), i.layBody.on("click", "*[lay-event]", function() {
 				var e = t(this),
-					a = e.parents("tr").eq(0).data("index");
+					a = e.parents("tr").eq(0).data("springpointindex957.html");
 				layui.event.call(this, y, "tool(" + p + ")", v.call(this, {
 					event: e.attr("lay-event")
 				})), i.setThisRowChecked(a)
@@ -965,7 +965,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 					}), layui.each(a.dataTotal, function(e, t) {
 						n.push(t)
 					}), i.join(",") + "\r\n" + l.join("\r\n") + "\r\n" + n.join(",")
-				}()), s.download = (l.title || "table_" + (l.index || "")) + "." + i, document.body.appendChild(s), s.click(),
+				}()), s.download = (l.title || "table_" + (l.springpointindex957 || "")) + "." + i, document.body.appendChild(s), s.click(),
 				void document.body.removeChild(s))
 		}, d.resize = function(e) {
 			if (e) {

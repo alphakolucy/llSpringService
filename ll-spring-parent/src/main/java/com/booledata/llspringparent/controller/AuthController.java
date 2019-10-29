@@ -5,6 +5,7 @@ import com.booledata.llspringparent.common.exception.ExceptionCast;
 import com.booledata.llspringparent.common.model.response.CommonCode;
 import com.booledata.llspringparent.common.model.response.ResponseResult;
 import com.booledata.llspringparent.dao.SpringUserRepository;
+import com.booledata.llspringparent.model.springPoint.response.RespondAuth;
 import com.booledata.llspringparent.model.ucenter.ext.AuthToken;
 import com.booledata.llspringparent.model.ucenter.request.LoginRequest;
 import com.booledata.llspringparent.model.ucenter.response.AuthCode;
@@ -35,7 +36,7 @@ public class AuthController implements AuthControllerApi {
 
     @Override
     @PostMapping("userLogin")
-    public ResponseEntity<?> login(LoginRequest loginRequest) {
+    public RespondAuth login(LoginRequest loginRequest) {
         if (loginRequest == null || StringUtils.isEmpty(loginRequest.getUsername())) {
             ExceptionCast.cast(AuthCode.AUTH_USERNAME_NONE);
         }

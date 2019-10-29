@@ -112,8 +112,9 @@
 				text-align: center;
 			}
 		</style>
+        <script src="Api.js"></script>
 
-	</head>
+    </head>
 
 	<body class="bg">
 		<div class="layui-row">
@@ -138,14 +139,14 @@
 				</div>
 			</form>
 		</div>
-
+        <script src="Api.js"></script>
 		<script src="layui/layui.js"></script>
 		<script>
 			layui.use(['form', 'jquery', 'layer'], function() {
 				var form = layui.form;
 				var $ = layui.jquery;
 				var layer = layui.layer;
-				var apiUrl="http://localhost:8080";
+				// var apiUrl="http://localhost:8090";
 				//监听提交
 				form.on('submit(login)', function(data) {
 					$.ajax({
@@ -156,21 +157,31 @@
 						data: data.field,
 						success: function(data) {
 							console.log(data);
-							if (data.code == 0) {
-								layer.msg(data.msg, {
-									icon: 5
+							if (data.code == 200) {
+								layer.msg("登录成功", {
+									icon: 5,
+                                    message: data.msg
 								});
-							} else {
-								layer.msg(data.msg, {
-									icon: 6
+                                window.location = "springpointindex957.html";
+							} else if (data.code == 301) {
+								layer.msg("用户名错误", {
+									icon: 6,
+                                    message: data.msg
 								});
-								window.location = "index.html";
-							}
+
+							}else if (data.code == 302) {
+                                layer.msg("密码错误", {
+                                    icon: 6,
+                                    message: data.msg
+                                });
+
+                            }
 							return false;
 						},
 						error: function(data) {
 							layer.msg("网络错误！", {
-								icon: 5
+								icon: 5,
+                                message: data.msg
 							});
 						}
 					});

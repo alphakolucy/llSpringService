@@ -3,6 +3,7 @@ package com.booledata.llspringparent.service;
 import com.alibaba.fastjson.JSON;
 
 import com.booledata.llspringparent.dao.SpringUserRepository;
+import com.booledata.llspringparent.model.springPoint.response.RespondAuth;
 import com.booledata.llspringparent.model.ucenter.ext.AuthToken;
 import com.booledata.llspringparent.model.ucenter.request.LoginRequest;
 import com.booledata.llspringparent.utils.HttpStatusContent;
@@ -53,21 +54,21 @@ public class AuthService {
     @Autowired
     private SpringUserRepository springUserRepository;
 
-    public ResponseEntity<?> login(LoginRequest loginRequest) {
+    public RespondAuth login(LoginRequest loginRequest) {
         HttpStatusContent status = null;
         LoginRequest byUsername = springUserRepository.findByUsername(loginRequest.getUsername());
 
         if (byUsername == null) {
             status = new HttpStatusContent(LoginState.USER_NOT_EXISTS, "没有该用户！");
-            return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
+            return new RespondAuth(301,"没有该用户");
         }
 
         if (loginRequest.getPassword().equals(byUsername.getPassword())) {
             status = new HttpStatusContent(LoginState.SUCCESS, "登录成功");
-            return new ResponseEntity<>(status, HttpStatus.OK);
+            return new RespondAuth(200, "登录成功");
         } else {
             status = new HttpStatusContent(LoginState.FAIL, "密码错误");
-            return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
+            return new RespondAuth(302,"密码错误");
         }
 
 

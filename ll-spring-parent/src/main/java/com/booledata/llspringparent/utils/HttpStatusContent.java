@@ -7,6 +7,8 @@ import com.booledata.llspringparent.utils.enums.OutputState;
 public class HttpStatusContent {
     private String message;
 
+    private Integer code;
+
     public HttpStatusContent(OutputState state) {
     	this.message = state.getTxt();
 	}
