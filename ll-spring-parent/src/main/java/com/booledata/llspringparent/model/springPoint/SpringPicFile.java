@@ -42,6 +42,8 @@ public class SpringPicFile {
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createTime;
 
+    @Column(nullable = false, length = 20)
+    private String codeNumber;
 
     @Column(nullable = false, length = 20)
     private Integer picState;

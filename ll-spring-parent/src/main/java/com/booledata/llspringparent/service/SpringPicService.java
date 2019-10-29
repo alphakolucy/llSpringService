@@ -31,7 +31,7 @@ import java.util.UUID;
 @Service
 public class SpringPicService {
 
-    private static final String PATH = "F:\\DevProject\\llspring\\llSpringService\\ll-spring-parent\\src\\main\\resources\\static"; //上传路径
+    private static final String PATH = "E:\\dev\\project\\llSpringService\\ll-spring-parent\\src\\main\\resources\\static"; //上传路径
     @Autowired
     private SpringPicRepository springPicRepository;
 
@@ -109,6 +109,7 @@ public class SpringPicService {
                     springPicFile.setUrl(one.getUrl());
                     springPicFile.setPointId(one.getPointId());
                     springPicFile.setPicState(one.getPicState());
+                    springPicFile.setCodeNumber(codeNumber);
                     springPicFileRepository.save(springPicFile);
                     //清除缓存图片
 //                    boolean delete = FileUtil.delete(one.getFilePath());
@@ -171,6 +172,7 @@ public class SpringPicService {
                 springPicFile.setUrl(springPointPic.getUrl());
                 springPicFile.setPointId(springPointPic.getPointId());
                 springPicFile.setPicState(springPointPic.getPicState());
+                springPicFile.setCodeNumber(codeNumber);
                 springPicFileRepository.save(springPicFile);
             }
 

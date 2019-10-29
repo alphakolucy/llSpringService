@@ -34,6 +34,8 @@ public class SpringPicFileResult extends ResponseResult {
     }
 
 
+
+
     public SpringPicFileResult(List<SpringPicFile> springPicFileList, int code) {
         this.springPicFileList = springPicFileList;
         this.code = code;

@@ -221,9 +221,19 @@ public class SpringPointController implements SpringPointControllerApi {
     @GetMapping("findOnePic")
     public List<SpringPointPic> findPointPic(String id) {
 
-        SpringPointInfo one = springPointRepository.findOne(id);
-        String pointId = one.getId();
-        return springPicRepository.findByPointId(pointId);
+        if (id != null) {
+            SpringPointInfo one = springPointRepository.findOne(id);
+
+            if (one.getId() != null) {
+                String pointId = one.getId();
+                return springPicRepository.findByPointId(pointId);
+            } else {
+                return null;
+            }
+
+        } else {
+            return null;
+        }
 
     }
 
@@ -325,10 +335,8 @@ public class SpringPointController implements SpringPointControllerApi {
     }
 
 
-
-
     @GetMapping(produces = "application/json", value = "/findPicFileHistory")
-    public SpringPicFileResult findPicFileList(@RequestParam("pointId")String pointId,@RequestParam("picState")Integer picState) {
+    public SpringPicFileResult findPicFileList(@RequestParam("pointId") String pointId, @RequestParam("picState") Integer picState) {
         HttpStatusContent status = null;
 
         SpringPicFile entity = new SpringPicFile();
@@ -354,20 +362,34 @@ public class SpringPointController implements SpringPointControllerApi {
     public SpringPicFileResult deletePicFileHis(Integer id) {
 
         SpringPicFile one = springPicFileRepository.findById(id);
-        SpringPointPic springPointPic = springPicRepository.selectByPointIdAndPicState(one.getUrl());
+        SpringPointPic springPointPic = springPicRepository.selectByUrl(one.getUrl());
         springPicFileRepository.deleteById(id);
         String filePath = springPointPic.getFilePath();
-        System.out.println("springPointPic:"+springPointPic.toString());
-        if (filePath!=null){
+        System.out.println("springPointPic:" + springPointPic.toString());
+        if (filePath != null) {
             FileUtil.delete(filePath);
-        }else {
+        } else {
             System.out.println("当前文件不存在或已删除");
             return new SpringPicFileResult(404);
         }
 
 
-
         return new SpringPicFileResult(200);
+    }
+
+
+    @GetMapping("/findPointAllPic")
+    public SpringPicFileResult findPointAllPic(SpringPicFile entity, @PageableDefault(sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        //添加匹配规则  模糊查询 codeNumber address+
+        SpringPointResult springPointResult = new SpringPointResult();
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withMatcher("codeNumber", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                .withMatcher("picState", ExampleMatcher.GenericPropertyMatchers.contains())
+                .withMatcher("fileName", ExampleMatcher.GenericPropertyMatchers.contains());
+        Example<SpringPicFile> example = Example.of(entity, matcher);
+        Page<SpringPicFile> all = springPicFileRepository.findAll(example, pageable);
+
+        return new SpringPicFileResult(all, 200);
     }
 
 }

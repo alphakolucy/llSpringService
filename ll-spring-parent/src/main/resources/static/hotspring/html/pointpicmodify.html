@@ -633,8 +633,7 @@
 									}
 								case 10006:
 									{
-										var tr = $(['<tr id="0">', '<td>' + item.fileName + '</td>',
-                                            '<td>' + item.createTime + '</td>','<td>',
+										var tr = $(['<tr id="0">', '<td>' + item.fileName + '</td>', '<td>' + item.createTime + '</td>','<td>',
 											'<button layui-url=' + item.url + ' class="layui-btn layui-btn-xs demo-down">下载</button>',
 											'<button layui-pid=' + item.pid +
 											' class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>', '</td>', '</tr>'
@@ -760,7 +759,7 @@
 						data: senddata,
 						accept: 'images',
 						acceptMime: 'image/*',
-						size: 51200,
+						size: 5120,
 						auto: false,
 						choose: function(obj) {
 							var curimgid = $(item.id + 'img').attr("layui-imgid");

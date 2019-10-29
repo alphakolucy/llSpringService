@@ -33,6 +33,7 @@ hotsprings.addTo(map);
 
 function readdpoint(latlng, properties) {
 	console.log(latlng);
+	latlng.x
 	var geojsonMarkerOptions = {
 		radius: 1,
 		fillColor: "#ff7800",
@@ -55,7 +56,7 @@ function readdpoint(latlng, properties) {
 		},
 		properties: properties
 	};
-	var pointiconUrl = 'img/default.png';
+	var pointiconUrl = 'img/hotspring.png';
 	if (properties.pointCategory == 30001) {
 		pointiconUrl = 'img/hotspring.png'; //天然温泉井
 	} else if (properties.pointCategory == 30002) {
@@ -65,8 +66,10 @@ function readdpoint(latlng, properties) {
 	} else if (properties.pointCategory == -30001) {
 		pointiconUrl = 'img/hotspring-gray.png'; //不达标温泉
 	} else if (properties.pointCategory == -30002) {
-		pointiconUrl = 'img/default.png'; //不达标地热
-	}
+		pointiconUrl = 'img/lanhotwell-gray.png'; //不达标地热
+	}else if (properties.pointCategory == -30003) {
+        pointiconUrl = 'img/default.png'; //不达标地热
+    }
 	var myIcon = L.icon({
 		iconUrl: pointiconUrl,
 		iconSize: [20, 20],
@@ -161,7 +164,7 @@ function tableToExcel(tabletitles, jsonData) {
 	//列标题，逗号隔开，每一个逗号就是隔开一个单元格
 	let str = "<tr>";
 	for (let item in tabletitles) {
-		str += `<td>${ tabletitles[item] + '\t'}</td>`;
+		str +=`<td>${ tabletitles[item] + '\t'}</td>`;
 	}
 	str += '</tr>';
 	// `姓名,电话,邮箱\n`;
@@ -297,7 +300,7 @@ layui.use(['layer', 'jquery', 'form'], function() {
 			success: function(data) {
 				allpointdata = data;
 				$.each(data, function(i, item) {
-					readdpoint([item.x / pointrotiox, item.y / pointrotioy], item);
+					readdpoint([item.y / pointrotiox, item.x / pointrotioy], item);
 				})
 			},
 			errorfunction(data) {
@@ -709,6 +712,7 @@ layui.use(['layer', 'jquery', 'form'], function() {
 			content: 'html/pointadd.html'
 		});
 	});
+
 	// $('#springPoint').click();
 	$('#searchpoint').on('click', function() {
 		var searchpoint = layer.open({
@@ -723,6 +727,18 @@ layui.use(['layer', 'jquery', 'form'], function() {
 		});
 		layer.full(searchpoint);
 	});
+    $('#springPicHis').on('click', function() {
+        var searchpoint = layer.open({
+            type: 2,
+            title: "温泉点上传图片记录",
+            area: ['1000px', '600px'],
+            shadeClose: true, //点击遮罩关闭
+            content: 'html/pointpiclist.html',
+            success: function(layero, index) {
+            },
+        });
+        layer.full(searchpoint);
+    });
 	// $('#searchpoint').click();
 });
 

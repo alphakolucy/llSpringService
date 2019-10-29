@@ -72,11 +72,11 @@ body {
 }
 
 #legend .legendleft .five {
-	color: #FF0000;
-	width: 15px;
-	height: 15px;
+	color: #0b0b0b;
+	width: 5px;
+	height: 5px;
 	display: inline-block;
-	background-color: #FF0000;
+	background-color: #0b0b0b;
 	vertical-align: middle;
 	margin: 0 20px;
 }
@@ -161,8 +161,8 @@ body {
 }
 
 .my-div-icon {
-	font-size: 14px;
-	color: #0000FF;
+	font-size: 9px;
+	color: #0b0b0b;
 	position: absolute;
 	top: -10px;
 	left: -10px;
@@ -170,7 +170,7 @@ body {
 
 .my-div-icon-name {
 	font-size: 4px;
-	color: #0000FF;
+	color: #707070;
 	opacity: 0.4;
 	width: 80px !important;
 	margin-left: -40px !important;
@@ -178,9 +178,9 @@ body {
 	text-align: center;
 }
 
-.my-div-icon-namepoint {
-	color: #FF0000;
-	font-size: 50px;
-	position: absolute;
-	top: -25px;
-}
+/*.my-div-icon-namepoint {*/
+/*	color: #0b0b0b;*/
+/*	font-size: 50px;*/
+/*	position: absolute;*/
+/*	top: -25px;*/
+/*}*/

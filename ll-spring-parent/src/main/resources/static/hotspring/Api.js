@@ -1,6 +1,6 @@
-var apiUrl = "http://localhost:8080";
-var pointrotiox=1800;//点坐标x缩放比例
-var pointrotioy=3100;//点坐标y缩放比例
+var apiUrl = "http://localhost:8090";
+var pointrotiox=11750;//点坐标x缩放比例
+var pointrotioy=500;//点坐标y缩放比例
 //水质标准
 var waterstanard = {
 	"dissolvedSolids": 1000,

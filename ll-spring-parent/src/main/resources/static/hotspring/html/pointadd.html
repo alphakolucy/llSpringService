@@ -392,6 +392,7 @@
 							<thead>
 								<tr>
 									<th>附件名称</th>
+                                    <th>创建时间</th>
 									<th>操作</th>
 								</tr>
 							</thead>
@@ -429,7 +430,7 @@
 								}, function() {
 									pointid=data.id;
 									codeNumber = data.codeNumber;
-									window.parent.readdpoint([fromdata.x/pointrotiox, fromdata.y/pointrotioy], fromdata);
+									window.parent.readdpoint([fromdata.y/pointrotiox, fromdata.x/pointrotioy], fromdata);
 									// var index = parent.layer.getFrameIndex(window.name);
 									// parent.layer.close(index);
 								});
@@ -496,7 +497,7 @@
 						auto: false,
 						accept: 'images',
 						acceptMime: 'image/*',
-						size: 5120,
+						size: 51200,
 						choose: function(obj) {
 							if (pointid == 0) {
 								layer.msg('请先保存基础数据', {
@@ -551,7 +552,7 @@
 					accept: 'file',
 					// multiple: true,
 					auto: false,
-					size: 10240,
+					size: 520,
 					choose: function(obj) {
 						if (pointid == 0) {
 							layer.msg('请先保存基础数据', {
@@ -582,7 +583,8 @@
 					done: function(res) {
 						layer.closeAll('loading');
 						if(res.hasOwnProperty("springPointPic")){
-							var tr = $(['<tr id="0">', '<td>' + res.springPointPic.fileName + '</td>','<td>',
+							var tr = $(['<tr id="0">', '<td>' + res.springPointPic.fileName + '</td>',
+                                '<td>' + res.springPointPic.createTime + '</td>',
 								'<button layui-url='+res.springPointPic.url+' class="layui-btn layui-btn-xs demo-down">下载</button>',
 								'<button layui-pid='+res.springPointPic.id+' class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>', '</td>', '</tr>'
 							].join(''));
