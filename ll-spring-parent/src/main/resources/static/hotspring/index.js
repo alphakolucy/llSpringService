@@ -25,11 +25,21 @@ var map = L.map('map', {
 	attributionControl: false,
 });
 
+
+
 structures.addTo(map);
 slips.addTo(map);
 residentials.addTo(map);
 hotsprings.addTo(map);
-
+//
+// var printer = L.easyPrint({
+//     tileLayer: null,
+//     sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+//     filename: 'myMap',
+//     exportOnly: true,
+//     hideControlContainer: true,
+//     hidden: true
+// }).addTo(map);
 
 function readdpoint(latlng, properties) {
 	console.log(latlng);
@@ -157,6 +167,19 @@ function func_map(type) {
 				map.zoomOut();
 				break;
 			}
+        case 3:
+        {
+            map.setView(mapcenter);
+            map.setZoom(mapzoom);
+            var interval = setInterval(function() {
+                if(map.getZoom()==mapzoom){
+                    clearInterval(interval);
+                    layer.msg('地图开始导出中');
+                    printer.printMap('CurrentSize', '导出地图');
+                }
+            }, 200);
+            break;
+        }
 	}
 }
 

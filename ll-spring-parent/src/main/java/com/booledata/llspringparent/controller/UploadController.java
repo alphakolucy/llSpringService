@@ -34,15 +34,15 @@ public class UploadController implements UploadControllerApi {
     @Override
     @RequestMapping(value = "/image", method = RequestMethod.POST)
     public ResponseEntity<?> uploadImgDif(@RequestParam("file") MultipartFile file, @RequestParam(value = "filetype", defaultValue = "") String type,
-                                          HttpServletRequest request,@RequestParam(value = "PicState", defaultValue = "") Integer picState,String codeNumber,String id,String pointId) {
+                                          HttpServletRequest request,@RequestParam(value = "PicState", defaultValue = "") Integer picState,String codeNumber,String id,String pointId,String plottingScale) {
 
-        return springPicService.saveImg(file, type, request, picState, codeNumber,id,pointId);
+        return springPicService.saveImg(file, type, request, picState, codeNumber,id,pointId,plottingScale);
     }
 
     @Override
     @RequestMapping(value = "/file", method = RequestMethod.POST)
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request,@RequestParam(value = "PicState", defaultValue = "")  Integer picState,String codeNumber,String id,String poinId) {
-        return springPicService.saveFile(file,request,picState,codeNumber,id,poinId);
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request,@RequestParam(value = "PicState", defaultValue = "")  Integer picState,String codeNumber,String id,String poinId,Integer packageType) {
+        return springPicService.saveFile(file,request,picState,codeNumber,id,poinId,packageType);
     }
 
     @Override

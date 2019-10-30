@@ -10,12 +10,13 @@
     <div class="layui-inline">
         <select name="selectfilter" lay-verify="" lay-filter="selectfilter">
             <option value="codeNumber" selected>编号</option>
-            <option value="address">地址</option>
+            <option value="fileName">文件名</option>
+            <option value="createTime">创建时间</option>
         </select>
     </div>
     <div class="layui-inline"><input class="layui-input" style="width: 250px;display: inline-block;"
                                      id="searchvaladress"
-                                     placeholder="请输入地址关键字"/>
+                                     placeholder="请输入关键字"/>
         <button class="layui-btn" style="width: 100px;" id="searchaddress">查询</button>
     </div>
     <!--			<div class="layui-inline">-->
@@ -139,9 +140,6 @@
                     title: '创建时间',
                     sort: true
                 }, {
-                        field: 'content',
-                        title: '描述'
-                }, {
                         title: '操作',
                         field: 'url',
                         width: 160,
@@ -158,8 +156,8 @@
             if (obj.event === 'detail') {
                 layer.open({
                     type: 2,
-                    title: "温泉图片详情",
-                    area: ['1000px', '800px'],
+                    title: "温泉点图片",
+                    area: ['1400px', '800px'],
                     shadeClose: true, //点击遮罩关闭
                     content: data.url
                 });
@@ -191,10 +189,10 @@
                         }
                     });
                 });
-            } else if (obj.event === 'edit') {
+            } else if (obj.event === 'download') {
                 layer.open({
                     type: 2,
-                    title: "编辑温泉点",
+                    title: "下载图片",
                     area: ['1000px', '800px'],
                     shadeClose: true, //点击遮罩关闭
                     content: data.url
@@ -206,7 +204,7 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
 <!--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
-    <button layui-url=url class="layui-btn layui-btn-xs demo-down">下载</button>
+<!--    <button layui-url=data.url class="layui-btn layui-btn-xs demo-down" lay-event="download">下载</button>-->
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 </body>

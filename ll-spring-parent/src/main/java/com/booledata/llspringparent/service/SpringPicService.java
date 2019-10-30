@@ -46,7 +46,7 @@ public class SpringPicService {
     private SpringPointControllerApi springPointControllerApi;
 
     public ResponseEntity<?> saveImg(MultipartFile file, String type,
-                                     HttpServletRequest request, Integer picState, String codeNumber, String id, String pointId) {
+                                     HttpServletRequest request, Integer picState, String codeNumber, String id, String pointId ,String plottingScale) {
         HttpStatusContent status;
 
         SpringPicFile springPicFile = new SpringPicFile();
@@ -110,6 +110,7 @@ public class SpringPicService {
                     springPicFile.setPointId(one.getPointId());
                     springPicFile.setPicState(one.getPicState());
                     springPicFile.setCodeNumber(codeNumber);
+                    springPicFile.setPlottingScale(plottingScale);
                     springPicFileRepository.save(springPicFile);
                     //清除缓存图片
 //                    boolean delete = FileUtil.delete(one.getFilePath());
@@ -125,6 +126,7 @@ public class SpringPicService {
                     uUtil.copyProperties(springPointPic, one);
 //                    springPointPics.add(one);
 //                    springPointInfo.setSpringPointPics(springPointPics);
+
 
 
                     //保存点信息
@@ -158,12 +160,24 @@ public class SpringPicService {
 
             }
 
+
+            //保存当前显示
             springPointPic.setPicState(picState);
             springPointPic.setUrl(img.getImageUrl());
             springPointPic.setFilePath(ap);
             springPointPic.setPointId(pointId);
 
             springPointPic = springPicRepository.save(springPointPic);
+
+            //保存图文
+            springPicFile.setCodeNumber(codeNumber);
+            springPicFile.setFileName(originalFilename);
+            springPicFile.setUrl(img.getImageUrl());
+            springPicFile.setPointId(pointId);
+            springPicFile.setPicState(picState);
+            springPicFile.setCodeNumber(codeNumber);
+            springPicFile.setPlottingScale(plottingScale);
+            springPicFileRepository.save(springPicFile);
 
 
             if (springPointPic!=null){
@@ -187,10 +201,11 @@ public class SpringPicService {
         }
     }
 
-    public ResponseEntity<?> saveFile(MultipartFile file, HttpServletRequest request, Integer picState, String codeNumber, String id, String poinId) {
+    public ResponseEntity<?> saveFile(MultipartFile file, HttpServletRequest request, Integer picState, String codeNumber, String id, String pointId,Integer packageType) {
         HttpStatusContent status;
         SpringPointInfo entity = new SpringPointInfo();
         SpringPointPic springPointPic = new SpringPointPic();
+        SpringPicFile springPicFile = new SpringPicFile();
         SpringPointInfo springPointInfo = springPointRepository.getSpringPointByCodeNumber(codeNumber);
 //        List<SpringPointPic> springPointPics = springPointInfo.getSpringPointPics();
         String originalFilename = file.getOriginalFilename();
@@ -277,7 +292,7 @@ public class SpringPicService {
             springPointPic.setPicState(picState);
             springPointPic.setUrl(img.getImageName());
             springPointPic.setFilePath(ap);
-            springPointPic.setPointId(poinId);
+            springPointPic.setPointId(pointId);
 
             //存入url
             springPointPic = springPicRepository.save(springPointPic);
@@ -288,7 +303,16 @@ public class SpringPicService {
 
             //保存点信息
 //            springPointRepository.save(springPointInfo);
-
+            //保存图文
+            springPicFile.setCodeNumber(codeNumber);
+            springPicFile.setFileName(originalFilename);
+            springPicFile.setUrl(img.getImageName());
+            springPicFile.setPointId(pointId);
+            springPicFile.setPicState(picState);
+            springPicFile.setCodeNumber(codeNumber);
+            springPicFile.setPackageType(packageType);
+            springPicFile.setPlottingScale("无");
+            springPicFileRepository.save(springPicFile);
             respondSpringPic.setImage(img);
             respondSpringPic.setSpringPointPic(springPointPic);
             return new ResponseEntity<RespondSpringPic>(respondSpringPic, HttpStatus.OK);

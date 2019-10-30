@@ -336,10 +336,14 @@ public class SpringPointController implements SpringPointControllerApi {
 
 
     @GetMapping(produces = "application/json", value = "/findPicFileHistory")
-    public SpringPicFileResult findPicFileList(@RequestParam("pointId") String pointId, @RequestParam("picState") Integer picState) {
+    public SpringPicFileResult findPicFileList(@RequestParam("pointId") String pointId, @RequestParam("picState") Integer picState,Integer packageType) {
         HttpStatusContent status = null;
 
+
         SpringPicFile entity = new SpringPicFile();
+        if (packageType!=null){
+            entity.setPackageType(packageType);
+        }
         entity.setPicState(picState);
         entity.setPointId(pointId);
         //添加匹配规则  模糊查询 codeNumber address+
@@ -378,7 +382,7 @@ public class SpringPointController implements SpringPointControllerApi {
     }
 
 
-    @GetMapping("/findPointAllPic")
+    @GetMapping("/findPointAllPicFile")
     public SpringPicFileResult findPointAllPic(SpringPicFile entity, @PageableDefault(sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable) {
         //添加匹配规则  模糊查询 codeNumber address+
         SpringPointResult springPointResult = new SpringPointResult();

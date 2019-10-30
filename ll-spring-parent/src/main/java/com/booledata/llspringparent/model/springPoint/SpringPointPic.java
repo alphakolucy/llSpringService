@@ -62,6 +62,7 @@ public class SpringPointPic implements Serializable {
     private String pointId;
 
 
+
     @Column(length = 100)
     private String fileName;
 

@@ -15,10 +15,10 @@ public interface UploadControllerApi {
 
 
     @ApiOperation(value = "图片上传")
-    ResponseEntity<?> uploadImgDif(@RequestParam("file") MultipartFile file, @RequestParam(value = "filetype", defaultValue = "") String type, HttpServletRequest request, @RequestParam(value = "PicState", defaultValue = "") Integer picState, @RequestParam(value = "codeNumber", defaultValue = "") String codeNumber, String id,String poinId);
+    ResponseEntity<?> uploadImgDif(@RequestParam("file") MultipartFile file, @RequestParam(value = "filetype", defaultValue = "") String type, HttpServletRequest request, @RequestParam(value = "PicState", defaultValue = "") Integer picState, @RequestParam(value = "codeNumber", defaultValue = "") String codeNumber, String id,String poinId,String plottingScale);
 
     @ApiOperation(value = "文件上传")
-    ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request, @RequestParam(value = "PicState", defaultValue = "") Integer picState, @RequestParam(value = "codeNumber", defaultValue = "") String codeNumber, String id,String poinId);
+    ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request, @RequestParam(value = "PicState", defaultValue = "") Integer picState, @RequestParam(value = "codeNumber", defaultValue = "") String codeNumber, String id,String poinId,Integer packageType);
 
 
     @ApiOperation(value = "文件/文件夹删除")

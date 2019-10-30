@@ -77,6 +77,11 @@ public class SpringPointInfo implements Serializable {
     //y轴
     @Column(nullable = false, length = 20)
     private Double y;
+    @Column(nullable = false, length = 20)
+    private Double realX;
+    //y轴
+    @Column(nullable = false, length = 20)
+    private Double realY;
     //z轴
     @Column(nullable = false, length = 20)
     private Double z;

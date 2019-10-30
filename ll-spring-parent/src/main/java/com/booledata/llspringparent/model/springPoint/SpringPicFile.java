@@ -1,6 +1,7 @@
 package com.booledata.llspringparent.model.springPoint;
 
 
+import com.booledata.llspringparent.utils.enums.PackageState;
 import com.booledata.llspringparent.utils.enums.PicState;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -36,6 +37,14 @@ public class SpringPicFile {
     @Column(nullable = false, length = 255)
     private String url;
 
+    //照片才有
+    @Column( length = 255)
+    private String plottingScale;
+
+    //附件才有
+    @Column( length = 255)
+    private Integer packageType;
+
     @Column(columnDefinition = "datetime default now()")
     @Generated(GenerationTime.INSERT)
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
@@ -56,6 +65,15 @@ public class SpringPicFile {
     public String getPicStateTxt(){
         if(this.getPicState() != null){
             return PicState.getTxtByValue(this.getPicState());
+        }
+        return null;
+    }
+
+
+    //附件分类状态txt
+    public String getPackageStateTxt(){
+        if(this.getPackageType() != null){
+            return PackageState.getTxtByValue(this.getPackageType());
         }
         return null;
     }
