@@ -1,6 +1,6 @@
 var apiUrl = "http://localhost:8090";
-var pointrotiox=11750;//点坐标x缩放比例
-var pointrotioy=500;//点坐标y缩放比例
+var pointrotiox=500;//点坐标x缩放比例
+var pointrotioy=11750;//点坐标y缩放比例
 //水质标准
 var waterstanard = {
 	"dissolvedSolids": 1000,
@@ -8,11 +8,11 @@ var waterstanard = {
 	"hydrothion": 2,
 	"hsio": 50,
 	"hbo2": 35,
-	"br2": 5,
-	"i2": 10,
-	"fe": 0.7,
-	"asa": 110,
-	"rn": 25,
+	"br2": 25,
+	"i2": 5,
+	"fe": 10,
+	"asa": 0.7,
+	"rn": 110,
 };
 //详情显示字段
 var showproperties = {

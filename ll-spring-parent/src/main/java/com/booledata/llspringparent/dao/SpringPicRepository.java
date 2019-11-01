@@ -31,6 +31,9 @@ public interface SpringPicRepository extends WiselyRepository<SpringPointPic,Str
     @Query(nativeQuery = true,value = "select * from spring_pointpic where file_path = ?1")
     SpringPointPic findByFilePath(String filePath);
 
+    @Query(nativeQuery = true,value = "select * from spring_pointpic where url = ?1")
+    SpringPointPic findByUrl(String url);
+
     @Query(nativeQuery = true,value = "select * from spring_pointpic where point_id = ?1")
     List<SpringPointPic> findByPointId(String pointId);
 

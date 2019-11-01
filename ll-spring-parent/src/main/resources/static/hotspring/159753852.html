@@ -18,7 +18,7 @@
 			<ul id="menuitem">
 				<li id="searchpoint">温泉点列表</li>
 				<li id="springPoint">基础数据录入</li>
-                <li id="springPicHis">温泉点图片历史</li>
+<!--                <li id="springPicHis">温泉点图片历史</li>-->
 			</ul>
 		</div>
 		
@@ -28,7 +28,6 @@
 				<li><img src="img/add.svg" onclick="func_map(1)" title="放大"/></li>
 				<li><img src="img/sub.svg" onclick="func_map(2)" title="缩小"/></li>
                 <li><img src="img/imgexport.png" onclick="func_map(3)" title="导出地图" /></li>
-
 			</ul>
 		</div>
 		
@@ -50,7 +49,7 @@
 				<li><img src="img/default.png"/><span>未分类</span></li>
 			</ul>
 		</div>
-		
+
 		<div id="screen" class="layui-form layui-form-item">
 			<ul class="layers">
 				<li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="layersall" name="layersall" title="全部图层" checked="true"/></li>
@@ -72,14 +71,15 @@
 				<li><input type="checkbox" lay-skin="primary" lay-filter="waterquality" id="rn" name="rn" title="氡" checked=""/></li>
 			</ul>
 		</div>
-		
-		
+
+
 		<script type="text/javascript" src="Api.js"></script>
 		<script type="text/javascript" src="layui/layui.js"></script>
 		<script type="text/javascript" src="leaflet/leaflet.js"></script>
 		<script src="js/proj4-compressed.js"></script>
 		<script src="js/proj4leaflet.js"></script>
 		<script type="text/javascript" src="js/catiline.js"></script>
+        <script type="text/javascript" src="bundle.js"></script>
 		<script type="text/javascript" src="index.js"></script>
 	</body>
 </html>

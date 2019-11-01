@@ -31,19 +31,20 @@ structures.addTo(map);
 slips.addTo(map);
 residentials.addTo(map);
 hotsprings.addTo(map);
-//
-// var printer = L.easyPrint({
-//     tileLayer: null,
-//     sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
-//     filename: 'myMap',
-//     exportOnly: true,
-//     hideControlContainer: true,
-//     hidden: true
-// }).addTo(map);
 
-function readdpoint(latlng, properties) {
-	console.log(latlng);
-	latlng.x
+var printer = L.easyPrint({
+    tileLayer: null,
+    sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+    filename: 'myMap',
+    exportOnly: true,
+    hideControlContainer: true,
+    hidden: true
+}).addTo(map);
+
+function readdpoint(lat,lng, properties) {
+    var relat=lat/pointrotiox;
+    var relng=lng/pointrotioy;
+    console.log([relng,relat]);
 	var geojsonMarkerOptions = {
 		radius: 1,
 		fillColor: "#ff7800",
@@ -56,7 +57,7 @@ function readdpoint(latlng, properties) {
 		type: "Feature",
 		geometry: {
 			type: "Point",
-			coordinates: latlng
+			coordinates: [relng,relat]
 		},
 		crs: {
 			type: "name",
@@ -323,7 +324,7 @@ layui.use(['layer', 'jquery', 'form'], function() {
 			success: function(data) {
 				allpointdata = data;
 				$.each(data, function(i, item) {
-					readdpoint([item.y / pointrotiox, item.x / pointrotioy], item);
+					readdpoint(item.x , item.y , item);
 				})
 			},
 			errorfunction(data) {

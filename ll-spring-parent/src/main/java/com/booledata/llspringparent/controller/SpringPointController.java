@@ -15,6 +15,7 @@ import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
 import com.booledata.llspringparent.model.springPoint.SpringPointPic;
 import com.booledata.llspringparent.model.springPoint.response.SpringPicFileResult;
 import com.booledata.llspringparent.model.springPoint.response.SpringPointResult;
+import com.booledata.llspringparent.service.SpringPicFileService;
 import com.booledata.llspringparent.service.SpringPicService;
 import com.booledata.llspringparent.service.SpringTypeService;
 import com.booledata.llspringparent.utils.*;
@@ -66,6 +67,8 @@ public class SpringPointController implements SpringPointControllerApi {
     @Autowired
     private SpringPicRepository springPicRepository;
 
+    @Autowired
+    private SpringPicFileService springPicFileService;
 
     @Autowired
     private SpringPicFileRepository springPicFileRepository;
@@ -132,7 +135,6 @@ public class SpringPointController implements SpringPointControllerApi {
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }
 
-
     @Override
     @PostMapping("/addPoint")
     public ResponseEntity<?> addPoint(SpringPointInfo entity) {
@@ -171,27 +173,21 @@ public class SpringPointController implements SpringPointControllerApi {
 
     @Override
     @PutMapping(produces = "application/json", value = "/{id}")
-    public ResponseEntity<?> updatePoint(@PathVariable(value = "id") String id, @PathVariable(value = "id") SpringPointInfo entity) {
+    public ResponseEntity<?> updatePoint(SpringPointInfo entity) {
         HttpStatusContent status = null;
-
-
-        System.out.println("entityId" + entity.getId());
+        System.out.println("entityId:" + entity.getId());
         SpringPointInfo springPointInfo = new SpringPointInfo();
-        springPointInfo = springPointRepository.findOne(entity.getId());
-
-        if (springPointInfo == null) {
+        SpringPointInfo exist = springPointRepository.findOne(entity.getId());
+        if (exist == null) {
             System.out.println("no exit!");
             status = new HttpStatusContent(OutputState.FAIL, "数据不存在！");
             return new ResponseEntity<HttpStatusContent>(status, HttpStatus.NOT_FOUND);
         }
-
-
         //同一类实体之间的属性复制
         ObjectCopyUtil<SpringPointInfo> uUtil = new ObjectCopyUtil<>();
         uUtil.copyProperties(entity, springPointInfo);
-
-        entity = this.springPointRepository.save(springPointInfo);
-        if (entity == null) {
+        springPointInfo = this.springPointRepository.save(springPointInfo);
+        if (springPointInfo == null) {
             status = new HttpStatusContent(OutputState.FAIL, "修改失败，请稍后重试！");
             return new ResponseEntity<HttpStatusContent>(status, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -203,8 +199,13 @@ public class SpringPointController implements SpringPointControllerApi {
     @DeleteMapping("deletePoint")
     public ResponseEntity<?> deletePoint(String id) {
         HttpStatusContent status = null;
+
+        //删除本地文件
+        String s = springPicFileService.deleteAllFileFromPoint(id);
+        //删除点
         springPointRepository.delete(id);
         springPicRepository.deleteByPointId(id);
+        springPicFileRepository.deleteByPointId(id);
         status = new HttpStatusContent(OutputState.SUCCESS);
         return new ResponseEntity<HttpStatusContent>(status, HttpStatus.OK);
     }
@@ -364,7 +365,6 @@ public class SpringPointController implements SpringPointControllerApi {
     @Override
     @DeleteMapping("/deletePicFileHis")
     public SpringPicFileResult deletePicFileHis(Integer id) {
-
         SpringPicFile one = springPicFileRepository.findById(id);
         SpringPointPic springPointPic = springPicRepository.selectByUrl(one.getUrl());
         springPicFileRepository.deleteById(id);
@@ -376,8 +376,6 @@ public class SpringPointController implements SpringPointControllerApi {
             System.out.println("当前文件不存在或已删除");
             return new SpringPicFileResult(404);
         }
-
-
         return new SpringPicFileResult(200);
     }
 
@@ -391,8 +389,7 @@ public class SpringPointController implements SpringPointControllerApi {
                 .withMatcher("picState", ExampleMatcher.GenericPropertyMatchers.contains())
                 .withMatcher("fileName", ExampleMatcher.GenericPropertyMatchers.contains());
         Example<SpringPicFile> example = Example.of(entity, matcher);
-        Page<SpringPicFile> all = springPicFileRepository.findAll(example, pageable);
-
+        List<SpringPicFile> all = springPicFileRepository.findAll(example);
         return new SpringPicFileResult(all, 200);
     }
 

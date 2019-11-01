@@ -21,12 +21,26 @@ import java.util.List;
 public interface SpringPicFileRepository extends WiselyRepository<SpringPicFile,String> {
 
 
+
+
+
 	@Query(nativeQuery = true,value = "select * from spring_picfile where id= ?1")
 	SpringPicFile findById(Integer id);
 
 	@Query(nativeQuery = true,value = "DELETE FROM spring_picfile WHERE id = ?1 ")
 	@Modifying
 	Integer deleteById(Integer id);
+
+
+    @Query(nativeQuery = true,value = "DELETE FROM spring_picfile WHERE point_id = ?1 ")
+    @Modifying
+    Integer deleteByPointId(String id);
+
+
+
+    @Query(nativeQuery = true,value = "select * FROM spring_picfile WHERE point_id = ?1 ")
+
+    List<SpringPicFile> findByPointId(String id);
 
 //    @Query(nativeQuery = true,value = "DELETE FROM spring_pointpic WHERE point_id = ?1 ")
 //    @Modifying

@@ -9,12 +9,12 @@ import com.booledata.llspringparent.utils.EmptyUtil;
 **/
 public enum PackageState {
     //图片代码
-    SJ(40001, "收集资料"),
-    YW(40002, "野外资料"),
-    CS(40003, "测试分析报告"),
-    CG(40004,"成果报告"),
-    ZP(40005,"照片"),
-    QY(40006,"企业资料");
+    SJ(0, "收集资料"),
+    YW(1, "野外资料"),
+    CS(2, "测试分析报告"),
+    CG(3,"成果报告"),
+    ZP(4,"照片"),
+    QY(5,"企业资料");
 
 
     private Integer value;

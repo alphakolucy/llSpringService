@@ -41,7 +41,7 @@ public interface SpringPointControllerApi {
     ResponseEntity<?> addPoint(SpringPointInfo entity);
 
     @ApiOperation(value = "修改温泉点")
-    ResponseEntity<?> updatePoint(String id, SpringPointInfo entity);
+    ResponseEntity<?> updatePoint( SpringPointInfo entity);
 
     @ApiOperation(value = "删除温泉点")
     ResponseEntity<?> deletePoint(String id);
