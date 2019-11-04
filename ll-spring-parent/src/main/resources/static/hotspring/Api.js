@@ -46,6 +46,8 @@ var pointtabletitles = {
 	"address": "位置名称",
 	"x": "x",
 	"y": "y",
+    "realX":"实际X",
+    "realy":"实际Y",
 	"z": "海拔",
 	"holeDepth": "孔深",
 	"ph": "PH",

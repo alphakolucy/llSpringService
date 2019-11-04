@@ -14,4 +14,10 @@ public interface SpringTypeRepository extends WiselyRepository<SpringPointType,S
     @Query(nativeQuery = true,value = "DELETE FROM spring_pointtype WHERE point_id = ?1 ")
     @Modifying
     Integer deleteByPointId(String pointId);
+
+
+
+    @Query(nativeQuery = true, value = "SELECT * FROM spring_pointtype WHERE point_id= ?1")
+    SpringPointType findByPointId(String pointId);
+
 }

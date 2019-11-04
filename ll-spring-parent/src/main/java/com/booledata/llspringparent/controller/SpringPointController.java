@@ -10,9 +10,11 @@ import com.booledata.llspringparent.common.model.response.CommonCode;
 import com.booledata.llspringparent.dao.SpringPicFileRepository;
 import com.booledata.llspringparent.dao.SpringPicRepository;
 import com.booledata.llspringparent.dao.SpringPointRepository;
+import com.booledata.llspringparent.dao.SpringTypeRepository;
 import com.booledata.llspringparent.model.springPoint.SpringPicFile;
 import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
 import com.booledata.llspringparent.model.springPoint.SpringPointPic;
+import com.booledata.llspringparent.model.springPoint.SpringPointType;
 import com.booledata.llspringparent.model.springPoint.response.SpringPicFileResult;
 import com.booledata.llspringparent.model.springPoint.response.SpringPointResult;
 import com.booledata.llspringparent.service.SpringPicFileService;
@@ -63,6 +65,10 @@ public class SpringPointController implements SpringPointControllerApi {
 
     @Autowired
     private SpringTypeService springTypeService;
+
+    @Autowired
+    private SpringTypeRepository springTypeRepository;
+
 
     @Autowired
     private SpringPicRepository springPicRepository;
@@ -175,9 +181,26 @@ public class SpringPointController implements SpringPointControllerApi {
     @PutMapping(produces = "application/json", value = "/{id}")
     public ResponseEntity<?> updatePoint(SpringPointInfo entity) {
         HttpStatusContent status = null;
-        System.out.println("entityId:" + entity.getId());
+        PointCategoryUtil pointCategoryUtil = new PointCategoryUtil();
+        String pointId = entity.getId();
+        SpringPointType springPointType = new SpringPointType();
+        String type = springTypeService.getType(entity);
         SpringPointInfo springPointInfo = new SpringPointInfo();
-        SpringPointInfo exist = springPointRepository.findOne(entity.getId());
+        if (type != null) {
+            //更行类型
+            springPointType.setPointType(type);
+            boolean b = false;
+            if (type.length() > 0) {
+                b = true;
+                springPointInfo = pointCategoryUtil.selectPointCategory(entity, b);
+            } else {
+                springPointInfo = pointCategoryUtil.selectPointCategory(entity, b);
+            }
+        }
+        SpringPointInfo exist = springPointRepository.findOne(pointId);
+        SpringPointType existType = springTypeRepository.findByPointId(pointId);
+        //创建时间为null 重新插入
+        springPointInfo.setCreateTime(exist.getCreateTime());
         if (exist == null) {
             System.out.println("no exit!");
             status = new HttpStatusContent(OutputState.FAIL, "数据不存在！");
@@ -185,7 +208,10 @@ public class SpringPointController implements SpringPointControllerApi {
         }
         //同一类实体之间的属性复制
         ObjectCopyUtil<SpringPointInfo> uUtil = new ObjectCopyUtil<>();
+        ObjectCopyUtil<SpringPointType> copyType = new ObjectCopyUtil<>();
         uUtil.copyProperties(entity, springPointInfo);
+        copyType.copyProperties(springPointType, existType);
+        this.springTypeRepository.save(existType);
         springPointInfo = this.springPointRepository.save(springPointInfo);
         if (springPointInfo == null) {
             status = new HttpStatusContent(OutputState.FAIL, "修改失败，请稍后重试！");
@@ -196,13 +222,16 @@ public class SpringPointController implements SpringPointControllerApi {
     }
 
     @Override
-    @DeleteMapping("deletePoint")
+    @DeleteMapping("/deletePoint")
     public ResponseEntity<?> deletePoint(String id) {
         HttpStatusContent status = null;
 
         //删除本地文件
         String s = springPicFileService.deleteAllFileFromPoint(id);
         //删除点
+
+        //先删TYPE 不然级联删除报错
+        springTypeRepository.deleteByPointId(id);
         springPointRepository.delete(id);
         springPicRepository.deleteByPointId(id);
         springPicFileRepository.deleteByPointId(id);
@@ -299,30 +328,37 @@ public class SpringPointController implements SpringPointControllerApi {
                     springPointInfo.setAddress(obArr[2]);
                     springPointInfo.setX(Double.parseDouble(obArr[3]));
                     springPointInfo.setY(Double.parseDouble(obArr[4]));
-                    springPointInfo.setZ(Double.parseDouble(obArr[5]));
-                    springPointInfo.setHoleDepth(Double.parseDouble(obArr[6]));
-                    springPointInfo.setPh(obArr[7]);
-                    springPointInfo.setWaterTemperature(obArr[8]);
-                    springPointInfo.setWaterInflow(obArr[9]);
-                    springPointInfo.setTrepanning(obArr[10]);
-                    springPointInfo.setWaterOutlet(obArr[11]);
-                    springPointInfo.setDissolvedSolids(Double.parseDouble(obArr[12]));
-                    springPointInfo.setCo2(Double.parseDouble(obArr[13]));
-                    springPointInfo.setHydrothion(Double.parseDouble(obArr[14]));
-                    springPointInfo.setHsio(Double.parseDouble(obArr[15]));
-                    springPointInfo.setHbo2(Double.parseDouble(obArr[16]));
-                    springPointInfo.setBr2(Double.parseDouble(obArr[17]));
-                    springPointInfo.setI2(Double.parseDouble(obArr[18]));
-                    springPointInfo.setFe(Double.parseDouble(obArr[19]));
-                    springPointInfo.setAsa(Double.parseDouble(obArr[20]));
-                    springPointInfo.setRn(Double.parseDouble(obArr[21]));
-                    springPointInfo.setHydrochemicalType(obArr[22]);
+                    springPointInfo.setRealX(Double.parseDouble(obArr[5]));
+                    springPointInfo.setRealY(Double.parseDouble(obArr[6]));
+                    springPointInfo.setZ(Double.parseDouble(obArr[7]));
+                    springPointInfo.setHoleDepth(Double.parseDouble(obArr[8]));
+                    springPointInfo.setPh(obArr[9]);
+                    springPointInfo.setWaterTemperature(obArr[10]);
+                    springPointInfo.setWaterInflow(obArr[11]);
+                    springPointInfo.setTrepanning(obArr[12]);
+                    springPointInfo.setWaterOutlet(obArr[13]);
+                    springPointInfo.setDissolvedSolids(Double.parseDouble(obArr[14]));
+                    springPointInfo.setCo2(Double.parseDouble(obArr[15]));
+                    springPointInfo.setHydrothion(Double.parseDouble(obArr[16]));
+                    springPointInfo.setHsio(Double.parseDouble(obArr[17]));
+                    springPointInfo.setHbo2(Double.parseDouble(obArr[18]));
+                    springPointInfo.setBr2(Double.parseDouble(obArr[19]));
+                    springPointInfo.setI2(Double.parseDouble(obArr[20]));
+                    springPointInfo.setFe(Double.parseDouble(obArr[21]));
+                    springPointInfo.setAsa(Double.parseDouble(obArr[22]));
+                    springPointInfo.setRn(Double.parseDouble(obArr[23]));
+                    springPointInfo.setHydrochemicalType(obArr[24]);
 
 
                     //判断温泉是否达标(
+                    springPointRepository.save(springPointInfo);
                     boolean b = springTypeService.saveType(springPointInfo);
                     SpringPointInfo entity = pointCategoryUtil.selectPointCategory(springPointInfo, b);
+
+
+                    //存入类型
                     SpringPointInfo save = springPointRepository.save(entity);
+
 //                integer = baseMysqlCRUDManager.save(springPointInfo);
 //                System.out.println("保存返回integer:" + integer);
                 }
@@ -331,18 +367,17 @@ public class SpringPointController implements SpringPointControllerApi {
             exception.printStackTrace();
             return new SpringPointResult(-10000);
         }
-
         return new SpringPointResult(0);
     }
 
 
     @GetMapping(produces = "application/json", value = "/findPicFileHistory")
-    public SpringPicFileResult findPicFileList(@RequestParam("pointId") String pointId, @RequestParam("picState") Integer picState,Integer packageType) {
+    public SpringPicFileResult findPicFileList(@RequestParam("pointId") String pointId, @RequestParam("picState") Integer picState, Integer packageType) {
         HttpStatusContent status = null;
 
 
         SpringPicFile entity = new SpringPicFile();
-        if (packageType!=null){
+        if (packageType != null) {
             entity.setPackageType(packageType);
         }
         entity.setPicState(picState);

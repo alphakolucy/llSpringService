@@ -23,9 +23,9 @@ public class SpringPointType implements Serializable {
     //所属温泉点
 //    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinColumn(name = "point_id")
-    @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)//People是关系的维护端
-    @JoinColumn(name = "point_id")
-    private SpringPointInfo springPointInfo;
+//    @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)//关系的维护端
+//    @JoinColumn(name = "point_id")
+    private String pointId;
 
     @Id
     @GeneratedValue(generator = "system-uuid")
