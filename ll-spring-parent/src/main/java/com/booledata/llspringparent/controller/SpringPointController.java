@@ -225,16 +225,14 @@ public class SpringPointController implements SpringPointControllerApi {
     @DeleteMapping("/deletePoint")
     public ResponseEntity<?> deletePoint(String id) {
         HttpStatusContent status = null;
-
         //删除本地文件
         String s = springPicFileService.deleteAllFileFromPoint(id);
-        //删除点
-
-        //先删TYPE 不然级联删除报错
+        //先删子表 不然级联删除报错
         springTypeRepository.deleteByPointId(id);
-        springPointRepository.delete(id);
         springPicRepository.deleteByPointId(id);
         springPicFileRepository.deleteByPointId(id);
+        //删除点
+        springPointRepository.delete(id);
         status = new HttpStatusContent(OutputState.SUCCESS);
         return new ResponseEntity<HttpStatusContent>(status, HttpStatus.OK);
     }

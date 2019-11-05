@@ -6,15 +6,18 @@ package com.booledata.llspringparent.model.springPoint;
 //import com.gitee.sunchenbin.mybatis.actable.annotation.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.*;
 
-import org.hibernate.annotations.GenerationTime;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Generated;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
@@ -40,6 +43,7 @@ public class SpringPointInfo implements Serializable {
 
     @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinColumn(name = "typeId",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    @NotFound(action= NotFoundAction.IGNORE)
     private SpringPointType springPointType;
 
 

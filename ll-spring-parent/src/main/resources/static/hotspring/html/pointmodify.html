@@ -677,6 +677,66 @@
 						}
 					}
 				}
+
+				//监听
+                table.on('tool(imagedemo)', function(obj) {
+                    var data = obj.data;
+                    var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+                    if (obj.event === 'down') {
+                        var a = document.createElement('a');
+                        a.setAttribute('href', data.url);
+                        a.setAttribute('target', '_blank');
+                        a.click();
+                    } else if (obj.event === 'detail') {
+                        var imgHtml = "<div style='text-align:center'><img src='" + data.url + "' /></div>";
+                        //弹出层
+                        var imglayer = layer.open({
+                            type: 1,
+                            shade: 0.8,
+                            offset: 'auto',
+                            area: ['300px', '300px'],
+                            shadeClose: true, //点击外围关闭弹窗
+                            scrollbar: true, //不现实滚动条
+                            title: "图片预览" + data.createTime, //不显示标题
+                            content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            cancel: function() {
+                                //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });
+                            }
+                        });
+                        layer.full(imglayer);
+                    } else if (obj.event === 'del') {
+                        layer.confirm('真的删除行么', function(index) {
+                            layer.close(index);
+                            $.ajax({
+                                type: "DELETE",
+                                url: apiUrl + "/springPoint/deletePicFileHis?id=" + data.id,
+                                success: function(data) {
+                                    layer.msg('删除成功', {
+                                        icon: 1,
+                                        time: 1000
+                                    }, function() {
+                                        obj.del();
+                                        removeItem(imagelist[imagesidnex], item => item.id == data.id);
+                                        if (imagelist[imagesidnex].length == 0) {
+                                            table.reload('pointlist' + imagesidnex, {
+                                                data: imagelist[imagesidnex]
+                                            });
+                                        }
+                                    });
+                                },
+                                error: function(data) {
+                                    console.log(data);
+                                    layer.msg('删除失败', {
+                                        icon: 5,
+                                        time: 1000
+                                    }, function() {});
+                                }
+                            });
+                        });
+                    }
+                });
+
+
 				//监听提交
 				form.on('submit(formDemo)', function(data) {
 					var fromdata = data.field;
@@ -876,7 +936,7 @@
 						auto: false,
 						accept: 'images',
 						acceptMime: 'image/*',
-						size: 10240,
+						size: 20480,
 						choose: function(obj) {
 							console.log($(item.id+"plottingScale").val());
 							var scaleval=$(item.id+"plottingScale").val().replace(/(^\s*)|(\s*$)/g, '');//去除空格;;
