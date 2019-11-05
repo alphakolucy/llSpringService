@@ -33,11 +33,21 @@
 		
 		<div id="legend">
 			<ul class="legendleft">
-				<li><span class="five"></span> <span>县/乡政府</span></li>
-				<li><span class="one">————</span> <span>穹隆背斜</span></li>
-				<li><span class="two">————</span> <span>盆状向斜</span></li>
-				<li><span class="three">————</span> <span>挽进期活动断层</span></li>
-				<li><span class="four">————</span> <span>断层</span></li>
+<!--				<li><span class="five"></span> <span>县/乡政府</span></li>-->
+<!--				<li><span class="one">————</span> <span>穹隆背斜</span></li>-->
+<!--				<li><span class="two">————</span> <span>盆状向斜</span></li>-->
+<!--				<li><span class="three">————</span> <span>挽进期活动断层</span></li>-->
+<!--				<li><span class="four">————</span> <span>断层</span></li>-->
+                    <li><span class="one"></span> <span>乡镇</span></li>
+                    <li><span class="two">————</span> <span>高速路</span></li>
+                    <li><span class="three">————</span> <span>交通</span></li>
+                    <li><span class="four">————</span> <span>河流</span></li>
+                    <li><span class="five">————</span> <span>断层</span></li>
+                    <li><span class="six">————</span> <span>构造分区</span></li>
+                    <li><span class="seven">————</span> <span>主要构造</span></li>
+                    <li><span class="eight">————</span> <span>省市县</span></li>
+                    <li><span class="nine">————</span> <span>图框</span></li>
+                    <li><span class="ten">————</span> <span>图名</span></li>
 			</ul>
 			<ul class="legendright">
 				<li><img src="img/lanhotwell.png"/><span>地热井</span></li>
@@ -52,10 +62,13 @@
 
 		<div id="screen" class="layui-form layui-form-item">
 			<ul class="layers">
-				<li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="layersall" name="layersall" title="全部图层" checked="true"/></li>
-				<li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="structure" name="structure" title="构造图层" checked="true"/></li>
-				<li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="slip" name="slip" title="断层图层" checked="true"/></li>
-				<li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="residential" name="residential" title="县名称图层" checked="true"/></li>
+                <li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="layersall" name="layersall" title="全部图层" checked="true"/></li>
+                <li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="structure" name="structure" title="构造图层"/></li>
+                <li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="fault" name="fault" title="断层图层" /></li>
+                <li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="residential" name="residential" title="乡镇图层"/></li>
+                <li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="rivers" name="rivers" title="河流图层"/></li>
+                <li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="traffic" name="traffic" title="交通图层" checked="true"/></li>
+                <li><input type="checkbox" lay-skin="primary" lay-filter="layers" id="highspeed" name="highspeed" title="高速路图层" checked="true"/></li>
 			</ul>
 			<ul class="water-quality">
 				<li><input type="checkbox" lay-skin="primary" lay-filter="waterquality" id="waterqualityall" name="waterqualityall" title="全部" checked=""/></li>

@@ -106,7 +106,6 @@ public class SpringPointController implements SpringPointControllerApi {
                 .withMatcher("codeNumber", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
                 .withMatcher("address", ExampleMatcher.GenericPropertyMatchers.contains())
                 .withMatcher("pointCategory", ExampleMatcher.GenericPropertyMatchers.contains());
-
         Example<SpringPointInfo> example = Example.of(entity, matcher);
 
         Page<SpringPointInfo> springPoints = this.springPointRepository.findAll(example, pageable);

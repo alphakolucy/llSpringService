@@ -5,10 +5,10 @@ body {
 }
 
 #map {
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	background-color: #FFFFFF;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: #FFFFFF;
 }
 
 
@@ -56,29 +56,49 @@ body {
 }
 
 #legend .legendleft .one {
-	color: #00FF00;
+    color: #BEBEBE;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-color: #BEBEBE;
+    vertical-align: middle;
+    margin: 0 20px;
 }
 
 #legend .legendleft .two {
-	color: #00FF00;
+    color: #FFD832;
 }
 
 #legend .legendleft .three {
-	color: #FF0000;
+    color: #FFD898;
 }
 
 #legend .legendleft .four {
-	color: #FF0000;
+    color: #B2FFFF;
 }
 
 #legend .legendleft .five {
-	color: #0b0b0b;
-	width: 5px;
-	height: 5px;
-	display: inline-block;
-	background-color: #0b0b0b;
-	vertical-align: middle;
-	margin: 0 20px;
+    color: #FF0000;
+}
+
+#legend .legendleft .six {
+    color: #0000FF;
+}
+
+#legend .legendleft .seven {
+    color: #99FF7F;
+}
+
+#legend .legendleft .eight {
+    color: #BEBEBE;
+}
+
+#legend .legendleft .nine {
+    color: #BEBEBE;
+}
+
+#legend .legendleft .ten {
+    color: #000000;
 }
 
 #legend .legendright {
@@ -184,3 +204,15 @@ body {
 /*	position: absolute;*/
 /*	top: -25px;*/
 /*}*/
+.my-div-city-name {
+    color: #BEBEBE;
+    font-size: 15px;
+    position: absolute;
+    top: -15px;
+    width: 100px !important;
+    text-align: center;
+}
+
+.easyPrintHolder .a3CssClass {
+    background-image: url(data:image/svg+xml;utf8;base64,PD9...go=);
+}
