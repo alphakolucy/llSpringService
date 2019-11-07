@@ -50,6 +50,8 @@ citynamelayer.addTo(map);
 // structurelayer.addTo(map);
 // residentiallayer.addTo(map);
 // faultlayer.addTo(map);
+
+
 trafficlayer.addTo(map);
 highspeedlayer.addTo(map);
 
@@ -100,7 +102,7 @@ function readdpoint(lat, lng, properties) {
         pointiconUrl = 'img/hotspring-gray.png'; //不达标温泉
     } else if (properties.pointCategory == -30002) {
         pointiconUrl = 'img/lanhotwell-gray.png'; //不达标地热
-    }else if (properties.pointCategory == -30003) {
+    } else if (properties.pointCategory == -30003) {
         pointiconUrl = 'img/default.png'; //不达标地热
     }
     var myIcon = L.icon({
@@ -119,21 +121,23 @@ function readdpoint(lat, lng, properties) {
     });
 
     L.Proj.geoJson(geojson, {
-        pointToLayer: function(feature, latlng) {
+        pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {
                 icon: myIcontext,
             });
         },
     }).addTo(hotspringslayer);
     L.Proj.geoJson(geojson, {
-        pointToLayer: function(feature, latlng) {
+        pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {
                 icon: myIcon,
             });
         },
-    }).on('click', function(e) {
+    }).on('click', function (e) {
         var pointproperties = e.layer.feature.properties; //当前点击的物体的名称
+        console.log('已经进on')
         if (showtype == 2) {
+            console.log(e)
             curpointjson = pointproperties;
             layer.open({
                 type: 2,
@@ -144,7 +148,9 @@ function readdpoint(lat, lng, properties) {
             });
         } else if (showtype == 1) {
             var popuphtml = [];
-            Object.keys(pointproperties).forEach(function(key) {
+            console.log('1')
+            console.log(e)
+            Object.keys(pointproperties).forEach(function (key) {
                 if (showproperties.hasOwnProperty(key)) {
                     if (waterstanard.hasOwnProperty(key)) {
                         if (pointproperties[key] > waterstanard[key]) {
@@ -161,28 +167,27 @@ function readdpoint(lat, lng, properties) {
             var popup = L.popup()
                 .setLatLng(e.latlng)
                 .setContent(popuphtml.join("</br>"))
-                .openOn(hotspringslayer);
+                .openOn(map);
         }
     }).addTo(hotspringslayer);
 }
 
 
-
-layui.use(['layer', 'jquery', 'form'], function() {
+layui.use(['layer', 'jquery', 'form'], function () {
     var layer = layui.layer
     var $ = layui.jquery;
     var form = layui.form;
 
-    getpointlist = function() {
+    getpointlist = function () {
         hotspringslayer.clearLayers();
         //获取已存在的温泉点
         $.ajax({
             type: "GET",
             url: apiUrl + "/springPoint",
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 allpointdata = data;
-                $.each(data, function(i, item) {
+                $.each(data, function (i, item) {
                     readdpoint(item.x, item.y, item);
                 })
             },
@@ -194,9 +199,9 @@ layui.use(['layer', 'jquery', 'form'], function() {
     getpointlist();
 
     //加载图框
-    $.getJSON("jsondata/pictureframe.json", "", function(data) {
+    $.getJSON("jsondata/pictureframe.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -213,9 +218,9 @@ layui.use(['layer', 'jquery', 'form'], function() {
         });
     });
     //加载图名
-    $.getJSON("jsondata/picturename.json", "", function(data) {
+    $.getJSON("jsondata/picturename.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -234,10 +239,10 @@ layui.use(['layer', 'jquery', 'form'], function() {
 
 
     //加载县界
-    $.getJSON("jsondata/county.json", "", function(data) {
+    $.getJSON("jsondata/county.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
         var provices = []
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -254,13 +259,37 @@ layui.use(['layer', 'jquery', 'form'], function() {
         });
     });
 
+    //加载县名称
+    $.getJSON("jsondata/countyname.json", "", function (data) {
+        //each循环 使用$.each方法遍历返回的数据date
+        var provices = []
+        $.each(data.features, function (i, item) {
+            item["crs"] = {
+                type: "name",
+                properties: {
+                    name: "EPSG:2385"
+                }
+            };
+            var myIcontext = L.divIcon({
+                html: item.properties.pname,
+                className: 'my-div-county-name',
+            });
+            L.Proj.geoJson(item, {
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, {
+                        icon: myIcontext,
+                    });
+                },
+            }).addTo(provincelayer);
+        });
+    });
 
 
     //加载市界
-    $.getJSON("jsondata/city.json", "", function(data) {
+    $.getJSON("jsondata/city.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
         var provices = []
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -280,10 +309,10 @@ layui.use(['layer', 'jquery', 'form'], function() {
         });
     });
     //加载市名称
-    $.getJSON("jsondata/cityname.json", "", function(data) {
+    $.getJSON("jsondata/cityname.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
         var provices = []
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -295,7 +324,7 @@ layui.use(['layer', 'jquery', 'form'], function() {
                 className: 'my-div-city-name',
             });
             L.Proj.geoJson(item, {
-                pointToLayer: function(feature, latlng) {
+                pointToLayer: function (feature, latlng) {
                     return L.marker(latlng, {
                         icon: myIcontext,
                     });
@@ -305,10 +334,10 @@ layui.use(['layer', 'jquery', 'form'], function() {
     });
 
     //加载省界
-    $.getJSON("jsondata/province.json", "", function(data) {
+    $.getJSON("jsondata/province.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
         var provices = []
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -330,9 +359,9 @@ layui.use(['layer', 'jquery', 'form'], function() {
     });
 
     //加载河流
-    $.getJSON("jsondata/rivers-line.json", "", function(data) {
+    $.getJSON("jsondata/rivers-line.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -351,9 +380,9 @@ layui.use(['layer', 'jquery', 'form'], function() {
     });
 
     //加载活性断层
-    $.getJSON("jsondata/fault.json", "", function(data) {
+    $.getJSON("jsondata/fault.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -370,9 +399,9 @@ layui.use(['layer', 'jquery', 'form'], function() {
         });
     });
     //加载一般断层
-    $.getJSON("jsondata/generalfault.json", "", function(data) {
+    $.getJSON("jsondata/generalfault.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -389,9 +418,9 @@ layui.use(['layer', 'jquery', 'form'], function() {
         });
     });
     //加载交通
-    $.getJSON("jsondata/traffic.json", "", function(data) {
+    $.getJSON("jsondata/traffic.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -408,9 +437,9 @@ layui.use(['layer', 'jquery', 'form'], function() {
         });
     });
     //加载高速
-    $.getJSON("jsondata/highspeed.json", "", function(data) {
+    $.getJSON("jsondata/highspeed.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -427,9 +456,9 @@ layui.use(['layer', 'jquery', 'form'], function() {
         });
     });
     //加载构造
-    $.getJSON("jsondata/structure.json", "", function(data) {
+    $.getJSON("jsondata/structure.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -446,9 +475,9 @@ layui.use(['layer', 'jquery', 'form'], function() {
         });
     });
     //加载主要构造
-    $.getJSON("jsondata/mainstructure.json", "", function(data) {
+    $.getJSON("jsondata/mainstructure.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -465,10 +494,10 @@ layui.use(['layer', 'jquery', 'form'], function() {
         });
     });
     //加载乡镇点
-    $.getJSON("jsondata/township.json", "", function(data) {
+    $.getJSON("jsondata/township.json", "", function (data) {
         //each循环 使用$.each方法遍历返回的数据date
         var provices = []
-        $.each(data.features, function(i, item) {
+        $.each(data.features, function (i, item) {
             item["crs"] = {
                 type: "name",
                 properties: {
@@ -493,7 +522,7 @@ layui.use(['layer', 'jquery', 'form'], function() {
             // 	},
             // }).addTo(residentials);
             L.Proj.geoJson(item, {
-                pointToLayer: function(feature, latlng) {
+                pointToLayer: function (feature, latlng) {
                     return L.marker(latlng, {
                         icon: myIcon,
                     });
@@ -505,22 +534,20 @@ layui.use(['layer', 'jquery', 'form'], function() {
 
     //图层切换监听
     var changesfeature = ['structure', 'fault', 'residential', 'rivers', 'traffic', 'highspeed'];
-    form.on('checkbox(layers)', function(data) {
+    form.on('checkbox(layers)', function (data) {
         var layername = $(data.elem).attr('name');
         var layercheck = data.elem.checked;
         var reallayername = layername + 'layer';
         if (layercheck) {
             switch (layername) {
-                case 'layersall':
-                {
-                    $.each(changesfeature, function(index, item) {
+                case 'layersall': {
+                    $.each(changesfeature, function (index, item) {
                         $("#" + item).prop("checked", true);
                         eval(item + 'layer').addTo(map);
                     });
                     break;
                 }
-                default:
-                {
+                default: {
                     $("#layersall").prop("checked", true);
                     eval(reallayername).addTo(map);
                     break;
@@ -528,18 +555,16 @@ layui.use(['layer', 'jquery', 'form'], function() {
             }
         } else {
             switch (layername) {
-                case 'layersall':
-                {
-                    $.each(changesfeature, function(index, item) {
+                case 'layersall': {
+                    $.each(changesfeature, function (index, item) {
                         $("#" + item).prop("checked", false);
                         map.removeLayer(eval(item + 'layer'));
                     });
                     break;
                 }
-                default:
-                {
+                default: {
                     var isfull = true;
-                    $.each(changesfeature, function(index, item) {
+                    $.each(changesfeature, function (index, item) {
                         if ($("#" + item)[0].checked) {
                             isfull = false;
                             return false;
@@ -557,22 +582,22 @@ layui.use(['layer', 'jquery', 'form'], function() {
     });
 
     //水质切换监听
-    form.on('checkbox(waterquality)', function(data) {
+    form.on('checkbox(waterquality)', function (data) {
         var layername = $(data.elem).attr('name');
         var layercheck = data.elem.checked;
         if (layername == "waterqualityall") {
             if (layercheck) {
-                Object.keys(waterstanard).forEach(function(key) {
+                Object.keys(waterstanard).forEach(function (key) {
                     $("#" + key).prop("checked", true);
                 });
-                hotsprings.eachLayer(function(layer) {
+                hotsprings.eachLayer(function (layer) {
                     map.addLayer(layer);
                 });
             } else {
-                Object.keys(waterstanard).forEach(function(key) {
+                Object.keys(waterstanard).forEach(function (key) {
                     $("#" + key).prop("checked", false);
                 });
-                hotsprings.eachLayer(function(layer) {
+                hotsprings.eachLayer(function (layer) {
                     map.removeLayer(layer);
                 });
             }
@@ -580,7 +605,7 @@ layui.use(['layer', 'jquery', 'form'], function() {
         } else {
             if (layercheck) {
                 var layerkeys = false;
-                Object.keys(waterstanard).forEach(function(key) {
+                Object.keys(waterstanard).forEach(function (key) {
                     if ($("#" + key)[0].checked) {
                         layerkeys = true;
                     }
@@ -588,7 +613,7 @@ layui.use(['layer', 'jquery', 'form'], function() {
                 if (layerkeys) {
                     $("#waterqualityall").prop("checked", true);
                 }
-                hotsprings.eachLayer(function(layer) {
+                hotsprings.eachLayer(function (layer) {
                     var properties = layer._layers[layer._leaflet_id - 1].feature.properties;
                     if (properties[layername] > waterstanard[layername]) {
                         map.addLayer(layer);
@@ -596,7 +621,7 @@ layui.use(['layer', 'jquery', 'form'], function() {
                 });
             } else {
                 var layerkeys = false;
-                Object.keys(waterstanard).forEach(function(key) {
+                Object.keys(waterstanard).forEach(function (key) {
                     if (key != layername) {
                         if ($("#" + key)[0].checked) {
                             layerkeys = true;
@@ -606,7 +631,7 @@ layui.use(['layer', 'jquery', 'form'], function() {
                 if (!layerkeys) {
                     $("#waterqualityall").prop("checked", false);
                 }
-                hotsprings.eachLayer(function(layer) {
+                hotsprings.eachLayer(function (layer) {
                     var properties = layer._layers[layer._leaflet_id - 1].feature.properties;
                     if (properties[layername] > waterstanard[layername]) {
                         map.removeLayer(layer);
@@ -617,11 +642,11 @@ layui.use(['layer', 'jquery', 'form'], function() {
         form.render('checkbox');
     });
 
-    $("#clickmenu").on('click', function() {
+    $("#clickmenu").on('click', function () {
         $("#menuitem").toggle();
     });
 
-    $('#springPoint').on('click', function() {
+    $('#springPoint').on('click', function () {
         layer.open({
             type: 2,
             title: "添加温泉点",
@@ -631,14 +656,14 @@ layui.use(['layer', 'jquery', 'form'], function() {
         });
     });
     // $('#springPoint').click();
-    $('#searchpoint').on('click', function() {
+    $('#searchpoint').on('click', function () {
         var searchpoint = layer.open({
             type: 2,
             title: "基础数据列表",
             area: ['1000px', '600px'],
             shadeClose: true, //点击遮罩关闭
             content: 'html/pointlist.html',
-            success: function(layero, index) {
+            success: function (layero, index) {
                 // console.log(layero);
             },
         });
@@ -647,28 +672,57 @@ layui.use(['layer', 'jquery', 'form'], function() {
     // $('#searchpoint').click();
 });
 
+function imgexport() {
+    var loadindex = layer.load(2, {
+        shade: [0.1, '#fff'] //0.1透明度的白色背景
+    });
+    if (map.getZoom() == mapzoom) {
+        layer.msg('地图开始导出中', {
+            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+        }, function() {
+            setTimeout(function() {
+                layer.close(loadindex);
+            }, 2000);
+        });
+        printer.printMap('CurrentSize', '导出地图');
+        // var modeToUse = L.control.browserPrint.mode.auto();
+        // map.printControl.print(modeToUse);
+    } else {
+        map.setView(mapcenter);
+        map.setZoom(mapzoom);
+        var interval = setInterval(function() {
+            layer.msg('地图开始导出中', {
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            }, function() {
+                setTimeout(function() {
+                    layer.close(loadindex);
+                }, 2000);
+            });
+            printer.printMap('CurrentSize', '导出地图');
+            // var modeToUse = L.control.browserPrint.mode.auto();
+            // map.printControl.print(modeToUse);
 
+            clearInterval(interval);
+        }, 200);
+    }
+}
 
 function func_map(type) {
     switch (type) {
-        case 0:
-        {
+        case 0: {
             map.setView(mapcenter);
             map.setZoom(mapzoom);
             break;
         }
-        case 1:
-        {
+        case 1: {
             map.zoomIn();
             break;
         }
-        case 2:
-        {
+        case 2: {
             map.zoomOut();
             break;
         }
-        case 3:
-        {
+        case 3: {
             if (map.getZoom() == mapzoom) {
                 layer.msg('地图开始导出中');
                 printer.printMap('CurrentSize', '导出地图');
@@ -677,7 +731,7 @@ function func_map(type) {
             } else {
                 map.setView(mapcenter);
                 map.setZoom(mapzoom);
-                var interval = setInterval(function() {
+                var interval = setInterval(function () {
                     layer.msg('地图开始导出中');
                     printer.printMap('CurrentSize', '导出地图');
                     // var modeToUse = L.control.browserPrint.mode.auto();
@@ -695,7 +749,7 @@ function tableToExcel(tabletitles, jsonData) {
     //列标题，逗号隔开，每一个逗号就是隔开一个单元格
     let str = "<tr>";
     for (let item in tabletitles) {
-        str += `<td>${ tabletitles[item] + '\t'}</td>`;
+        str += `<td>${tabletitles[item] + '\t'}</td>`;
     }
     str += '</tr>';
     // `姓名,电话,邮箱\n`;
@@ -756,6 +810,7 @@ function tableToExcel(tabletitles, jsonData) {
     document.body.removeChild(link);
 
 }
+
 //输出base64编码
 function base64(s) {
     return window.btoa(unescape(encodeURIComponent(s)))
@@ -812,7 +867,8 @@ function tableToExcelcsv(tabletitles, jsonData) {
     link.click();
     document.body.removeChild(link);
 }
-var exportdata = function() {
+
+var exportdata = function () {
     tableToExcel(pointtabletitles, allpointdata);
 }
 
