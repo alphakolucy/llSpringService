@@ -81,10 +81,10 @@ public class SpringPointInfo implements Serializable {
     //y轴
     @Column(nullable = false, length = 20)
     private Double y;
-    @Column(nullable = false, length = 20)
+    @Column( length = 20)
     private Double realX;
     //y轴
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private Double realY;
     //z轴
     @Column(nullable = false, length = 20)
@@ -97,7 +97,7 @@ public class SpringPointInfo implements Serializable {
     private String ph;
     //水温
     @Column(nullable = false, length = 11)
-    private String waterTemperature;
+    private Double waterTemperature;
     //涌水量
     @Column(nullable = false, length = 11)
     private String waterInflow;
@@ -140,6 +140,14 @@ public class SpringPointInfo implements Serializable {
     //水化学类型
     @Column(nullable = false, length = 20)
     private String hydrochemicalType;
+
+    //热储单元
+    @Column(nullable = false,length = 11)
+    private String reservoirUnit;
+
+    //状态  四种
+    @Column(nullable = false,length = 11)
+    private String status;
 
     //温泉点类型：理疗温泉  地热井
     @Column( length = 10)

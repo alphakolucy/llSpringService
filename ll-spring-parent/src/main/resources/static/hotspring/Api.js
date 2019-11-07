@@ -3,6 +3,7 @@ var pointrotiox=500;//点坐标x缩放比例
 var pointrotioy=11750;//点坐标y缩放比例
 //水质标准
 var waterstanard = {
+    "waterTemperature": 36,
 	"dissolvedSolids": 1000,
 	"co2": 500,
 	"hydrothion": 2,

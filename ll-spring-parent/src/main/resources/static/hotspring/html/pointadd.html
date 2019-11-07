@@ -172,7 +172,7 @@
 
                             <div class="layui-col-md4">
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">海拔</label>
+                                    <label class="layui-form-label">海拔(m)</label>
                                     <div class="layui-input-block">
                                         <input type="text" name="z" required lay-verify="required" placeholder="请输入" value="1500"
                                                autocomplete="off" class="layui-input">
@@ -186,21 +186,18 @@
                         <div class="layui-row">
                             <div class="layui-col-md4">
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">实际X坐标</label>
+                                    <label class="layui-form-label">水温(℃)</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="realX" required lay-verify="required" value="1182.4152024552552"
-                                               placeholder="请输入"
+                                        <input type="text" name="waterTemperature"  required lay-verify="required" placeholder="请输入"
                                                autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                             </div>
-
                             <div class="layui-col-md4">
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">实际Y坐标</label>
+                                    <label class="layui-form-label">涌水量(m<sub>3</sub>/D)</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="realY" required lay-verify="required" value="5560.519195287376"
-                                               placeholder="请输入"
+                                        <input type="text" name="waterInflow" value="100" required lay-verify="required" placeholder="请输入"
                                                autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
@@ -408,6 +405,8 @@
                             </div>
                         </div>
                     </form>
+
+
 				</div>
 
 				<div class="layui-tab-item">

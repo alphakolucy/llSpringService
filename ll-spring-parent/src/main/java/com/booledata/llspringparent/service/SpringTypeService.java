@@ -38,7 +38,7 @@ public class SpringTypeService {
 //
         ArrayList arrayList = new ArrayList();
         //温泉类型标准值（大于）
-        double[] arr = {1000, 5, 500, 10, 2, 0.7, 50, 110, 35, 25};
+        double[] arr = {1000, 5, 500, 10, 2, 0.7, 50, 110, 35, 25,36};
         String type = "";
 //        SpringPointType springPointType = springPointInfo.getSpringPointType();
         SpringPointType springPointType = new SpringPointType();
@@ -72,6 +72,9 @@ public class SpringTypeService {
         }
         if (springPointInfo.getBr2() > arr[9]) {
             type += PointType.BR.getTxt() + ",";
+        }
+        if (springPointInfo.getWaterTemperature() > arr[10]) {
+            type += PointType.WATERTEMPERATURE.getTxt() + ",";
         }
 
         if (type.length()>0){
@@ -104,7 +107,7 @@ public class SpringTypeService {
 //
         ArrayList arrayList = new ArrayList();
         //温泉类型标准值（大于）
-        double[] arr = {1000, 5, 500, 10, 2, 0.7, 50, 110, 35, 25};
+        double[] arr = {1000, 5, 500, 10, 2, 0.7, 50, 110, 35, 25,36};
         String type = "";
 //        SpringPointType springPointType = springPointInfo.getSpringPointType();
         SpringPointType springPointType = new SpringPointType();
@@ -138,6 +141,9 @@ public class SpringTypeService {
         }
         if (springPointInfo.getBr2() > arr[9]) {
             type += PointType.BR.getTxt() + ",";
+        }
+        if (springPointInfo.getBr2() > arr[10]) {
+            type += PointType.WATERTEMPERATURE.getTxt() + ",";
         }
         if (type.length()>0){
             return type;

@@ -330,7 +330,7 @@ public class SpringPointController implements SpringPointControllerApi {
                     springPointInfo.setZ(Double.parseDouble(obArr[7]));
                     springPointInfo.setHoleDepth(Double.parseDouble(obArr[8]));
                     springPointInfo.setPh(obArr[9]);
-                    springPointInfo.setWaterTemperature(obArr[10]);
+                    springPointInfo.setWaterTemperature(Double.parseDouble(obArr[10]));
                     springPointInfo.setWaterInflow(obArr[11]);
                     springPointInfo.setTrepanning(obArr[12]);
                     springPointInfo.setWaterOutlet(obArr[13]);
