@@ -104,316 +104,345 @@
 				<li>柱状图/剖面图</li>
 				<li>水质分析</li>
 				<li>成因模式</li>
+				<li>理疗功效研究</li>
 				<li>附件</li>
 			</ul>
 			<div class="layui-tab-content">
 				<div class="layui-tab-item layui-show">
 					<!--基本信息-->
-                    <form class="layui-form" action="" lay-filter="pointinfo">
-                        <b>基本信息</b>
-<!--                        <div class="layui-row layui-hide">-->
-<!--                            <div class="layui-col-md6">-->
-<!--                                <div class="layui-form-item">-->
-<!--                                    <label class="layui-form-label">id</label>-->
-<!--                                    <div class="layui-input-block">-->
-<!--                                        <input type="text" name="id" required lay-verify="required" placeholder="请输入"-->
-<!--                                               autocomplete="off" class="layui-input">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        <div class="layui-row">
-                            <div class="layui-col-md6">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">编号</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="codeNumber" required lay-verify="required" placeholder="请输入"
-                                               autocomplete="off"
-                                               class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
+					<form class="layui-form" action="" lay-filter="pointinfo">
+						<b>基本信息</b>
+						<!--                        <div class="layui-row layui-hide">-->
+						<!--                            <div class="layui-col-md6">-->
+						<!--                                <div class="layui-form-item">-->
+						<!--                                    <label class="layui-form-label">id</label>-->
+						<!--                                    <div class="layui-input-block">-->
+						<!--                                        <input type="text" name="id" required lay-verify="required" placeholder="请输入"-->
+						<!--                                               autocomplete="off" class="layui-input">-->
+						<!--                                    </div>-->
+						<!--                                </div>-->
+						<!--                            </div>-->
+						<!--                        </div>-->
+						<div class="layui-row">
+							<div class="layui-col-md3">
+								<div class="layui-form-item">
+									<label class="layui-form-label">编号</label>
+									<div class="layui-input-block">
+										<input type="text" name="codeNumber" required lay-verify="required" placeholder="请输入" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
 
-                            <div class="layui-col-md6">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">位置名称</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="address" required lay-verify="required" placeholder="请输入" value="address"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
+							<div class="layui-col-md9">
+								<div class="layui-form-item">
+									<label class="layui-form-label">位置名称</label>
+									<div class="layui-input-block">
+										<input type="text" name="address" required lay-verify="required" placeholder="请输入" value="address"
+										 autocomplete="off" class="layui-input">
+									</div>
+								</div>
+							</div>
 
-                        </div>
-
-
-                        <div class="layui-row">
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">x</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="x" required lay-verify="required" value="3060227"
-                                               placeholder="请输入"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">y</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="y" required lay-verify="required" value="19222257"
-                                               placeholder="请输入"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">海拔(m)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="z" required lay-verify="required" placeholder="请输入" value="1500"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+						</div>
 
 
-                        <div class="layui-row">
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">水温(℃)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="waterTemperature"  required lay-verify="required" placeholder="请输入"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">涌水量(m<sub>3</sub>/D)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="waterInflow" value="100" required lay-verify="required" placeholder="请输入"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">孔深</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="holeDepth" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
+						<div class="layui-row">
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">x</label>
+									<div class="layui-input-block">
+										<input type="text" name="x" required lay-verify="required" value="3060227" placeholder="请输入" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">y</label>
+									<div class="layui-input-block">
+										<input type="text" name="y" required lay-verify="required" value="19222257" placeholder="请输入" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">海拔(m)</label>
+									<div class="layui-input-block">
+										<input type="text" name="z" required lay-verify="required" placeholder="请输入" value="1500" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+
+						</div>
 
 
-                        </div>
+						<div class="layui-row">
 
-                        <div class="layui-row">
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">PH</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="ph" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">涌水量(m<sub>3</sub>/D)</label>
+									<div class="layui-input-block">
+										<input type="text" name="waterInflow" value="100" required lay-verify="required" placeholder="请输入"
+										 autocomplete="off" class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">PH</label>
+									<div class="layui-input-block">
+										<input type="text" name="ph" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">开孔/出露层位</label>
+									<div class="layui-input-block">
+										<input type="text" name="trepanning" required lay-verify="required" placeholder="请输入" value="开孔" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+						</div>
 
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">水温(℃)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="waterTemperature" required lay-verify="required" value="0"
-                                               placeholder="请输入" autocomplete="off"
-                                               class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">涌水量</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="waterInflow" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off"
-                                               class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
+						<div class="layui-row">
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">出水段</label>
+									<div class="layui-input-block">
+										<input type="text" name="waterOutlet" required lay-verify="required" placeholder="请输入" value="出水段"
+										 autocomplete="off" class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">孔深(m)</label>
+									<div class="layui-input-block">
+										<input type="text" name="holeDepth" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">水化学类型</label>
+									<div class="layui-input-block">
+										<input type="text" name="hydrochemicalType" required lay-verifxy="required" value="水化学" placeholder="请输入"
+										 autocomplete="off" class="layui-input">
+									</div>
+								</div>
+							</div>
+						</div>
 
 
 
-                        <div class="layui-row">
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">开孔/出露层位</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="trepanning" required lay-verify="required" placeholder="请输入" value="开孔"
-                                               autocomplete="off"
-                                               class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
+						<div class="layui-row">
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">热储单元</label>
+									<div class="layui-input-block">
+										<select name="reservoirUnit" id="reservoirUnit" lay-verify="" lay-filter="reservoirUnitfilter">
+											<option value="第一热储单元" selected>第一热储单元</option>
+											<option value="第二热储单元">第二热储单元</option>
+											<option value="第三热储单元">第三热储单元</option>
+											<option value="第四热储单元">第四热储单元</option>
+											<option value="第五热储单元">第五热储单元</option>
+											<option value="赤水、习水地区热卤水型">赤水、习水地区热卤水型</option>
+											<option value="变质岩区构造裂隙型">变质岩区构造裂隙型</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">状态</label>
+									<div class="layui-input-block">
+										<select name="status" id="status" lay-verify="" lay-filter="statusfilter">
+											<option value="正常" selected>正常</option>
+											<option value="施工中">施工中</option>
+											<option value="无资料">无资料 </option>
+											<option value="废弃">废弃</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">出水段</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="waterOutlet" required lay-verify="required" placeholder="请输入" value="出水段"
-                                               autocomplete="off"
-                                               class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+						<b>理疗天然矿泉水水质指标</b>
+						<div class="layui-row">
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">水温(℃)</label>
+									<div class="layui-input-block">
+										<input type="text" name="waterTemperature" required lay-verify="required" placeholder="请输入" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">TDS(mg/L)</label>
+									<div class="layui-input-block">
+										<input type="text" name="dissolvedSolids" required lay-verify="required" value="0" placeholder="请输入"
+										 autocomplete="off" class="layui-input">
+									</div>
+								</div>
+							</div>
 
-                        <b>理疗天然矿泉水水质指标</b>
-                        <div class="layui-row">
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">TDS(mg/L)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="dissolvedSolids" required lay-verify="required" value="0"
-                                               placeholder="请输入" autocomplete="off"
-                                               class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">CO<sub>2</sub>(mg/L)</label>
+									<div class="layui-input-block">
+										<input type="text" name="co2" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
 
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">CO2(mg/L)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="co2" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">H2S+HS-(mg/L)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="hydrothion" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off"
-                                               class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+						</div>
 
-                        <div class="layui-row">
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">H2SiO3(mg/L)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="hsio" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
+						<div class="layui-row">
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">H<sub>2</sub>S<sup>+</sup>HS<sup>-</sup>(mg/L)</label>
+									<div class="layui-input-block">
+										<input type="text" name="hydrothion" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">H<sub>2</sub>SiO<sub>3</sub>(mg/L)</label>
+									<div class="layui-input-block">
+										<input type="text" name="hsio" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
 
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">HBO2(mg/L)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="hbo2" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">HBO<sub>2</sub>(mg/L)</label>
+									<div class="layui-input-block">
+										<input type="text" name="hbo2" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
 
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">Br-(mg/L)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="br2" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="layui-row">
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">I<sup>-</sup>(mg/L)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="i2" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
+						</div>
 
-                                </div>
-                            </div>
+						<div class="layui-row">
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">Br<sup>-</sup>(mg/L)</label>
+									<div class="layui-input-block">
+										<input type="text" name="br2" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">I<sup>-</sup>(mg/L)</label>
+									<div class="layui-input-block">
+										<input type="text" name="i2" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
 
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">Fe<sup>2+</sup>+Fe<sup>3+</sup>(mg/L)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="fe" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
+								</div>
+							</div>
 
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">As(mg/L)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="asa" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">Fe<sup>2+</sup>+Fe<sup>3+</sup>(mg/L)</label>
+									<div class="layui-input-block">
+										<input type="text" name="fe" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
 
-                        <div class="layui-row">
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label"><sup>222</sup>Rn(mg/L)</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="rn" required lay-verify="required" placeholder="请输入" value="0"
-                                               autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">水化学类型</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="hydrochemicalType" required lay-verifxy="required" value="水化学"
-                                               placeholder="请输入" autocomplete="off"
-                                               class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+						</div>
 
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="formDemo">保存</button>
-                            </div>
-                        </div>
-                    </form>
+						<div class="layui-row">
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">As(mg/L)</label>
+									<div class="layui-input-block">
+										<input type="text" name="asa" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label"><sup>222</sup>Rn(Bg/L)</label>
+									<div class="layui-input-block">
+										<input type="text" name="rn" required lay-verify="required" placeholder="请输入" value="0" autocomplete="off"
+										 class="layui-input">
+									</div>
+								</div>
+							</div>
+						</div>
+						<b>其他</b>
+						<div class="layui-row">
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">温泉地区流行病学调查</label>
+									<div class="layui-input-block">
+										<input type="text" name="epidemiologicalSurvey" required lay-verify="required" placeholder="请输入" value="0"
+										 autocomplete="off" class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">温泉理疗功效干预实验</label>
+									<div class="layui-input-block">
+										<input type="text" name="efficacyInterventionExperiment" required lay-verify="required" placeholder="请输入"
+										 value="0" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-form-item">
+									<label class="layui-form-label">理疗温泉成因解剖</label>
+									<div class="layui-input-block">
+										<input type="text" name="geneticDissection" required lay-verify="required" placeholder="请输入" value="0"
+										 autocomplete="off" class="layui-input">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit lay-filter="formDemo">保存</button>
+							</div>
+						</div>
+					</form>
 
-                    <!--待更新-->
+					<!--待更新-->
 
 				</div>
 
 				<div class="layui-tab-item">
 					<!--位置图-->
 					<div>
-						<input style="width: 250px; display: inline-block;" class="layui-input" id="seatplottingScale" value="" placeholder="请输入比例尺" />
+						<input style="width: 250px; display: inline-block;" class="layui-input" id="seatplottingScale" value=""
+						 placeholder="请输入比例尺" />
 						<button type="button" class="layui-btn" id="seat">
 							<i class="layui-icon">&#xe60d;</i>上传图片
 						</button>
@@ -436,7 +465,8 @@
 				<div class="layui-tab-item">
 					<!--地质图-->
 					<div>
-						<input style="width: 250px; display: inline-block;" class="layui-input" id="geologyplottingScale" value="" placeholder="请输入比例尺" />
+						<input style="width: 250px; display: inline-block;" class="layui-input" id="geologyplottingScale" value=""
+						 placeholder="请输入比例尺" />
 						<button type="button" class="layui-btn" id="geology">
 							<i class="layui-icon">&#xe60d;</i>上传图片
 						</button>
@@ -458,7 +488,8 @@
 				<div class="layui-tab-item">
 					<!--柱状图/剖面图-->
 					<div>
-							<input style="width: 250px; display: inline-block;" class="layui-input" id="columnarplottingScale" value="" placeholder="请输入比例尺" />
+						<input style="width: 250px; display: inline-block;" class="layui-input" id="columnarplottingScale" value=""
+						 placeholder="请输入比例尺" />
 						<button type="button" class="layui-btn" id="columnar">
 							<i class="layui-icon">&#xe60d;</i>上传图片
 						</button>
@@ -480,7 +511,8 @@
 				<div class="layui-tab-item">
 					<!--水质分析-->
 					<div>
-						<input style="width: 250px; display: inline-block;" class="layui-input" id="waterqualityplottingScale" value="" placeholder="请输入比例尺" />
+						<input style="width: 250px; display: inline-block;" class="layui-input" id="waterqualityplottingScale" value=""
+						 placeholder="请输入比例尺" />
 						<button type="button" class="layui-btn" id="waterquality">
 							<i class="layui-icon">&#xe60d;</i>上传图片
 						</button>
@@ -502,7 +534,8 @@
 				<div class="layui-tab-item">
 					<!--成因模式-->
 					<div>
-						<input style="width: 250px; display: inline-block;" class="layui-input" id="modelplottingScale" value="" placeholder="请输入比例尺" />
+						<input style="width: 250px; display: inline-block;" class="layui-input" id="modelplottingScale" value=""
+						 placeholder="请输入比例尺" />
 						<button type="button" class="layui-btn" id="model">
 							<i class="layui-icon">&#xe60d;</i>上传图片
 						</button>
@@ -520,6 +553,25 @@
 							<div class="chooseimg"><img src="../img/addimg.png" id="model2" /></div>
 						</div>
 					</div> -->
+				</div>
+				<div class="layui-tab-item">
+					<!--理疗功效研究-->
+					<div class="fileupload">
+						<div class="filetype" id="filetype1">
+							<ul>
+								<li class="active" packagetype="6">地区流行病学调查</li>
+								<li packagetype="7">理疗功效干预实验</li>
+							</ul>
+						</div>
+						<div class="filedata">
+							<button type="button" class="layui-btn" id="uploadfile1">
+								<i class="layui-icon">&#xe67c;</i>上传附件
+							</button>
+							<div>
+								<table class="layui-hide" id="list1" lay-data="{id: 'pointlist6'}" lay-filter="demo1"></table>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="layui-tab-item">
 					<!--附件-->
@@ -541,17 +593,6 @@
 							<div>
 								<table class="layui-hide" id="list" lay-data="{id: 'pointlist'}" lay-filter="demo"></table>
 							</div>
-							<!-- <div class="layui-upload-list">
-								<table class="layui-table">
-									<thead>
-										<tr>
-											<th>附件名称</th>
-											<th>操作</th>
-										</tr>
-									</thead>
-									<tbody id="filesList"></tbody>
-								</table>
-							</div> -->
 						</div>
 					</div>
 				</div>
@@ -567,27 +608,30 @@
 				var $ = layui.jquery;
 				var table = layui.table;
 				var packagetype = 0;
+				var packagetype1 = 6;
 				var pointid = 0;
 				var codeNumber = 0;
 				var imagesidnex = 0;
 
 				var inputs = $("form").find("input");
 				$.each(inputs, function(index, item) {
-					$(item).on("input",function(){
-						var attrname=$(this).attr("name");
-						if(waterstanard.hasOwnProperty(attrname)){
-							var val=$(this).val();
-							if(val>waterstanard[attrname]){
-								$(this).parent().parent().css("color","#FF0000");
-								$(this).css("color","#FF0000");
-							}else{
-								$(this).parent().parent().css("color","#000000");
-								$(this).css("color","#000000");
+					$(item).on("input", function() {
+						var attrname = $(this).attr("name");
+						if (waterstanard.hasOwnProperty(attrname)) {
+							var val = $(this).val();
+							if (val > waterstanard[attrname]) {
+								$(this).parent().parent().css("color", "#FF0000");
+								$(this).css("color", "#FF0000");
+							} else {
+								$(this).parent().parent().css("color", "#000000");
+								$(this).css("color", "#000000");
 							}
 						}
 					})
 					//遍历得到的每一个jquery对象
 				});
+				  
+				
 				//监听提交
 				form.on('submit(formDemo)', function(data) {
 					var fromdata = data.field;
@@ -744,7 +788,7 @@
 						data: {
 							filetype: "images",
 							PicState: item.picState,
-							plottingScale:0,
+							plottingScale: 0,
 							pointId: 0,
 							codeNumber: 0
 						},
@@ -760,17 +804,17 @@
 								}, function() {});
 								return false;
 							} else {
-								var scaleval=$(item.id+"plottingScale").val().replace(/(^\s*)|(\s*$)/g, '');//去除空格;;
-								if(scaleval == '' || scaleval == undefined || scaleval == null){
+								var scaleval = $(item.id + "plottingScale").val().replace(/(^\s*)|(\s*$)/g, ''); //去除空格;;
+								if (scaleval == '' || scaleval == undefined || scaleval == null) {
 									layer.msg('比例尺不能为空', {
 										icon: 5,
 										time: 1000
 									}, function() {});
 									return false;
-								}else{
+								} else {
 									this.data.pointId = pointid;
 									this.data.codeNumber = codeNumber;
-									this.data.plottingScale=scaleval;
+									this.data.plottingScale = scaleval;
 									obj.preview(function(index1, file, result) {
 										obj.upload(index1, file);
 									});
@@ -782,12 +826,12 @@
 						},
 						done: function(res) {
 							layer.closeAll('loading');
-							if (res.hasOwnProperty("springPointPic")) {
+							if (res.hasOwnProperty("springPicFile")) {
 								layer.msg('图片上传成功', {
 									icon: 1,
 									time: 1000
 								}, function() {
-									imagelist[index].push(res.springPointPic);
+									imagelist[index].push(res.springPicFile);
 									table.reload('pointlist' + index, {
 										data: imagelist[index]
 									});
@@ -806,7 +850,7 @@
 								icon: 5,
 								time: 1000
 							}, function() {
-							
+
 							});
 							layer.closeAll('loading');
 							// $(item.id + 'img').attr("src", "../img/default.png");
@@ -881,6 +925,10 @@
 					[],
 					[]
 				];
+				var fileslist = [
+					[],
+					[]
+				];
 				//切换附件类型
 				$("#filetype ul li").on("click", function() {
 					if ($(this).hasClass('active')) {
@@ -895,6 +943,47 @@
 						});
 					}
 
+				});
+				//切换附件类型
+				$("#filetype1 ul li").on("click", function() {
+					if ($(this).hasClass('active')) {
+						return false;
+					} else {
+						var listli = $("#filetype1").find("li");
+						listli.removeClass('active');
+						$(this).addClass('active');
+						packagetype1 = $(this).attr("packagetype");
+						table.reload('pointlist6', {
+							data: fileslist1[packagetype1 - 6]
+						});
+					}
+
+				});
+				//附件上传
+				table.render({
+					elem: '#list1',
+					id: 'pointlist6',
+					cols: [
+						[{
+								field: 'id',
+								title: 'ID',
+								hide: true,
+							}, {
+								field: 'fileName',
+								title: '文件名称'
+							}, {
+								field: 'createTime',
+								title: '上传时间'
+							},
+							{
+								title: '操作',
+								width: 160,
+								toolbar: '#barDemo'
+							}
+						]
+					],
+					data: [],
+					page: true
 				});
 				//附件上传
 				table.render({
@@ -985,7 +1074,110 @@
 						});
 					}
 				});
+				//监听工具条
+				table.on('tool(demo1)', function(obj) {
+					var data = obj.data;
+					var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+					if (obj.event === 'down') {
+						var a = document.createElement('a');
+						a.setAttribute('href', data.url);
+						a.setAttribute('target', '_blank');
+						a.click();
+					} else if (obj.event === 'del') {
+						layer.confirm('真的删除行么', function(index) {
+							layer.close(index);
+							$.ajax({
+								type: "DELETE",
+								url: apiUrl + "/upload?id=" + data.id,
+								success: function(data) {
+									layer.msg('删除成功', {
+										icon: 1,
+										time: 1000
+									}, function() {
+										obj.del();
+										removeItem(fileslist1[packagetype1 - 6], item => item.id == data.id);
+										if (fileslist1[packagetype1 - 6].length == 0) {
+											table.reload('pointlist6', {
+												data: fileslist[packagetype1 - 6]
+											});
+										}
+									});
+								},
+								error: function(data) {
+									console.log(data);
+									layer.msg('删除失败', {
+										icon: 5,
+										time: 1000
+									}, function() {});
+								}
+							});
+						});
+					}
+				});
+				var uploadfiles1 = upload.render({
+					elem: "#uploadfile1",
+					url: apiUrl + '/upload/file',
+					data: {
+						filetype: "file",
+						PicState: 10007,
+						packageType: packagetype1,
+						poinId: 0,
+						codeNumber: 0
+					},
+					accept: 'file',
+					// multiple: true,
+					auto: false,
+					size: 102400,
+					choose: function(obj) {
+						if (pointid == 0) {
+							layer.msg('请先保存基础数据', {
+								icon: 5,
+								time: 1000
+							}, function() {});
+						} else {
+							this.data.poinId = pointid;
+							this.data.codeNumber = codeNumber;
+							this.data.packageType = packagetype;
+							var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+							obj.preview(function(index, file, result) {
+								obj.upload(index, file);
+							});
+						}
+					},
+					before: function(res) {
+						layer.load();
+					},
+					done: function(res) {
+						layer.closeAll('loading');
+						if (res.hasOwnProperty("springPointPic")) {
+							layer.msg('附件上传成功', {
+								icon: 1,
+								time: 1000
+							}, function() {
+								fileslist1[packagetype1 - 6].push(res.springPointPic);
+								table.reload('pointlist6', {
+									data: fileslist1[packagetype1 - 6]
+								});
+							});
+						} else {
+							layer.msg('附件上传失败', {
+								icon: 5,
+								time: 1000
+							}, function() {
 
+							});
+						}
+					},
+					error: function() {
+						layer.msg('附件上传失败', {
+							icon: 5,
+							time: 1000
+						}, function() {
+
+						});
+						layer.closeAll('loading');
+					},
+				});
 				var uploadfiles = upload.render({
 					elem: "#uploadfile",
 					url: apiUrl + '/upload/file',
@@ -1045,7 +1237,7 @@
 							icon: 5,
 							time: 1000
 						}, function() {
-						
+
 						});
 						layer.closeAll('loading');
 					},

@@ -70,6 +70,140 @@ var pointtabletitles = {
 	"pointCategory": "温泉类型",
 	"createTime": "创建时间"
 };
+function tableToExcel(tabletitles, jsonData) {
+    //列标题，逗号隔开，每一个逗号就是隔开一个单元格
+    let str = "<tr>";
+    for (let item in tabletitles) {
+        str += `<td>${tabletitles[item] + '\t'}</td>`;
+    }
+    str += '</tr>';
+    // `姓名,电话,邮箱\n`;
+    //增加\t为了不让表格显示科学计数法或者其他格式
+    for (let i = 0; i < jsonData.length; i++) {
+        str += '<tr>';
+        for (let item in tabletitles) {
+            if (jsonData[i].hasOwnProperty(item)) {
+                if (item == "pointCategory") {
+                    switch (jsonData[i][item]) {
+                        case 30001:
+                            str += "<td>天然温泉\t</td>";
+                            break;
+                        case 30002:
+                            str += "<td>地热井\t</td>";
+                            break;
+                        case 30003:
+                            str += "<td>施工中热矿水转孔\t</td>";
+                            break;
+                        case -30001:
+                            str += "<td>不达标温泉\t</td>";
+                            break;
+                        case -30002:
+                            str += "<td>不达标地热\t</td>";
+                            break;
+						case -30004:
+							str += "<td>无资料\t</td>";
+							break;
+						case -30005:
+							str += "<td>废弃\t</td>";
+							break;
+                        default:
+                            str += "<td>未分类\t</td>";
+                            break;
+                    }
+                } else {
+                    str += `<td>${jsonData[i][item] + '\t'}</td>`;
+                }
+            }
+        }
+        str += '</tr>';
+    }
+    //Worksheet名
+    let worksheet = '温泉点数据'
+    let uri = 'data:application/vnd.ms-excel;base64,';
+
+    //下载的表格模板数据
+    let template =
+        `<html xmlns:o="urn:schemas-microsoft-com:office:office" 
+	      xmlns:x="urn:schemas-microsoft-com:office:excel" 
+	      xmlns="http://www.w3.org/TR/REC-html40">
+	      <head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>
+	        <x:Name>${worksheet}</x:Name>
+	        <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>
+	        </x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+	        </head><body><table>${str}</table></body></html>`;
+    //下载模板
+    let link = document.createElement("a");
+    link.href = uri + base64(template);
+    //对下载的文件命名
+    link.download = "温泉点数据.xls";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+}
+
+//输出base64编码
+function base64(s) {
+    return window.btoa(unescape(encodeURIComponent(s)))
+}
+
+function tableToExcelcsv(tabletitles, jsonData) {
+    //列标题，逗号隔开，每一个逗号就是隔开一个单元格
+    tabletitletext = [];
+    for (let item in tabletitles) {
+        tabletitletext.push(tabletitles[item])
+    }
+    let str = tabletitletext.join(',') + "\n";
+    // `姓名,电话,邮箱\n`;
+    //增加\t为了不让表格显示科学计数法或者其他格式
+    for (let i = 0; i < jsonData.length; i++) {
+        for (let item in tabletitles) {
+            if (jsonData[i].hasOwnProperty(item)) {
+                if (item == "pointCategory") {
+                    switch (jsonData[i][item]) {
+                        case 30001:
+                            str += "天然温泉\t,";
+                            break;
+                        case 30002:
+                            str += "地热井\t,";
+                            break;
+                        case 30003:
+                            str += "施工中热矿水转孔\t,";
+                            break;
+                        case -30001:
+                            str += "不达标温泉\t,";
+                            break;
+                        case -30002:
+                            str += "不达标地热\t,";
+                            break;
+						case -30004:
+							str += "无资料\t,";
+							break;
+						case -30005:
+							str += "废弃\t,";
+							break;
+                        default:
+                            str += "未分类\t,";
+                            break;
+                    }
+                } else {
+                    str += `${jsonData[i][item] + '\t'},`;
+                }
+            }
+        }
+        str += '\n';
+    }
+    //encodeURIComponent解决中文乱码
+    let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+    //通过创建a标签实现
+    let link = document.createElement("a");
+    link.href = uri;
+    //对下载的文件命名
+    link.download = "温泉点数据.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 //温泉点测试数据
 var visualpoint = [{
 		"latlng": [1558.156759601893, 6416.941167692173],

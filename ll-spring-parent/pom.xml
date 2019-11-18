@@ -8,10 +8,11 @@
         <version>1.5.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <packaging>war</packaging>
     <groupId>com.booledata</groupId>
     <artifactId>ll-spring-parent</artifactId>
     <version>0.9.0-SNAPSHOT</version>
-    <name>ll-spring-parent</name>
+    <name>llspring</name>
     <description>spring system parent</description>
 
     <properties>
@@ -19,6 +20,8 @@
     </properties>
 
     <dependencies>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -201,6 +204,23 @@
             <version>2.0.0-beta4</version>
         </dependency>
 
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.9</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.2.2</version>
+        </dependency>
 
     </dependencies>
     <repositories>

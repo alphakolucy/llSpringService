@@ -1,6 +1,8 @@
 package com.booledata.llspringparent.utils;
 
+import com.booledata.llspringparent.dao.SpringPointRepository;
 import com.booledata.llspringparent.model.springPoint.SpringPointInfo;
+import com.booledata.llspringparent.service.SpringTypeService;
 import com.booledata.llspringparent.utils.enums.PointCategory;
 
 import java.util.ArrayList;
@@ -34,10 +36,13 @@ public class PointCategoryUtil {
             if (b){
                 springPointInfo.setPointCategory(PointCategory.DR.getValue());
                 return springPointInfo;
-            }else if(reach){
-                springPointInfo.setPointCategory(PointCategory.SGZRKSZK.getValue());
-                return springPointInfo;
-            }else {
+            }
+            //取消施工判断，  用 status 判断
+//            else if(reach){
+//                springPointInfo.setPointCategory(PointCategory.SGZRKSZK.getValue());
+//                return springPointInfo;
+//            }
+            else {
                 springPointInfo.setPointCategory(PointCategory.DRCANCEL.getValue());
                 return springPointInfo;
             }
@@ -75,5 +80,27 @@ public class PointCategoryUtil {
             }
         }
         return false;
+    }
+
+
+
+    public SpringPointInfo getPointCategory(SpringPointInfo springPointInfo, SpringPointRepository springPointRepository, SpringTypeService springTypeService){
+        SpringPointInfo entity = new SpringPointInfo();
+        //判断温泉是否达标(
+        springPointRepository.save(springPointInfo);
+        String pointStatus = springPointInfo.getStatus();
+        //温度大于等于36°进行判断  否则为不达标
+        if (springPointInfo.getWaterTemperature() >= 36&&"正常".equals(pointStatus)) {
+            boolean b = springTypeService.saveType(springPointInfo);
+            return selectPointCategory(springPointInfo, b);
+        } else if (PointCategory.WZL.getTxt().equals(pointStatus)||PointCategory.FQ.getTxt().equals(pointStatus)){
+            Integer  pointCategory=PointCategory.WZL.getTxt().equals(pointStatus)? PointCategory.WZL.getValue():PointCategory.FQ.getValue();
+            springPointInfo.setPointCategory(pointCategory);
+            springTypeService.saveType(springPointInfo);
+            return springPointInfo;
+        }else {
+            boolean bo = false;
+            return selectPointCategory(springPointInfo, bo);
+        }
     }
 }

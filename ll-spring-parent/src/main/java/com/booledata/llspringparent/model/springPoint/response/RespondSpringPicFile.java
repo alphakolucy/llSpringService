@@ -17,7 +17,7 @@ public class RespondSpringPicFile {
 
     private Image image;
 
-    private String code;
+    private int code;
 
 
 }

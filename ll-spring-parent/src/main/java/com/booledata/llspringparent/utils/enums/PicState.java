@@ -14,8 +14,8 @@ public enum PicState {
     ZZT(10003, "柱状图/剖面图"),
     SZFX(10004,"水质分析"),
     CYMS(10005,"成因模式"),
-    SCWJ(10006,"上传附件");
-
+    SCWJ(10006,"上传附件"),
+    LLGX(10007,"理疗功效研究");
 
     private Integer value;
     private String txt;

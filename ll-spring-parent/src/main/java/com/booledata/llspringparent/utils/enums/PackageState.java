@@ -14,7 +14,9 @@ public enum PackageState {
     CS(2, "测试分析报告"),
     CG(3,"成果报告"),
     ZP(4,"照片"),
-    QY(5,"企业资料");
+    QY(5,"企业资料"),
+    DQ(6,"地区流行病学调查"),
+    LL(7,"理疗功效干预实验");
 
 
     private Integer value;

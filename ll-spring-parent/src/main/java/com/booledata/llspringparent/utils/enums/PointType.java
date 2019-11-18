@@ -20,7 +20,7 @@ public enum PointType {
     RN(20008, "氡水"),
     HBO2(20009, "硼酸水"),
     BR(20010, "溴水"),
-    WATERTEMPERATURE(20011,"温泉水达标"),
+    WATERTEMPERATURE(20011,"温泉水温"),
 
     CANCEL(-20000,"已取消");
 

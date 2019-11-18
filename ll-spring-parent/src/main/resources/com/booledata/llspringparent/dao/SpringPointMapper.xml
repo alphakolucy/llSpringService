@@ -9,7 +9,7 @@
     </select>
 
     <insert id="addPoint" parameterType="com.booledata.llspringparent.model.springPointInfo.SpringPointInfo">
-        insert into springbaseinfo(pointId,,codeNumber,address,x,y,z,holeDepth,ph,waterTemperature,waterInflow,trepanning,waterOutlet,dissolvedSolids,co2,hydrothion,hsio,hbo2,br2,i2,fe,as,rn,hydrochemicalType)
+        insert into springbaseinfo(pointId,codeNumber,address,x,y,z,holeDepth,ph,waterTemperature,waterInflow,trepanning,waterOutlet,dissolvedSolids,co2,hydrothion,hsio,hbo2,br2,i2,fe,as,rn,hydrochemicalType)
         values(#{pointId},#{codeNumber},#{address},#{x},#{y},#{z},#{holeDepth},#{ph},#{waterTemperature},#{waterInflow},#{trepanning},#{waterOutlet},#{dissolvedSolids},#{co2},#{hydrothion},#{hsio},#{hbo2},#{i2},#{as},#{rn},#{hydrochemicalType})
 
     </insert>

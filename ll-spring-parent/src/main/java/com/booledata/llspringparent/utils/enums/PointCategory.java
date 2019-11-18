@@ -16,7 +16,9 @@ public enum PointCategory {
 
     SCANCEL(-30001,"不达标温泉"),
     DRCANCEL(-30002,"不达标地热"),
-    NCANCEL(-30003,"其他");
+    NCANCEL(-30003,"其他"),
+    WZL(-30004,"无资料"),
+    FQ(-30005,"废弃");
 
     private Integer value;
     private String txt;

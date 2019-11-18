@@ -32,7 +32,10 @@ import java.util.UUID;
 @Service
 public class SpringPicService {
 
-    private static final String PATH = "E:\\dev\\project\\llSpringService\\ll-spring-parent\\src\\main\\resources\\static"; //上传路径
+    private static final String PATH = "F:\\DevProject\\llspring\\springService\\ll-spring-parent\\src\\main\\resources\\static";
+
+
+//    private static final String PATH = "E:\\dev\\project\\llSpringService\\ll-spring-parent\\src\\main\\resources\\static"; //上传路径
     @Autowired
     private SpringPicRepository springPicRepository;
 
@@ -185,17 +188,17 @@ public class SpringPicService {
             springPicFileRepository.save(springPicFile);
 
 
-            if (springPointPic != null) {
-                //保存历史图片
-                springPicFile.setFileName(originalFilename);
-                springPicFile.setUrl(springPointPic.getUrl());
-                springPicFile.setPointId(springPointPic.getPointId());
-                springPicFile.setPicState(springPointPic.getPicState());
-                springPicFile.setCodeNumber(codeNumber);
-                springPicFile.setPlottingScale(plottingScale);
-                springPicFileRepository.save(springPicFile);
-            }
-
+//            if (springPointPic != null) {
+//                //保存历史图片
+//                springPicFile.setFileName(originalFilename);
+//                springPicFile.setUrl(springPointPic.getUrl());
+//                springPicFile.setPointId(springPointPic.getPointId());
+//                springPicFile.setPicState(springPointPic.getPicState());
+//                springPicFile.setCodeNumber(codeNumber);
+//                springPicFile.setPlottingScale(plottingScale);
+//                springPicFileRepository.save(springPicFile);
+//            }
+            respondSpringPicFile.setCode(200);
             respondSpringPicFile.setImage(img);
             respondSpringPicFile.setSpringPicFile(springPicFile);
             return new ResponseEntity<RespondSpringPicFile>(respondSpringPicFile, HttpStatus.OK);

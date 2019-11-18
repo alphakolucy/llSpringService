@@ -145,7 +145,14 @@ public class SpringPointInfo implements Serializable {
     @Column(nullable = false,length = 11)
     private String reservoirUnit;
 
-    //状态  四种
+
+    /**
+     * ----四种状态----
+     * 正常（符合理疗指标为红色、不符合为灰色）
+     * 施工中（绿色）
+     * 无资料（黄色）
+     * 废弃（黑色）
+     */
     @Column(nullable = false,length = 11)
     private String status;
 
@@ -153,8 +160,33 @@ public class SpringPointInfo implements Serializable {
     @Column( length = 10)
     private Integer pointCategory;
 
+    //温泉地区流行病学调查
+    @Column(nullable = false,length = 11)
+    private String epidemiologicalSurvey;
 
+    //温泉理疗功效干预实验
+    @Column(nullable = false,length = 11)
+    private String efficacyInterventionExperiment;
 
+    //理疗温泉成因解剖
+    @Column(nullable = false,length = 11)
+    private String geneticDissection;
+
+//    public Double getRealX() {
+//        return this.x/500;
+//    }
+//
+//    public void setRealX(Double realX) {
+//        this.realX = this.x/500;
+//    }
+//
+//    public Double getRealY() {
+//        return this.y/500;
+//    }
+//
+//    public void setRealY(Double realY) {
+//        this.realY = realY;
+//    }
 }
 
 

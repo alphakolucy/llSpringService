@@ -20,6 +20,7 @@
 			<div class="layui-inline">
 				<button class="layui-btn" style="width: 100px;" id="import">导入</button>
 				<button class="layui-btn" style="width: 100px;" id="export">导出</button>
+				<button class="layui-btn" style="width: 100px;" id="exportall">导出所有</button>
 			</div>
 		</div>
 		<div>
@@ -37,6 +38,8 @@
 				var layer = layui.layer;
 				var upload = layui.upload;
 				var searchfilter = "codeNumber";
+				var curtabledata=[];
+
 				//查询
 				$("#searchaddress").on("click", function() {
 					var searchval = $("#searchvaladress").val();
@@ -49,10 +52,26 @@
 						}
 					});
 				});
-				//导出
-				$("#export").on("click", function() {
+				//导出所有
+				$("#exportall").on("click", function() {
 					parent.exportdata();
 				});
+				//导出当前
+				$("#export").on("click", function() {
+
+					console.log(curtabledata);
+					if(curtabledata.length==0){
+						layer.msg('数据为空，导出失败！', {
+							icon: 5,
+							time: 1000
+						}, function() {
+						
+						});
+					}else{
+						tableToExcel(pointtabletitles, curtabledata);
+					}
+				});
+				
 				//导入
 				var uploadfiles = upload.render({
 					elem: "#import",
@@ -165,6 +184,10 @@
 										return "不达标温泉";
 									} else if (d.pointCategory == -30002) {
 										return "不达标地热";
+									} else if (d.pointCategory == -30004) {
+										return "无资料";
+									} else if (d.pointCategory == -30005) {
+										return "废弃";
 									} else {
 										return "未分类";
 									}
@@ -177,7 +200,16 @@
 							}
 						]
 					],
-					page: true
+					page: true,
+					done: function(res, curr, count){
+					    //如果是异步请求数据方式，res即为你接口返回的信息。
+						console.log("data:"+res.data);
+						// console.log("springPoints:"+res.springPoints);
+						// curtabledata=res.res.springPoints;
+						curtabledata=res.data;
+
+						console.log('查询结果数：'+curtabledata);
+					  }
 				});
 				//监听工具条
 				table.on('tool(demo)', function(obj) {
