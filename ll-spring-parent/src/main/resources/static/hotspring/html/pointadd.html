@@ -568,7 +568,7 @@
 								<i class="layui-icon">&#xe67c;</i>上传附件
 							</button>
 							<div>
-								<table class="layui-hide" id="list1" lay-data="{id: 'pointlist6'}" lay-filter="demo1"></table>
+								<table class="layui-hide" id="list6" lay-data="{id: 'pointlist6'}" lay-filter="demo1"></table>
 							</div>
 						</div>
 					</div>
@@ -601,6 +601,7 @@
 		<script type="text/javascript" src="../Api.js"></script>
 		<script type="text/javascript" src="../layui/layui.js"></script>
 		<script type="text/javascript">
+			var curpointdata = parent.curpointjson;
 			layui.use(['upload', 'element', 'form', 'jquery', 'table'], function() {
 				var upload = layui.upload;
 				var element = layui.element;
@@ -925,7 +926,7 @@
 					[],
 					[]
 				];
-				var fileslist = [
+				var fileslist1 = [
 					[],
 					[]
 				];
@@ -959,6 +960,9 @@
 					}
 
 				});
+
+				var packagetypes = [0, 1, 2, 3, 4, 5];
+				var packagetypes1 = [6, 7];
 				//附件上传
 				table.render({
 					elem: '#list1',
@@ -1114,6 +1118,60 @@
 						});
 					}
 				});
+				$.each(packagetypes, function(index, item) {
+					$.ajax({
+						type: "GET",
+						url: apiUrl + "/springPoint/findPointAllPicFile",
+						dataType: "json",
+						data: {
+							"pointId": curpointdata.id,
+							"picState": 10006,
+							"packageType": item
+						},
+						success: function(data) {
+							if (data.code == 200) {
+								fileslist[index] = data.springPicFileList;
+								if (index == packagetype) {
+									table.render({
+										elem: '#list',
+										id: 'pointlist',
+										cols: [
+											[{
+												field: 'id',
+												title: 'ID',
+												hide: true,
+											}, {
+												field: 'fileName',
+												title: '文件名称'
+											}, {
+												field: 'createTime',
+												title: '上传时间'
+											},
+												{
+													title: '操作',
+													width: 160,
+													toolbar: '#barDemo'
+												}
+											]
+										],
+										data: fileslist[packagetype],
+										page: true
+									});
+									// table.reload('pointlist', {
+									// 	data: fileslist[packagetype]
+									// });
+								}
+							}
+						},
+						error: function(data) {
+							console.log(data);
+							// layer.msg('删除失败', {
+							// 	icon: 5,
+							// 	time: 1000
+							// }, function() {});
+						}
+					});
+				});
 				var uploadfiles1 = upload.render({
 					elem: "#uploadfile1",
 					url: apiUrl + '/upload/file',
@@ -1149,12 +1207,12 @@
 					},
 					done: function(res) {
 						layer.closeAll('loading');
-						if (res.hasOwnProperty("springPointPic")) {
+						if (res.hasOwnProperty("springPicFile")) {
 							layer.msg('附件上传成功', {
 								icon: 1,
 								time: 1000
 							}, function() {
-								fileslist1[packagetype1 - 6].push(res.springPointPic);
+								fileslist1[packagetype1 - 6].push(res.springPicFile);
 								table.reload('pointlist6', {
 									data: fileslist1[packagetype1 - 6]
 								});
@@ -1177,6 +1235,62 @@
 						});
 						layer.closeAll('loading');
 					},
+				});
+
+				$.each(packagetypes1, function(index, item) {
+					$.ajax({
+
+						type: "GET",
+						url: apiUrl + "/springPoint/findPointAllPicFile",
+						dataType: "json",
+						data: {
+							"pointId": curpointdata.id,
+							"picState": 10007,
+							"packageType": item
+						},
+						success: function(data) {
+							if (data.code == 200) {
+								fileslist1[index] = data.springPicFileList;
+								if (index + 6 == packagetype1) {
+									table.render({
+										elem: '#list6',
+										id: 'pointlist6',
+										cols: [
+											[{
+												field: 'id',
+												title: 'ID',
+												hide: true,
+											}, {
+												field: 'fileName',
+												title: '文件名称'
+											}, {
+												field: 'createTime',
+												title: '上传时间'
+											},
+												{
+													title: '操作',
+													width: 160,
+													toolbar: '#barDemo'
+												}
+											]
+										],
+										data: fileslist1[packagetype1 - 6],
+										page: true
+									});
+									// table.reload('pointlist', {
+									// 	data: fileslist[packagetype]
+									// });
+								}
+							}
+						},
+						error: function(data) {
+							console.log(data);
+							// layer.msg('删除失败', {
+							// 	icon: 5,
+							// 	time: 1000
+							// }, function() {});
+						}
+					});
 				});
 				var uploadfiles = upload.render({
 					elem: "#uploadfile",

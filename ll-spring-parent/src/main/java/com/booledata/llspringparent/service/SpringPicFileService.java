@@ -32,7 +32,7 @@ import java.util.UUID;
 @Service
 public class SpringPicFileService {
 
-    private static final String PATH = "E:\\dev\\project\\llSpringService\\ll-spring-parent\\src\\main\\resources\\static"; //上传路径
+    private static final String PATH = "F:\\DevProject\\llspring\\springService\\ll-spring-parent\\src\\main\\resources\\static"; //上传路径
     @Autowired
     private SpringPicRepository springPicRepository;
 

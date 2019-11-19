@@ -598,8 +598,8 @@
 					<div class="fileupload">
 						<div class="filetype" id="filetype1">
 							<ul>
-								<li class="active" packagetype="6">地区流行病学调查</li>
-								<li packagetype="7">理疗功效干预实验</li>
+								<li class="active"  packagetype="6">地区流行病学调查</li>
+								<li   packagetype="7">理疗功效干预实验</li>
 							</ul>
 						</div>
 						<div class="filedata">
@@ -1222,8 +1222,10 @@
 						$(this).addClass('active');
 						packagetype = $(this).attr("packagetype");
 						table.reload('pointlist6', {
-							data: fileslist1[packagetype1 - 6]
+							data: fileslist1[packagetype - 6]
+
 						});
+						console.log("fileslist1"+fileslist1[packagetype1 - 6].toString())
 					}
 
 				});
