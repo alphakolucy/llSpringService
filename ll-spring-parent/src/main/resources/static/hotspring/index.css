@@ -123,6 +123,15 @@ body {
 	left: 10px;
 	z-index: 9999;
 }
+.hotshow{
+	display: block;
+}
+.hothide{
+	display: none;
+}
+.leaflet-control-container{
+	display: none !important;
+}
 
 #menu li {
 	height: 35px;

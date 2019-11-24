@@ -8,6 +8,7 @@ import com.booledata.llspringparent.utils.enums.PointType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 @Service
@@ -34,6 +35,7 @@ public class SpringTypeService {
 
     public Boolean saveType(SpringPointInfo springPointInfo) {
 
+        BigInteger bigInteger = BigInteger.valueOf(111);
         boolean bool = false;
 //
         ArrayList arrayList = new ArrayList();
@@ -76,16 +78,13 @@ public class SpringTypeService {
 
 
         if (type.length()>0){
-
             springPointType.setPointType(type);
             SpringPointInfo save = springPointRepository.save(springPointInfo);
             springPointType.setPointId(save.getId());
             springPointInfo.setSpringPointType(springPointType);
             springPointRepository.save(save);
-            bool = true;
-            return bool;
+            return true;
         }else {
-
             springPointType.setPointType(type);
             SpringPointInfo save = springPointRepository.save(springPointInfo);
             springPointType.setPointId(save.getId());
