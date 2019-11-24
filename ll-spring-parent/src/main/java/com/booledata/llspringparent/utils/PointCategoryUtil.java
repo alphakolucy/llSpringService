@@ -100,6 +100,7 @@ public class PointCategoryUtil {
             return springPointInfo;
         }else {
             boolean bo = false;
+            springTypeService.saveType(springPointInfo);
             return selectPointCategory(springPointInfo, bo);
         }
     }

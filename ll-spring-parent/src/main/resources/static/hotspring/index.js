@@ -829,14 +829,14 @@ layui.use(['layer', 'jquery', 'form'], function() {
 					if (layercheck) {
 						hotspringslayer.eachLayer(function(layer) {
 							var properties = layer._layers[layer._leaflet_id - 1].feature.properties;
-							if (properties["codeNumber"].indexOf("S") == 0) {
+							if (properties["codeNumber"].indexOf("S") == 0&&properties["codeNumber"].indexOf("s") == 0) {
 								map.addLayer(layer);
 							}
 						});
 					} else {
 						hotspringslayer.eachLayer(function(layer) {
 							var properties = layer._layers[layer._leaflet_id - 1].feature.properties;
-							if (properties["codeNumber"].indexOf("S") != 0) {
+							if (properties["codeNumber"].indexOf("S") != 0&&properties["codeNumber"].indexOf("s") != 0) {
 								map.addLayer(layer);
 							}
 						});
@@ -848,14 +848,14 @@ layui.use(['layer', 'jquery', 'form'], function() {
 					if (layercheck) {
 						hotspringslayer.eachLayer(function(layer) {
 							var properties = layer._layers[layer._leaflet_id - 1].feature.properties;
-							if (properties["codeNumber"].indexOf("DR") == 0) {
+							if (properties["codeNumber"].indexOf("DR") == 0&&properties["codeNumber"].indexOf("dr") == 0) {
 								map.addLayer(layer);
 							}
 						});
 					} else {
 						hotspringslayer.eachLayer(function(layer) {
 							var properties = layer._layers[layer._leaflet_id - 1].feature.properties;
-							if (properties["codeNumber"].indexOf("DR") != 0) {
+							if (properties["codeNumber"].indexOf("DR") != 0&&properties["codeNumber"].indexOf("dr") == 0) {
 								map.addLayer(layer);
 							}
 						});
