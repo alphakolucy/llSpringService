@@ -31,36 +31,37 @@ import java.util.UUID;
 
 @Service
 public class SpringPicFileService {
+	//    private static final String PATH = "E:\\dev\\project\\llSpringService\\ll-spring-parent\\src\\main\\resources\\static"; //上传路径
+	//    F:\DevProject\llspring\springService\ll-spring-parent\src\main\resources\static
+	private static final String PATH = "D:\\springService\\ll-spring-parent\\src\\main\\resources\\static"; //上传路径
+	@Autowired
+	private SpringPicRepository springPicRepository;
 
-    private static final String PATH = "F:\\DevProject\\llspring\\springService\\ll-spring-parent\\src\\main\\resources\\static"; //上传路径
-    @Autowired
-    private SpringPicRepository springPicRepository;
 
+	@Autowired
+	private SpringPicFileRepository springPicFileRepository;
 
-    @Autowired
-    private SpringPicFileRepository springPicFileRepository;
+	@Autowired
+	private SpringPointRepository springPointRepository;
 
-    @Autowired
-    private SpringPointRepository springPointRepository;
+	@Autowired
+	private SpringPointControllerApi springPointControllerApi;
 
-    @Autowired
-    private SpringPointControllerApi springPointControllerApi;
-
-    public String  deleteAllFileFromPoint(String id){
-        List<SpringPicFile> byPointId = springPicFileRepository.findByPointId(id);
-        try{
-            for (SpringPicFile springPicFile : byPointId) {
-                String url = springPicFile.getUrl();
-                SpringPointPic byUrl = springPicRepository.findByUrl(url);
-                String filePath = byUrl.getFilePath();
-                FileUtil.delete(filePath);
-            }
-            return  "删除成功";
-        }catch (Exception e){
+	public String deleteAllFileFromPoint(String id) {
+		List<SpringPicFile> byPointId = springPicFileRepository.findByPointId(id);
+		try {
+			for (SpringPicFile springPicFile : byPointId) {
+				String url = springPicFile.getUrl();
+				SpringPointPic byUrl = springPicRepository.findByUrl(url);
+				String filePath = byUrl.getFilePath();
+				FileUtil.delete(filePath);
+			}
+			return "删除成功";
+		} catch (Exception e) {
 //            e.printStackTrace();
-            return e.getMessage();
-        }
+			return e.getMessage();
+		}
 
 
-    }
+	}
 }
